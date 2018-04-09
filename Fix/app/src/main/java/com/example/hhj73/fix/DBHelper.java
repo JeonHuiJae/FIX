@@ -22,11 +22,11 @@ public class DBHelper extends SQLiteOpenHelper {
         // 노인 테이블
         // 이름, 성별, 흡연, 통금, 반려동물, 주거비용, 도움, 주소, 특이사항
         db.execSQL("CREATE TABLE SENIOR (_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "name TEXT, gender BOOLEAN, smoke BOOLEAN, curfew BOOLEAN, pet INTEGER," +
+                "name TEXT, gender BOOLEAN, smoke BOOLEAN, curfew BOOLEAN, pet BOOLEAN, cost INTEGER, " +
                 "help BOOLEAN, address TEXT, information TEXT);");
 
         // 학생 테이블
-        // 이름, 성별, 흡연, 통금, 반려동물, 주거비용, 도움, 특이사항
+        // 이름, 성별, 흡연, 통금, 반려동물, 도움, 특이사항
         db.execSQL("CREATE TABLE STUDENT (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name TEXT, gender BOOLEAN, smoke BOOLEAN, curfew BOOLEAN, pet INTEGER, " +
                 "help BOOLEAN, information TEXT);");
