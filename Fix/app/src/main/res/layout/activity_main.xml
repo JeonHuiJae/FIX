@@ -5,7 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="bottom"
     tools:context="com.example.hhj73.fix.MainActivity">
+
+    <TextView
+        android:text="XYLOPHONE \n HOUSE"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+<LinearLayout
+    android:paddingLeft="100dp"
+    android:paddingRight="100dp"
+    android:layout_marginTop="50dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:orientation="vertical"
@@ -15,14 +31,17 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <TextView
-                android:text="아이디"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="ID"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle" />
 
             <EditText
                 android:id="@+id/inputID"
-                android:width="200dp"
+                android:width="150dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -31,14 +50,17 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <TextView
-                android:text="비밀번호"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="PW"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle" />
 
             <EditText
                 android:id="@+id/inputPW"
-                android:width="200dp"
+                android:width="150dp"
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -51,22 +73,38 @@
         android:id="@+id/loginButton"
         android:text="로그인"
         android:onClick="login"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
+
+    <TextView
+        android:layout_marginTop="70dp"
+        android:text="처음이신가요?"
+        android:gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+<LinearLayout
+    android:layout_marginBottom="30dp"
+    android:layout_gravity="bottom"
+    android:gravity="bottom|center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <Button
         android:id="@+id/seniorJoinButton"
-        android:text="노인 회원가입"
+        android:text="어르신 가입"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="seniorJoin"/>
 
     <Button
         android:id="@+id/studentJoinButton"
-        android:text="학생 회원가입"
+        android:text="청년 가입"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="studentJoin"/>
+</LinearLayout>
+
 
 
 </LinearLayout>

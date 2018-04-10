@@ -23,6 +23,7 @@ public class StudentJoinActivity extends Activity {
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent); //액티비티 이동
+        overridePendingTransition(0, 0);
 
         Toast.makeText(this, "이메일을 인증해주세요.", Toast.LENGTH_SHORT).show();
     }

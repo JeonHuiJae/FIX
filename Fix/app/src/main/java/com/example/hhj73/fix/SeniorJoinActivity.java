@@ -22,6 +22,7 @@ public class SeniorJoinActivity extends Activity {
         // 노인회원 가입 완료
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent); //액티비티 이동
+        overridePendingTransition(0, 0);
     }
 
 }
