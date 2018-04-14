@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,12 +8,551 @@
 
 
 
+    <!--                             7번째 (그 외 특이사항)                                -->
     <LinearLayout
+        android:visibility="visible"
+        android:background="@drawable/test"
+        android:id="@+id/seventh"
         android:orientation="vertical"
-        android:layout_margin="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:padding="10dp"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_gravity="center"
+            android:text="그 외 특이사항"
+            android:textSize="25dp"
+            android:background="@color/colorAccent"
+            android:padding="3dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:text="입주자가 알았으면 하는 특이사항을 적어주세요!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:background="@color/colorMint"
+            android:layout_marginBottom="50dp"
+            android:layout_gravity="center"
+            android:layout_width="280dp"
+            android:layout_height="200dp" />
+        <Button
+            android:id="@+id/next7"
+            android:onClick="seniorJoinSuccess"
+            android:layout_gravity="center"
+            android:text="가입 완료"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!--                             6번째 (특이사항)                                -->
+    <LinearLayout
+        android:visibility="visible"
+        android:background="@drawable/test"
+        android:id="@+id/sixth"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:padding="10dp"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="특이사항 체크"
+            android:textSize="25dp"
+            android:background="@color/colorAccent"
+            android:padding="2dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:text="*해당되시면 체크해주세요!*"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_marginBottom="80dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:layout_marginBottom="10dp"
+                android:id="@+id/smokeCheck"
+                android:textSize="22dp"
+                android:text="흡연자에요"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <CheckBox
+                android:layout_marginBottom="10dp"
+                android:id="@+id/curfewCheck"
+                android:textSize="22dp"
+                android:text="통금이 있는게 좋을것 같아요"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <CheckBox
+                android:layout_marginBottom="10dp"
+                android:id="@+id/petCheck"
+                android:textSize="22dp"
+                android:text="반려동물이 있어요"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <CheckBox
+                android:layout_marginBottom="10dp"
+                android:id="@+id/helpCheck"
+                android:textSize="22dp"
+                android:text="도움을 줬으면 좋겠어요"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/next6"
+            android:onClick="next"
+            android:layout_gravity="center"
+            android:text="다음으로"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <!--                             5번째 (신분증 인증)                                -->
+
+    <LinearLayout
+        android:visibility="visible"
+        android:background="@drawable/test"
+        android:id="@+id/fifth"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:padding="10dp"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="신분증 인증"
+            android:textSize="25dp"
+            android:layout_gravity="center"
+            android:background="@color/colorAccent"
+            android:padding="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:background="@color/colorPrimary"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:layout_width="200dp"
+            android:layout_height="130dp" />
+        <LinearLayout
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:text="사진찍기"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:text="앨범에서 불러오기"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/next5"
+            android:onClick="next"
+            android:layout_gravity="center"
+            android:text="다음으로"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+    <!--                             4번째 (주소, 주거비용)                                -->
+    <LinearLayout
+        android:visibility="visible"
+        android:background="@drawable/test"
+        android:id="@+id/forth"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:padding="10dp"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginBottom="40dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="25dp"
+                android:layout_gravity="center"
+                android:background="@color/colorAccent"
+                android:padding="2dp"
+                android:text="집 주소를 알려주세요"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/address"
+                android:textSize="20dp"
+                android:hint="주소API"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/address2"
+                android:textSize="20dp"
+                android:hint="상세주소(107동 914호)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="25dp"
+                android:text="내줄 방의 가격"
+                android:layout_gravity="center"
+                android:background="@color/colorAccent"
+                android:padding="2dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/cost"
+                android:hint="예상 월세를 써주세요 (만원)"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textSize="22dp"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/next4"
+            android:onClick="next"
+            android:layout_gravity="center"
+            android:text="다음으로"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!--                             3번째 (전화번호)                                -->
+    <LinearLayout
+        android:visibility="visible"
+        android:background="@drawable/test"
+        android:id="@+id/third"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:padding="10dp"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_gravity="center"
+            android:text="핸드폰 번호 입력해주세요!"
+            android:textSize="25dp"
+            android:background="@color/colorAccent"
+            android:padding="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="140dp"
+            android:inputType="phone"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:hint="010-1234-1234"
+            android:textSize="20dp"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/next3"
+            android:onClick="next"
+            android:layout_gravity="center"
+            android:text="다음으로"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+  <!--                             2번째 (성함, 생년월일, 성별)                                -->
+
+
+    <LinearLayout
+        android:visibility="visible"
+        android:background="@drawable/test"
+        android:id="@+id/second"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:padding="10dp"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:text="성함이 어떻게되시나요?"
+            android:textSize="25dp"
+            android:padding="2dp"
+            android:background="@color/colorAccent"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/name"
+                android:layout_gravity="center"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:hint="이름 입력!" />
+        </LinearLayout>
+
+
+        <TextView
+            android:text="생년 월 일을 적어주세요!"
+            android:textSize="25dp"
+            android:padding="2dp"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <EditText
+            android:id="@+id/BDay"
+            android:textSize="18dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="number"
+            android:hint="ex) 53년생 6월 27 = 530627" />
+
+
+        <RadioGroup
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:id="@+id/genderGroup"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginRight="10dp"
+                android:background="@color/colorAccent"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="성별"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <RadioButton
+                android:textSize="20dp"
+                android:id="@+id/femaleButton"
+                android:text="여성"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <RadioButton
+                android:textSize="20dp"
+                android:id="@+id/maleButton"
+                android:text="남성"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+        <Button
+            android:id="@+id/next2"
+            android:onClick="next"
+            android:layout_gravity="center"
+            android:text="다음으로"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <!--                           1번째 (아이디, 비밀번호)                             -->
+
+    <LinearLayout
+        android:visibility="visible"
+        android:background="@drawable/test"
+        android:id="@+id/first"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:padding="10dp"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="사용하실 아이디(ID) "
+            android:textSize="25dp"
+            android:padding="2dp"
+            android:background="@color/colorAccent"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/JoinID"
+                android:layout_gravity="bottom"
+                android:textSize="20dp"
+                android:gravity="center"
+               android:inputType="text"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:hint="여기에 아이디 입력" />
+            <Button
+                android:id="@+id/IDcheckButton"
+                android:layout_gravity="center"
+                android:text="중복      확인"
+                android:textSize="10dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+        </LinearLayout>
+
+
+        <TextView
+            android:text="비밀번호를 입력해주세요! "
+            android:textSize="25dp"
+            android:padding="2dp"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/pw1"
+                android:textSize="20dp"
+               android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:inputType="textPassword"
+                android:hint="8자리이상(숫자, 영문 조합)" />
+        <EditText
+            android:layout_gravity="center"
+            android:id="@+id/pw2"
+            android:textSize="20dp"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:inputType="textPassword"
+            android:hint="다시 입력해주세요" />
+
+
+        <TextView
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="10dp"
+            android:text="꼭! 기억해주세요!"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/next1"
+            android:onClick="next"
+            android:layout_gravity="center"
+            android:text="다음으로"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <!--                           0번째 (동의)                             -->
+
+    <LinearLayout
+        android:visibility="visible"
+        android:background="@drawable/test"
+        android:id="@+id/zero"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:padding="10dp"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="동의문 내용"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:background="@color/colorMint"
+            android:layout_width="250dp"
+            android:layout_height="300dp" />
+        <CheckBox
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:text="동의하겠습니다."
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/next0"
+            android:onClick="next"
+            android:layout_gravity="center"
+            android:text="다음으로"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+   <!-- <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="430dp">
+        android:layout_height="490dp">
         <TextView
             android:text="노인 회원가입"
             android:gravity="center"
@@ -239,15 +778,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
+        <Button
+            android:text="완료"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="bottom"
+            android:onClick="seniorJoinSuccess"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
+-->
 
 
-    <Button
-        android:text="완료"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:onClick="seniorJoinSuccess"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+</FrameLayout>
