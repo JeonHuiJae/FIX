@@ -70,8 +70,8 @@ public class StudentJoinActivity extends Activity {
         String email = emailText.getText().toString();
         if(isValidEmail(email)){
             Intent intent = new Intent(this,EmailCertifActivity.class);
+            intent.putExtra("client_email",email);
             startActivity(intent);
-            Toast.makeText(this, "이메일을 인증해주세요.", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(this,"유효하지 않은 형식입니다.",Toast.LENGTH_SHORT).show();
         }

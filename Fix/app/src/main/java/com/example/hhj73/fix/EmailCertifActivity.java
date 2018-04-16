@@ -94,7 +94,7 @@ public class EmailCertifActivity extends AppCompatActivity {
         String userInput = editText.getText().toString();
         if(userInput.equals(certificationNum)){
             Toast.makeText(this,"OK",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(),StudentJoinActivity.class);
             startActivity(intent);
         }else{
             Toast.makeText(this,"Wrong Number. Check Again!",Toast.LENGTH_SHORT).show();
