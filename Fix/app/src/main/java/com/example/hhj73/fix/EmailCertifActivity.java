@@ -101,4 +101,7 @@ public class EmailCertifActivity extends AppCompatActivity {
         }
     }
 
+    public void resend(View view) {
+        sendEmail(client_email);
+    }
 }
