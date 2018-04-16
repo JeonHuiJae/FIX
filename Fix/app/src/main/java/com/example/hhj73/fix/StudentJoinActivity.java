@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.regex.Matcher;
@@ -18,10 +19,16 @@ import java.util.regex.Pattern;
 
 public class StudentJoinActivity extends Activity {
     EditText emailText;
+    LinearLayout zero;
+    LinearLayout first;
+    LinearLayout second;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.join_student);
+        zero = (LinearLayout)findViewById(R.id.zero);
+        first = (LinearLayout)findViewById(R.id.first);
+        second = (LinearLayout)findViewById(R.id.second);
         emailInit();
     }
     public void emailInit(){
@@ -30,19 +37,7 @@ public class StudentJoinActivity extends Activity {
     }
     public void studentJoinSuccess(View view) {
         // 학생회원 가입 완료
-        String email = emailText.getText().toString();
-        if(isValidEmail(email)){
-            Toast.makeText(this,"유효한 이메일 형식.",Toast.LENGTH_SHORT).show();
 
-            Intent emailintent = new Intent(getApplicationContext(), EmailCertifActivity.class);
-            emailintent.putExtra("client_email",email);
-            startActivity(emailintent); //액티비티 이동
-            overridePendingTransition(0, 0);
-            Toast.makeText(this, "이메일을 인증해주세요.", Toast.LENGTH_SHORT).show();
-
-        }else{
-            Toast.makeText(this,"유효하지 않은 형식입니다.",Toast.LENGTH_SHORT).show();
-        }
 
     }
     public boolean isValidEmail(String email) {
@@ -56,5 +51,30 @@ public class StudentJoinActivity extends Activity {
         return err;
     }
 
+    public void next(View view) {
+        switch (view.getId()){
+            case R.id.next0:
+                zero.setVisibility(view.GONE);
+                first.setVisibility(view.VISIBLE);
+                break;
+        }
+    }
+
+    public void search(View view) { //주소 검색
+    }
+
+    public void IDcheck(View view) { //아이디 중복 체크
+    }
+
+    public void sendEmail(View view) { //이메일 보내기
+        String email = emailText.getText().toString();
+        if(isValidEmail(email)){
+            Intent intent = new Intent(this,EmailCertifActivity.class);
+            startActivity(intent);
+            Toast.makeText(this, "이메일을 인증해주세요.", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this,"유효하지 않은 형식입니다.",Toast.LENGTH_SHORT).show();
+        }
+    }
 }
 
