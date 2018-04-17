@@ -16,8 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Iterator;
 
 /**
  * Created by hhj73 on 2018-04-09.
@@ -33,6 +38,11 @@ public class SeniorJoinActivity extends Activity {
     LinearLayout sixth;
     LinearLayout seventh;
     DatabaseReference databaseReference;
+    String id;
+    String pw;
+    EditText joinID;
+    EditText pw1;
+    EditText pw2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +66,11 @@ public class SeniorJoinActivity extends Activity {
         agree.setMovementMethod(new ScrollingMovementMethod());
 
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+        joinID = (EditText) findViewById(R.id.JoinID);
+        pw1 = (EditText) findViewById(R.id.pw1);
+        pw2 = (EditText) findViewById(R.id.pw2);
+
     }
 
     public void seniorJoinSuccess(View view) {
@@ -110,17 +125,32 @@ public class SeniorJoinActivity extends Activity {
     public void IDcheck(View view) { //아이디 중복확인
 
         // 아이디 가져오기
-        EditText joinID = (EditText) findViewById(R.id.JoinID);
-        String id = joinID.getText().toString();
+        id = joinID.getText().toString();
 
         // 중복 확인
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
 
+                while(child.hasNext()) {
+                    if(child.next().getKey().equals(id)) {
+                        Toast.makeText(SeniorJoinActivity.this, "중복되는 아이디입니다.", Toast.LENGTH_SHORT).show();
+                        joinID.setText("");
+                        id = null;
+                        databaseReference.removeEventListener(this);
+                        return;
+                    }
+                }
+                Toast.makeText(SeniorJoinActivity.this, "사용할 수 있는 ID입니다.", Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-
-        Toast.makeText(this, "확인완료",Toast.LENGTH_SHORT).show();
-
+            }
+        });
 
     }
 

@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
     EditText pw;
     Button loginButton;
 
-    boolean loginCheck;
-
     String inputID;
     String inputPW;
 
@@ -47,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
         pw = (EditText) findViewById(R.id.inputPW);
 
         loginButton = (Button) findViewById(R.id.loginButton);
-
     }
 
 
     public void login(View view) {
         inputID = id.getText().toString();
         inputPW = pw.getText().toString();
+
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -63,17 +61,20 @@ public class MainActivity extends AppCompatActivity {
                 while(child.hasNext()) {
                     if(child.next().getKey().equals(inputID)) {
                         // 아이디 존재
-                        if(checkPW()) {
-                            // 비번 맞아버림
+                        String userPW = dataSnapshot.child(inputID).child("pw").getValue().toString();
+                        
+                        if(inputPW.equals(userPW)) {
+                            // 비밀번호 똑같아
                             Toast.makeText(MainActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                            return;
+
+                            // 성공하면 어디로 가야함
+                            /// 여기다가 하세여
                         }
                         else {
-                            // 비밀번호 틀림
+                            // 비밀번호 틀렸어
+                            Toast.makeText(MainActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                             id.setText("");
                             pw.setText("");
-                            Toast.makeText(MainActivity.this, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
-                            return;
                         }
                   }
                 }
@@ -85,33 +86,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    public boolean checkPW() {
-        // ㅅㅂ
-
-        databaseReference.child(inputID).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String realPW = dataSnapshot.child("pw").getValue().toString();
-
-                Toast.makeText(MainActivity.this, realPW+", 입력한 비밀번호>>"+inputPW, Toast.LENGTH_SHORT).show();
-
-                if(inputPW.equals(realPW)) { // 비밀번호 맞으면
-                    loginCheck = true;
-                }
-                else { // 비밀번호 틀리면
-                    loginCheck = false;
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        return loginCheck;
     }
 
     public void seniorJoin(View view) {
