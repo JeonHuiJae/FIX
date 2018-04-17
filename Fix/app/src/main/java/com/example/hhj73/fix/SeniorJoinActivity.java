@@ -11,9 +11,13 @@ import android.support.v4.content.ContextCompat;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by hhj73 on 2018-04-09.
@@ -28,11 +32,18 @@ public class SeniorJoinActivity extends Activity {
     LinearLayout fifth;
     LinearLayout sixth;
     LinearLayout seventh;
+    DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.join_senior);
-       zero = (LinearLayout)findViewById(R.id.zero);
+
+        init();
+    }
+
+    public void init() {
+        zero = (LinearLayout)findViewById(R.id.zero);
         first = (LinearLayout)findViewById(R.id.first);
         second = (LinearLayout)findViewById(R.id.second);
         third = (LinearLayout)findViewById(R.id.third);
@@ -43,6 +54,8 @@ public class SeniorJoinActivity extends Activity {
 
         TextView agree = (TextView)findViewById(R.id.agreeOk);
         agree.setMovementMethod(new ScrollingMovementMethod());
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
     }
 
     public void seniorJoinSuccess(View view) {
@@ -95,6 +108,17 @@ public class SeniorJoinActivity extends Activity {
     }
 
     public void IDcheck(View view) { //아이디 중복확인
+
+        // 아이디 가져오기
+        EditText joinID = (EditText) findViewById(R.id.JoinID);
+        String id = joinID.getText().toString();
+
+        // 중복 확인
+
+
+
+
+
         Toast.makeText(this, "확인완료",Toast.LENGTH_SHORT).show();
 
 

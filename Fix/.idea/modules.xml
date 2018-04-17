@@ -4,11 +4,14 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Fix.iml" filepath="$PROJECT_DIR$/Fix.iml" />
       <module fileurl="file://$PROJECT_DIR$/activation/activation.iml" filepath="$PROJECT_DIR$/activation/activation.iml" />
+      <module fileurl="file://C:\Users\hhj73\Desktop\new-folder\Fix\activation\activation.iml" filepath="C:\Users\hhj73\Desktop\new-folder\Fix\activation\activation.iml" />
       <module fileurl="file://C:\Users\hizz\Documents\hui\Fix\activation\activation.iml" filepath="C:\Users\hizz\Documents\hui\Fix\activation\activation.iml" />
       <module fileurl="file://$PROJECT_DIR$/additionnal/additionnal.iml" filepath="$PROJECT_DIR$/additionnal/additionnal.iml" />
+      <module fileurl="file://C:\Users\hhj73\Desktop\new-folder\Fix\additionnal\additionnal.iml" filepath="C:\Users\hhj73\Desktop\new-folder\Fix\additionnal\additionnal.iml" />
       <module fileurl="file://C:\Users\hizz\Documents\hui\Fix\additionnal\additionnal.iml" filepath="C:\Users\hizz\Documents\hui\Fix\additionnal\additionnal.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mail/mail.iml" filepath="$PROJECT_DIR$/mail/mail.iml" />
+      <module fileurl="file://C:\Users\hhj73\Desktop\new-folder\Fix\mail\mail.iml" filepath="C:\Users\hhj73\Desktop\new-folder\Fix\mail\mail.iml" />
       <module fileurl="file://C:\Users\hizz\Documents\hui\Fix\mail\mail.iml" filepath="C:\Users\hizz\Documents\hui\Fix\mail\mail.iml" />
     </modules>
   </component>
