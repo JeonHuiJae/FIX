@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -74,6 +75,19 @@ public class StudentJoinActivity extends Activity {
             startActivity(intent);
         }else{
             Toast.makeText(this,"유효하지 않은 형식입니다.",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode==1){
+            if(requestCode==RESULT_OK){
+                boolean result = data.getBooleanExtra("email_certification",false);
+                emailText.setEnabled(false);
+                Button btn_email = (Button)findViewById(R.id.btn_email);
+                btn_email.setEnabled(false);
+            }
         }
     }
 }

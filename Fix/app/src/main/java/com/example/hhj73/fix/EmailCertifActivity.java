@@ -1,10 +1,12 @@
 package com.example.hhj73.fix;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,7 +23,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 
 
-public class EmailCertifActivity extends AppCompatActivity {
+public class EmailCertifActivity extends Activity {
     Properties props;
     Session mailSession;
     MimeMessage message;
@@ -31,7 +33,9 @@ public class EmailCertifActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_email_certif);
+
         Intent intent = getIntent();
         client_email = intent.getStringExtra("client_email");
 
@@ -94,8 +98,9 @@ public class EmailCertifActivity extends AppCompatActivity {
         String userInput = editText.getText().toString();
         if(userInput.equals(certificationNum)){
             Toast.makeText(this,"OK",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(),StudentJoinActivity.class);
-            startActivity(intent);
+            Intent intent = new Intent();
+            intent.putExtra("mail_certification",true);
+            finish();
         }else{
             Toast.makeText(this,"Wrong Number. Check Again!",Toast.LENGTH_SHORT).show();
         }
@@ -103,5 +108,12 @@ public class EmailCertifActivity extends AppCompatActivity {
 
     public void resend(View view) {
         sendEmail(client_email);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(event.getAction()==MotionEvent.ACTION_OUTSIDE)
+            return false;
+        return true;
     }
 }

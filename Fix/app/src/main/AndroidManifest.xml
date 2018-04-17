@@ -25,7 +25,8 @@
         </activity>
         <activity android:name=".SeniorJoinActivity" />
         <activity android:name=".StudentJoinActivity" />
-        <activity android:name=".EmailCertifActivity"></activity>
+        <activity android:name=".EmailCertifActivity" android:theme="@android:style/Theme.DeviceDefault.Light.Dialog">
+        </activity>
     </application>
 
 </manifest>

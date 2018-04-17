@@ -35,8 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <LinearLayout
+        android:layout_gravity="center"
         android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <EditText
             android:layout_marginLeft="5dp"
@@ -47,6 +48,7 @@
             android:inputType="textEmailAddress"
             android:textSize="15dp" />
         <Button
+            android:id="@+id/btn_email"
             android:onClick="sendEmail"
             android:text="인증보내기"
             android:layout_width="90dp"
