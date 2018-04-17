@@ -80,13 +80,11 @@ public class StudentJoinActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if(requestCode==1){
-            if(requestCode==RESULT_OK){
-                boolean result = data.getBooleanExtra("email_certification",false);
+        if (requestCode == 1 && resultCode == RESULT_OK){
+            if (data.getBooleanExtra("email_certification", false)) {
                 emailText.setEnabled(false);
-                Button btn_email = (Button)findViewById(R.id.btn_email);
-                btn_email.setEnabled(false);
+                Button btn_email = (Button) findViewById(R.id.btn_email);
+                btn_email.setVisibility(View.INVISIBLE);
             }
         }
     }

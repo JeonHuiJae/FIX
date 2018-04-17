@@ -100,6 +100,8 @@ public class EmailCertifActivity extends Activity {
             Toast.makeText(this,"OK",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.putExtra("mail_certification",true);
+            setResult(RESULT_OK,intent);
+
             finish();
         }else{
             Toast.makeText(this,"Wrong Number. Check Again!",Toast.LENGTH_SHORT).show();
