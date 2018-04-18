@@ -1,63 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.hhj73.fix.Address"
     android:background="@drawable/test"
+    android:orientation="vertical"
+    android:gravity="bottom|center"
     >
 
     <WebView
         android:id="@+id/webview"
-        android:layout_width="363dp"
-        android:layout_height="468dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:padding="10dp"
+        android:layout_width="300dp"
+        android:layout_height="350dp"
+      />
 
     <TextView
+        android:layout_marginTop="20dp"
         android:id="@+id/result"
-        android:layout_width="361dp"
-        android:layout_height="38dp"
-        android:layout_marginBottom="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
         android:gravity="center"
-        android:text="도로명을 선택해주세요"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/webview"
-        app:layout_constraintVertical_bias="0.91" />
+        android:layout_height="60dp"
+
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="주소를 선택해주세요"
+        android:textSize="20dp"
+ />
 
     <Button
         android:id="@+id/addconfirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+
+        android:layout_margin="5dp"
         android:text="확인"
         android:textSize="30dp"
         android:onClick="addclick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.939"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+ />
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

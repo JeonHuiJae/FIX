@@ -1,17 +1,28 @@
 package com.example.hhj73.fix;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.Image;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +33,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -44,6 +59,8 @@ public class SeniorJoinActivity extends Activity {
     EditText pw1;
     EditText pw2;
     EditText add2;
+
+    final int REQUEST_IMAGE_CAPTURE= 123;
 
 
     String strt;        //xml 중 address2 에 들어가는 string
@@ -187,10 +204,68 @@ public class SeniorJoinActivity extends Activity {
     }
 
     public void takePhoto(View view) { //사진찍어 신분증 인증
-        Toast.makeText(this, "사진찍어 인증함",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(checkAppPermission(new String[]{android.Manifest.permission.CAMERA})){
+            startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
+        }
+        else
+            askPermission(new String[]{android.Manifest.permission.CAMERA},REQUEST_IMAGE_CAPTURE);
+    }
+
+    boolean checkAppPermission(String[] requestPermission){
+        boolean[] requestResult = new boolean[requestPermission.length];
+        for(int i=0; i< requestResult.length; i++){
+            requestResult[i] = (ContextCompat.checkSelfPermission(this,
+                    requestPermission[i]) == PackageManager.PERMISSION_GRANTED );
+            if(!requestResult[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void askPermission(String[] requestPermission, int REQ_PERMISSION) {
+        ActivityCompat.requestPermissions(
+                this,
+                requestPermission,
+                REQ_PERMISSION
+        );
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_IMAGE_CAPTURE :
+                if (checkAppPermission(permissions)) {
+                    Toast.makeText(this, "승인완료",Toast.LENGTH_SHORT).show();
+                    takePhoto(view);
+                    // 퍼미션 동의했을 때 할 일
+                } else {
+                    Toast.makeText(this, "사용 불가",Toast.LENGTH_SHORT).show();
+                    // 퍼미션 동의하지 않았을 때 할일
+                    finish();
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+      if(requestCode==REQUEST_IMAGE_CAPTURE){
+          Bundle extras = data.getExtras();
+          Bitmap imageBitmap = (Bitmap)extras.get("data");
+          Matrix matrix = new Matrix();
+          matrix.postRotate(90); //90도 회전
+          Bitmap.createBitmap(imageBitmap, 0,0,
+                  imageBitmap.getWidth(),imageBitmap.getHeight(),matrix,true);
+        ((ImageView)findViewById(R.id.imageview)).setImageBitmap(imageBitmap);
+      }
     }
 
     public void loadPhote(View view) { //앨범에서 신분증 가져오기
         Toast.makeText(this, "앨범에서 가져와 인증함",Toast.LENGTH_SHORT).show();
     }
+
+
 }
