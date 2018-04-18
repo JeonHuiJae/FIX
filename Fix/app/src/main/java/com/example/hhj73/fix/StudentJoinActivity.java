@@ -73,7 +73,7 @@ public class StudentJoinActivity extends Activity {
         if(isValidEmail(email)){
             Intent intent = new Intent(this,EmailCertifActivity.class);
             intent.putExtra("client_email",email);
-            startActivity(intent);
+            startActivityForResult(intent,1);
         }else{
             Toast.makeText(this,"유효하지 않은 형식입니다.",Toast.LENGTH_SHORT).show();
         }
