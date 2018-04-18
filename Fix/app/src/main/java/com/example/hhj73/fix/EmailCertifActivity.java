@@ -3,20 +3,30 @@ package com.example.hhj73.fix;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 
 
 public class EmailCertifActivity extends Activity {
     Properties props;
-    //Session mailSession;
-    //MimeMessage message;
+    Session mailSession;
+    MimeMessage message;
     EditText editText;
     String certificationNum;
     String client_email;
@@ -29,8 +39,8 @@ public class EmailCertifActivity extends Activity {
         Intent intent = getIntent();
         client_email = intent.getStringExtra("client_email");
 
-        //StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-        //        .permitDiskReads().permitDiskWrites().permitNetwork().build());
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+               .permitDiskReads().permitDiskWrites().permitNetwork().build());
 
         sendEmail(client_email);
 
@@ -53,12 +63,12 @@ public class EmailCertifActivity extends Activity {
         props.put("mail.smtp.user",from);
         props.put("mail.smtp.auth", "true");              //SMTP 인증 설정
 
-        //javax.mail.Authenticator auth = new SMTPAuthenticator();
-        //mailSession = Session.getDefaultInstance(props, auth);
+        javax.mail.Authenticator auth = new SMTPAuthenticator();
+        mailSession = Session.getDefaultInstance(props, auth);
 
-        //message = new MimeMessage(mailSession);
+        message = new MimeMessage(mailSession);
 
-        /*try{
+        try{
             message.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName,"UTF-8","B")));
             InternetAddress[] address1 = {new InternetAddress(to1)};
             message.setRecipients(Message.RecipientType.TO, address1);
@@ -74,7 +84,7 @@ public class EmailCertifActivity extends Activity {
             e.printStackTrace();
         }catch (Exception e){
             e.printStackTrace();
-        }*/
+        }
 
     }
     public String makeSerialNum(){
