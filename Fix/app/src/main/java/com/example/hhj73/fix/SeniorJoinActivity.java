@@ -47,7 +47,7 @@ public class SeniorJoinActivity extends Activity {
 
 
     String strt;        //xml 중 address2 에 들어가는 string
-    boolean addcount;   //화면 다시 시작한 위치
+    boolean addcount=false;   //화면 다시 시작한 위치
     private View view;
 
     @Override
@@ -83,6 +83,14 @@ public class SeniorJoinActivity extends Activity {
         pw1 = (EditText) findViewById(R.id.pw1);
         pw2 = (EditText) findViewById(R.id.pw2);
 
+        if(addcount==true){
+            zero.setVisibility(view.GONE);
+            forth.setVisibility(view.VISIBLE);
+            add2= (EditText)findViewById(R.id.address);
+            add2.setText(strt);
+            // Toast.makeText(this, strt, Toast.LENGTH_SHORT).show();   //test intent values
+            addcount=false;
+        }
     }
 
     public void seniorJoinSuccess(View view) {
@@ -96,20 +104,6 @@ public class SeniorJoinActivity extends Activity {
 
     public void next(View view) { //다음버튼
 
-
-        if (addcount == true) {
-
-            zero.setVisibility(view.GONE);// ???????????????????????????????????????
-            first.setVisibility(view.GONE);
-            second.setVisibility(view.GONE);
-            third.setVisibility(view.GONE);
-            forth.setVisibility(view.VISIBLE);
-            add2= (EditText)findViewById(R.id.address);
-            add2.setText(strt);
-               // Toast.makeText(this, strt, Toast.LENGTH_SHORT).show();   //test intent values
-            addcount=false;
-
-        } else {
             switch (view.getId()) {
                 case R.id.next0:
                     CheckBox agree = (CheckBox) findViewById(R.id.agree);
@@ -149,7 +143,7 @@ public class SeniorJoinActivity extends Activity {
                     seventh.setVisibility(view.GONE);
                     break;
             }
-        }
+
     }
 
     public void IDcheck(View view) { //아이디 중복확인

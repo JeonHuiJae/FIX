@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 /**
  * Created by hhj73 on 2018-04-09.
  */
@@ -30,12 +31,12 @@ public class StudentJoinActivity extends Activity {
         zero = (LinearLayout)findViewById(R.id.zero);
         first = (LinearLayout)findViewById(R.id.first);
         second = (LinearLayout)findViewById(R.id.second);
-        emailInit();
+        //emailInit();
     }
-    public void emailInit(){
-        emailText = (EditText)findViewById(R.id.email);
-        emailText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS|InputType.TYPE_CLASS_TEXT);
-    }
+//    public void emailInit(){
+//        emailText = (EditText)findViewById(R.id.email);
+//        emailText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS|InputType.TYPE_CLASS_TEXT);
+//    }
     public void studentJoinSuccess(View view) {
         // 학생회원 가입 완료
 
@@ -70,9 +71,9 @@ public class StudentJoinActivity extends Activity {
     public void sendEmail(View view) { //이메일 보내기
         String email = emailText.getText().toString();
         if(isValidEmail(email)){
-            Intent intent = new Intent(this,EmailCertifActivity.class);
-            intent.putExtra("client_email",email);
-            startActivity(intent);
+           // Intent intent = new Intent(this,EmailCertifActivity.class);
+            //intent.putExtra("client_email",email);
+            //startActivity(intent);
         }else{
             Toast.makeText(this,"유효하지 않은 형식입니다.",Toast.LENGTH_SHORT).show();
         }
