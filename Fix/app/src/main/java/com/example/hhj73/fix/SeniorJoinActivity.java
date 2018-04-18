@@ -43,6 +43,12 @@ public class SeniorJoinActivity extends Activity {
     EditText joinID;
     EditText pw1;
     EditText pw2;
+    EditText add2;
+
+
+    String strt;        //xml 중 address2 에 들어가는 string
+    boolean addcount;   //화면 다시 시작한 위치
+    private View view;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +59,12 @@ public class SeniorJoinActivity extends Activity {
     }
 
     public void init() {
+
+
+        Intent intent =getIntent();
+        strt = intent.getStringExtra("ADDRESS");
+        addcount=intent.getBooleanExtra("ADDCOUNT",false);
+
         zero = (LinearLayout)findViewById(R.id.zero);
         first = (LinearLayout)findViewById(R.id.first);
         second = (LinearLayout)findViewById(R.id.second);
@@ -83,42 +95,60 @@ public class SeniorJoinActivity extends Activity {
 
 
     public void next(View view) { //다음버튼
-        switch (view.getId()){
-            case R.id.next0:
-                CheckBox agree = (CheckBox)findViewById(R.id.agree);
-                if(agree.isChecked()){
-                zero.setVisibility(view.GONE);
-                first.setVisibility(view.VISIBLE);}
-                else
-                    Toast.makeText(this, "동의하셔야 가입이 가능합니다",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.next1:
-                first.setVisibility(view.GONE);
-                second.setVisibility(view.VISIBLE);
-                break;
-            case R.id.next2:
-                second.setVisibility(view.GONE);
-                third.setVisibility(view.VISIBLE);
-                break;
-            case R.id.next3:
-                third.setVisibility(view.GONE);
-                forth.setVisibility(view.VISIBLE);
-                break;
-            case R.id.next4:
-                forth.setVisibility(view.GONE);
-                fifth.setVisibility(view.VISIBLE);
-                break;
-            case R.id.next5:
-                fifth.setVisibility(view.GONE);
-                sixth.setVisibility(view.VISIBLE);
-                break;
-            case R.id.next6:
-                sixth.setVisibility(view.GONE);
-                seventh.setVisibility(view.VISIBLE);
-                break;
-            case R.id.next7:
-                seventh.setVisibility(view.GONE);
-                break;
+
+
+        if (addcount == true) {
+
+            zero.setVisibility(view.GONE);// ???????????????????????????????????????
+            first.setVisibility(view.GONE);
+            second.setVisibility(view.GONE);
+            third.setVisibility(view.GONE);
+            forth.setVisibility(view.VISIBLE);
+            add2= (EditText)findViewById(R.id.address);
+            add2.setText(strt);
+               // Toast.makeText(this, strt, Toast.LENGTH_SHORT).show();   //test intent values
+            addcount=false;
+
+        } else {
+            switch (view.getId()) {
+                case R.id.next0:
+                    CheckBox agree = (CheckBox) findViewById(R.id.agree);
+                    if (agree.isChecked()) {
+                        zero.setVisibility(view.GONE);
+                        first.setVisibility(view.VISIBLE);
+                    } else
+                        Toast.makeText(this, "동의하셔야 가입이 가능합니다", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.next1:
+                    first.setVisibility(view.GONE);
+                    second.setVisibility(view.VISIBLE);
+                    break;
+                case R.id.next2:
+                    second.setVisibility(view.GONE);
+                    third.setVisibility(view.VISIBLE);
+                    break;
+
+                case R.id.next3:
+                    third.setVisibility(view.GONE);
+                    forth.setVisibility(view.VISIBLE);
+                    break;
+
+                case R.id.next4:
+                    forth.setVisibility(view.GONE);
+                    fifth.setVisibility(view.VISIBLE);
+                    break;
+                case R.id.next5:
+                    fifth.setVisibility(view.GONE);
+                    sixth.setVisibility(view.VISIBLE);
+                    break;
+                case R.id.next6:
+                    sixth.setVisibility(view.GONE);
+                    seventh.setVisibility(view.VISIBLE);
+                    break;
+                case R.id.next7:
+                    seventh.setVisibility(view.GONE);
+                    break;
+            }
         }
     }
 
@@ -155,7 +185,11 @@ public class SeniorJoinActivity extends Activity {
     }
 
     public void search(View view) { //주소 API 검색
-        Toast.makeText(this, "주소 불러왔음",Toast.LENGTH_SHORT).show();
+
+       // Toast.makeText(this, "주소 불러왔음",Toast.LENGTH_SHORT).show();      //delete
+        Intent address = new Intent(this,Address.class);
+        startActivity(address);
+
     }
 
     public void takePhoto(View view) { //사진찍어 신분증 인증

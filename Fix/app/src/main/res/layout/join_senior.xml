@@ -238,10 +238,12 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+<!--should reset position and size-->
     <EditText
         android:id="@+id/address"
         android:textSize="20dp"
-        android:hint="주소API"
+        android:hint="도록명을 선택하세요"
         android:inputType="text"
         android:layout_width="220dp"
         android:layout_height="50dp" />
@@ -559,6 +561,7 @@
     <!--                           0번째 (동의)                             -->
 
     <LinearLayout
+
         android:visibility="visible"
         android:background="@drawable/test"
         android:id="@+id/zero"
