@@ -19,11 +19,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,10 +58,35 @@ public class SeniorJoinActivity extends Activity {
     DatabaseReference databaseReference;
     String id;
     String pw;
+    String name;
+    String bday;
+    String phoneNumber;
+    boolean gender;
+    boolean smoking;
+    boolean curfew;
+    boolean pet;
+    boolean help;
+    String uniqueness;
+    String address;
+    String cost;
     EditText joinID;
     EditText pw1;
     EditText pw2;
     EditText add2;
+    RadioGroup genderGroup;
+    RadioButton femaleBtn;
+    RadioButton maleBtn;
+    EditText EditBday;
+    EditText EditName;
+    EditText EditPhone;
+    EditText EditCost;
+    EditText EditUnique;
+    CheckBox helpCheck;
+    CheckBox petCheck;
+    CheckBox curfewCheck;
+    CheckBox smokeCheck;
+
+    Button next2Btn;
 
     final int REQUEST_IMAGE_CAPTURE= 123;
 
@@ -77,8 +105,7 @@ public class SeniorJoinActivity extends Activity {
 
     public void init() {
 
-
-        Intent intent =getIntent();
+        Intent intent = getIntent();
         strt = intent.getStringExtra("ADDRESS");
         addcount=intent.getBooleanExtra("ADDCOUNT",false);
 
@@ -100,6 +127,20 @@ public class SeniorJoinActivity extends Activity {
         pw1 = (EditText) findViewById(R.id.pw1);
         pw2 = (EditText) findViewById(R.id.pw2);
 
+        genderGroup = (RadioGroup) findViewById(R.id.genderGroup);
+        femaleBtn = (RadioButton) findViewById(R.id.femaleButton);
+        maleBtn = (RadioButton) findViewById(R.id.maleButton);
+        EditBday = (EditText) findViewById(R.id.BDay);
+        EditName = (EditText) findViewById(R.id.name);
+        EditPhone = (EditText) findViewById(R.id.phoneNum);
+        EditCost = (EditText) findViewById(R.id.cost);
+        helpCheck = (CheckBox) findViewById(R.id.helpCheck);
+        petCheck = (CheckBox) findViewById(R.id.petCheck);
+        curfewCheck = (CheckBox) findViewById(R.id.curfewCheck);
+        smokeCheck = (CheckBox) findViewById(R.id.smokeCheck);
+        EditUnique = (EditText) findViewById(R.id.uniqueness);
+
+
         if(addcount==true){
             zero.setVisibility(view.GONE);
             forth.setVisibility(view.VISIBLE);
@@ -112,6 +153,26 @@ public class SeniorJoinActivity extends Activity {
 
     public void seniorJoinSuccess(View view) {
         // 노인회원 가입 완료
+
+        databaseReference.child(id).child("pw").setValue(pw); // 비밀번호
+        databaseReference.child(id).child("name").setValue(name); // 이름
+        databaseReference.child(id).child("bday").setValue(bday); // 생일
+        String str;
+        if(gender)
+            str = "female";
+        else
+            str = "male";
+        databaseReference.child(id).child("gender").setValue(str); // 성별
+        databaseReference.child(id).child("phone").setValue(phoneNumber); // 연락처
+        // databaseReference.child(id).child("address").setValue(address); // 주소
+        databaseReference.child(id).child("cost").setValue(cost); // 월세
+        databaseReference.child(id).child("smoking").setValue(smoking); // 흡연
+        databaseReference.child(id).child("curfew").setValue(curfew); // 통금
+        databaseReference.child(id).child("pet").setValue(pet); // 반려동물
+        databaseReference.child(id).child("help").setValue(help); // 도움
+        databaseReference.child(id).child("unique").setValue(uniqueness); // 특이사항
+
+
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent); //액티비티 이동
         overridePendingTransition(0, 0);
@@ -131,32 +192,41 @@ public class SeniorJoinActivity extends Activity {
                         Toast.makeText(this, "동의하셔야 가입이 가능합니다", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.next1:
-                    first.setVisibility(view.GONE);
-                    second.setVisibility(view.VISIBLE);
+                    if(checkPW()) {
+                        first.setVisibility(view.GONE);
+                        second.setVisibility(view.VISIBLE);
+                    }
                     break;
                 case R.id.next2:
+
+                    setName_bday_gender();
                     second.setVisibility(view.GONE);
                     third.setVisibility(view.VISIBLE);
                     break;
 
                 case R.id.next3:
+                    setPhoneNumber();
                     third.setVisibility(view.GONE);
                     forth.setVisibility(view.VISIBLE);
                     break;
 
                 case R.id.next4:
+                    setAddress_cost();
                     forth.setVisibility(view.GONE);
                     fifth.setVisibility(view.VISIBLE);
                     break;
                 case R.id.next5:
+                    // 사진 저장
                     fifth.setVisibility(view.GONE);
                     sixth.setVisibility(view.VISIBLE);
                     break;
                 case R.id.next6:
+                    setSpecial();
                     sixth.setVisibility(view.GONE);
                     seventh.setVisibility(view.VISIBLE);
                     break;
                 case R.id.next7:
+                    setUniqueness();
                     seventh.setVisibility(view.GONE);
                     break;
             }
@@ -193,6 +263,83 @@ public class SeniorJoinActivity extends Activity {
             }
         });
 
+    }
+
+    public boolean checkPW() {
+        // 두번 쓴 비밀번호 가져옴
+        String str1 = pw1.getText().toString();
+        String str2 = pw2.getText().toString();
+
+        // 비밀번호 동일 여부 확인
+        if(str1.equals(str2)) {
+            // 동일하다
+            pw = str1;
+            Toast.makeText(this, "비밀번호 설정이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        else {
+            // 틀렸다
+            Toast.makeText(this, "비밀번호를 다시 확인하세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    public void setName_bday_gender() {
+        // 이름 받아옴
+        name = EditName.getText().toString();
+
+        // 생년월일 받아옴
+        bday = EditBday.getText().toString();
+
+        // 성별 받아옴
+        if(femaleBtn.isChecked())
+            gender = true;
+        else if(maleBtn.isChecked())
+            gender = false;
+
+
+        Toast.makeText(this, name+", "+bday+", "+gender, Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void setPhoneNumber() {
+        phoneNumber = EditPhone.getText().toString();
+        Toast.makeText(this, phoneNumber, Toast.LENGTH_SHORT).show();
+    }
+
+    public void setAddress_cost() {
+        // 주소 넣는 구문
+        // address 변수에 넣어주시면 돼요
+
+        // 가격 받아옴
+        cost = EditCost.getText().toString();
+        Toast.makeText(this, cost, Toast.LENGTH_SHORT).show();
+    }
+
+    public void setSpecial() {
+        if(smokeCheck.isChecked())
+            smoking = true;
+        else
+            smoking = false;
+
+        if(curfewCheck.isChecked())
+            curfew = true;
+        else
+            curfew = false;
+
+        if(petCheck.isChecked())
+            pet = true;
+        else
+            pet = false;
+
+        if(helpCheck.isChecked())
+            help = true;
+        else
+            help = false;
+    }
+
+    public void setUniqueness() {
+        uniqueness = EditUnique.getText().toString();
     }
 
     public void search(View view) { //주소 API 검색
