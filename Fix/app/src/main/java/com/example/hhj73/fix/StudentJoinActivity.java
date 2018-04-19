@@ -1,5 +1,6 @@
 package com.example.hhj73.fix;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +37,7 @@ public class StudentJoinActivity extends Activity {
     LinearLayout second;
     EditText addEdit;
     static final int REQUEST_IMAGE_CAPTURE=123;
+    static final int REQUEST_STORAGE =234;
 
     String strt;        //xml 중 address2 에 들어가는 string
     boolean addcount=false;   //화면 다시 시작한 위치
@@ -73,8 +76,8 @@ public class StudentJoinActivity extends Activity {
     }
     public void studentJoinSuccess(View view) {
         // 학생회원 가입 완료
-
-
+    Intent intent = new Intent(this, MainActivity.class);
+    startActivity(intent);
     }
     public boolean isValidEmail(String email) {
         boolean err = false;
@@ -143,6 +146,16 @@ public class StudentJoinActivity extends Activity {
             Bitmap.createBitmap(imageBitmap, 0,0,
                     imageBitmap.getWidth(),imageBitmap.getHeight(),matrix,true);
             ((ImageView)findViewById(R.id.imageview)).setImageBitmap(imageBitmap);
+        }else if(requestCode == REQUEST_STORAGE && resultCode==RESULT_OK){
+            try{
+                Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                Matrix matrix = new Matrix();
+                matrix.postRotate(90); //90도 회전
+                Bitmap.createBitmap(image, 0,0,
+                        image.getWidth(),image.getHeight(),matrix,true);
+                ((ImageView)findViewById(R.id.imageview)).setImageBitmap(image);
+            }
+            catch (IOException ex){}
         }
     }
 
@@ -190,8 +203,29 @@ public class StudentJoinActivity extends Activity {
                     finish();
                 }
                 break;
+            case REQUEST_STORAGE:
+                if (checkAppPermission(permissions)) {
+                    Toast.makeText(this, "승인완료",Toast.LENGTH_SHORT).show();
+                    loadPhote(view);
+                    // 퍼미션 동의했을 때 할 일
+                } else {
+                    Toast.makeText(this, "사용 불가",Toast.LENGTH_SHORT).show();
+                    // 퍼미션 동의하지 않았을 때 할일
+                    finish();
+                }
+                break;
         }
     }
-
+    public void loadPhote(View view) { //앨범에서 신분증 가져오기
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        if(checkAppPermission(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE})){
+            if(intent.resolveActivity(getPackageManager())!=null)
+                startActivityForResult(intent,REQUEST_STORAGE);
+        }
+        else
+            askPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},REQUEST_STORAGE);
+    }
 }
 

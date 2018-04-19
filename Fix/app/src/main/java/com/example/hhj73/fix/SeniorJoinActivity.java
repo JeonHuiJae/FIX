@@ -423,6 +423,10 @@ public class SeniorJoinActivity extends Activity {
       }else if(requestCode == REQUEST_STORAGE && resultCode==RESULT_OK){
           try{
           Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+              Matrix matrix = new Matrix();
+              matrix.postRotate(90); //90도 회전
+              Bitmap.createBitmap(image, 0,0,
+                      image.getWidth(),image.getHeight(),matrix,true);
           ((ImageView)findViewById(R.id.imageview)).setImageBitmap(image);
           }
           catch (IOException ex){}
