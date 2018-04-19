@@ -1,5 +1,4 @@
 package com.example.hhj73.fix;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -24,8 +23,6 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-
 /**
  * Created by hhj73 on 2018-04-09.
  */
@@ -132,11 +129,13 @@ public class StudentJoinActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 && resultCode == RESULT_OK){
-            if (data.getBooleanExtra("email_certification", false)) {
-                emailText.setEnabled(false);
-                Button btn_email = (Button) findViewById(R.id.btn_email);
-                btn_email.setVisibility(View.INVISIBLE);
+        if (requestCode == 1){
+            if(resultCode == RESULT_OK){
+                if (data.getBooleanExtra("email_certification", false)) {
+                    emailText.setEnabled(false);
+                    Button btn_email = (Button) findViewById(R.id.btn_email);
+                    btn_email.setVisibility(View.INVISIBLE);
+                }
             }
         }else if(requestCode==REQUEST_IMAGE_CAPTURE){
             Bundle extras = data.getExtras();
