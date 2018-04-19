@@ -35,10 +35,12 @@ public class StudentJoinActivity extends Activity {
     EditText addEdit;
     static final int REQUEST_IMAGE_CAPTURE=123;
     static final int REQUEST_STORAGE =234;
+    static final int REQUEST_EMAIL = 345;
 
     String strt;        //xml 중 address2 에 들어가는 string
     boolean addcount=false;   //화면 다시 시작한 위치
     private View view;
+    boolean emailPassed=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,11 +72,20 @@ public class StudentJoinActivity extends Activity {
     public void emailInit(){
         emailText = (EditText)findViewById(R.id.email);
         emailText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS|InputType.TYPE_CLASS_TEXT);
+        emailText.setEnabled(!emailPassed);
+        Button button = (Button)findViewById(R.id.btn_email);
+        button.setEnabled(!emailPassed);
+        if(emailPassed)
+            button.setText("인증완료");
     }
     public void studentJoinSuccess(View view) {
         // 학생회원 가입 완료
-    Intent intent = new Intent(this, MainActivity.class);
-    startActivity(intent);
+        if(emailPassed) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }else{
+            Toast.makeText(this,"이메일을 확인해주세요.",Toast.LENGTH_SHORT).show();
+        }
     }
     public boolean isValidEmail(String email) {
         boolean err = false;
@@ -121,7 +132,7 @@ public class StudentJoinActivity extends Activity {
         if(isValidEmail(email)){
             Intent intent = new Intent(this,EmailCertifActivity.class);
             intent.putExtra("client_email",email);
-            startActivityForResult(intent,1);
+            startActivityForResult(intent,REQUEST_EMAIL);
         }else{
             Toast.makeText(this,"유효하지 않은 형식입니다.",Toast.LENGTH_SHORT).show();
         }
@@ -129,13 +140,10 @@ public class StudentJoinActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1){
+        if (requestCode == REQUEST_EMAIL){
             if(resultCode == RESULT_OK){
-                if (data.getBooleanExtra("email_certification", false)) {
-                    emailText.setEnabled(false);
-                    Button btn_email = (Button) findViewById(R.id.btn_email);
-                    btn_email.setVisibility(View.INVISIBLE);
-                }
+                emailPassed = data.getBooleanExtra("email_certification", true);
+                emailInit();
             }
         }else if(requestCode==REQUEST_IMAGE_CAPTURE){
             Bundle extras = data.getExtras();

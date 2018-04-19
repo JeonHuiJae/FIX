@@ -98,7 +98,7 @@ public class EmailCertifActivity extends Activity {
         String userInput = editText.getText().toString();
         if(userInput.equals(certificationNum)){
             Toast.makeText(this,"OK",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent();
+            Intent intent = getIntent();
             intent.putExtra("mail_certification",true);
             setResult(RESULT_OK,intent);
 
