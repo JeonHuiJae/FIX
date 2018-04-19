@@ -6,23 +6,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.media.Image;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -36,10 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -155,6 +146,7 @@ public class SeniorJoinActivity extends Activity {
     public void seniorJoinSuccess(View view) {
         // 노인회원 가입 완료
 
+        databaseReference.child(id).child("type").setValue(true); // 노인 회원임
         databaseReference.child(id).child("pw").setValue(pw); // 비밀번호
         databaseReference.child(id).child("name").setValue(name); // 이름
         databaseReference.child(id).child("bday").setValue(bday); // 생일
@@ -255,6 +247,7 @@ public class SeniorJoinActivity extends Activity {
                         return;
                     }
                 }
+                joinID.setEnabled(false);
                 Toast.makeText(SeniorJoinActivity.this, "사용할 수 있는 ID입니다.", Toast.LENGTH_SHORT).show();
             }
 
