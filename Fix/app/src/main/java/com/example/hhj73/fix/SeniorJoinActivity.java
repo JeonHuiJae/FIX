@@ -89,6 +89,7 @@ public class SeniorJoinActivity extends Activity {
     Button next2Btn;
 
     final int REQUEST_IMAGE_CAPTURE= 123;
+    final int REQUEST_STORAGE=234;
 
 
     String strt;        //xml 중 address2 에 들어가는 string
@@ -346,6 +347,7 @@ public class SeniorJoinActivity extends Activity {
 
        // Toast.makeText(this, "주소 불러왔음",Toast.LENGTH_SHORT).show();      //delete
         Intent address = new Intent(this,Address.class);
+        address.putExtra("activity",false);
         startActivity(address);
 
     }
@@ -380,7 +382,7 @@ public class SeniorJoinActivity extends Activity {
     }
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {//승인확인
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case REQUEST_IMAGE_CAPTURE :
@@ -394,11 +396,22 @@ public class SeniorJoinActivity extends Activity {
                     finish();
                 }
                 break;
+            case REQUEST_STORAGE:
+                if (checkAppPermission(permissions)) {
+                    Toast.makeText(this, "승인완료",Toast.LENGTH_SHORT).show();
+                    loadPhote(view);
+                    // 퍼미션 동의했을 때 할 일
+                } else {
+                    Toast.makeText(this, "사용 불가",Toast.LENGTH_SHORT).show();
+                    // 퍼미션 동의하지 않았을 때 할일
+                    finish();
+                }
+                break;
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //인텐트 갔다온 결과
       if(requestCode==REQUEST_IMAGE_CAPTURE){
           Bundle extras = data.getExtras();
           Bitmap imageBitmap = (Bitmap)extras.get("data");
@@ -407,11 +420,25 @@ public class SeniorJoinActivity extends Activity {
           Bitmap.createBitmap(imageBitmap, 0,0,
                   imageBitmap.getWidth(),imageBitmap.getHeight(),matrix,true);
         ((ImageView)findViewById(R.id.imageview)).setImageBitmap(imageBitmap);
+      }else if(requestCode == REQUEST_STORAGE && resultCode==RESULT_OK){
+          try{
+          Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+          ((ImageView)findViewById(R.id.imageview)).setImageBitmap(image);
+          }
+          catch (IOException ex){}
       }
     }
 
     public void loadPhote(View view) { //앨범에서 신분증 가져오기
-        Toast.makeText(this, "앨범에서 가져와 인증함",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        if(checkAppPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE})){
+            if(intent.resolveActivity(getPackageManager())!=null)
+                startActivityForResult(intent,REQUEST_STORAGE);
+        }
+        else
+            askPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},REQUEST_STORAGE);
     }
 
 

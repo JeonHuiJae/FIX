@@ -20,11 +20,15 @@ public class Address extends AppCompatActivity {
     String confirm;
 
     TextView tv ;
+    Boolean activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
+
+        Intent intent = getIntent();
+       activity = intent.getBooleanExtra("activity",true);
 
         result = (TextView) findViewById(R.id.result);
 
@@ -67,7 +71,10 @@ public class Address extends AppCompatActivity {
         Intent add = new Intent(this,SeniorJoinActivity.class);
 
         add.putExtra("ADDRESS",confirm);
-        add.setClass(this,SeniorJoinActivity.class);
+        if(activity==false)
+            add.setClass(this,SeniorJoinActivity.class);
+        else
+            add.setClass(this,StudentJoinActivity.class);
         add.putExtra("ADDCOUNT",true);
 
         startActivity(add);
