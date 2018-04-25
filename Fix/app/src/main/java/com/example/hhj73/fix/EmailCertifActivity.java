@@ -1,13 +1,16 @@
 package com.example.hhj73.fix;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -30,6 +33,9 @@ public class EmailCertifActivity extends Activity {
     EditText editText;
     String certificationNum;
     String client_email;
+    final int MESSEAGE_WHAT = 1;
+    int TIMELIMIT = 180;
+    TextView timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +47,21 @@ public class EmailCertifActivity extends Activity {
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                .permitDiskReads().permitDiskWrites().permitNetwork().build());
-
         sendEmail(client_email);
 
+
+        timer = (TextView)findViewById(R.id.timer);
+        tHandler.sendEmptyMessage(MESSEAGE_WHAT);
+
     }
+    @SuppressLint("HandlerLeak")
+    Handler tHandler = new Handler(){
+        public void handleMessage(Message msg){
+            TIMELIMIT--;
+            timer.setText(TIMELIMIT%60+"분 "+TIMELIMIT/60+"초");
+            tHandler.sendMessageDelayed(tHandler.obtainMessage(MESSEAGE_WHAT), 1000);
+        }
+    };
     public void sendEmail(String client_email){
         String host = "smtp.gmail.com";
         String subject = "F.I.X 가입 인증번호 전달";

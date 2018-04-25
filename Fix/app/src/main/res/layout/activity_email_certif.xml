@@ -18,9 +18,17 @@
 
             <EditText
                 android:id="@+id/certificationNum"
+                android:paddingLeft="5dp"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3분 00초"
+                android:textColor="@color/colorAccent" />
 
         </LinearLayout>
 
