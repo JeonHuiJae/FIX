@@ -1,14 +1,14 @@
 package com.example.hhj73.fix;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.CountDownTimer;
 import android.os.StrictMode;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +33,10 @@ public class EmailCertifActivity extends Activity {
     EditText editText;
     String certificationNum;
     String client_email;
-    final int MESSEAGE_WHAT = 1;
     int TIMELIMIT = 180;
+    private CountDownTimer countDownTimer;
+    private static final int MILLISINFUTURE = 181*1000;
+    private static final int COUNT_DOWN_INTERVAL = 1000;
     TextView timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +53,43 @@ public class EmailCertifActivity extends Activity {
 
 
         timer = (TextView)findViewById(R.id.timer);
-        tHandler.sendEmptyMessage(MESSEAGE_WHAT);
+        countDownTimer();
+        countDownTimer.start();
 
     }
-    @SuppressLint("HandlerLeak")
-    Handler tHandler = new Handler(){
-        public void handleMessage(Message msg){
-            TIMELIMIT--;
-            timer.setText(TIMELIMIT%60+"분 "+TIMELIMIT/60+"초");
-            tHandler.sendMessageDelayed(tHandler.obtainMessage(MESSEAGE_WHAT), 1000);
-        }
-    };
+    public void countDownTimer(){
+        countDownTimer = new CountDownTimer(MILLISINFUTURE,COUNT_DOWN_INTERVAL) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timer.setText(TIMELIMIT/60+"분 "+TIMELIMIT%60+"초");
+                TIMELIMIT--;
+            }
+
+            @Override
+            public void onFinish() {
+                timer.setText(TIMELIMIT/60+"분 "+TIMELIMIT%60+"초");
+                Button certificationBtn = (Button)findViewById(R.id.certificationBtn);
+                Button resendBtn = (Button)findViewById(R.id.resendBtn);
+                editText = (EditText)findViewById(R.id.certificationNum);
+
+                certificationBtn.setEnabled(false);
+                resendBtn.setEnabled(false);
+                editText.setEnabled(false);
+                Toast.makeText(getApplicationContext(),"[시간만료]\n다시 인증해주세요.",Toast.LENGTH_SHORT).show();
+
+            }
+        };
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try{
+            countDownTimer.cancel();
+        } catch (Exception e){}
+        countDownTimer=null;
+    }
+
     public void sendEmail(String client_email){
         String host = "smtp.gmail.com";
         String subject = "F.I.X 가입 인증번호 전달";
