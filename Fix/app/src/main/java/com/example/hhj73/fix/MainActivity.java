@@ -1,15 +1,13 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -69,12 +67,19 @@ public class MainActivity extends AppCompatActivity {
 
                             // 성공하면 어디로 가야함
                             /// 여기다가 하세여
+                            Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                            String name = dataSnapshot.child(inputID).child("name").getValue().toString();
+                            intent.putExtra("name", name);
+                            intent.putExtra("id", inputID);
+                            startActivity(intent);
+                            return;
                         }
                         else {
                             // 비밀번호 틀렸어
                             Toast.makeText(MainActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                             id.setText("");
                             pw.setText("");
+                            return;
                         }
                   }
                 }
