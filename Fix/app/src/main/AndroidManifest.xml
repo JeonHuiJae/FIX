@@ -39,7 +39,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".ConstraintActivity"></activity>
     </application>
 
 </manifest>
