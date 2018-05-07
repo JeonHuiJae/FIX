@@ -58,7 +58,7 @@ public class StudentJoinActivity extends Activity {
     String pw;
     String name;
     boolean gender;
-    String address;
+    String strAddress;
     boolean smoking;
     boolean curfew;
     boolean pet;
@@ -108,7 +108,8 @@ public class StudentJoinActivity extends Activity {
         RadioGroup genderGroup = (RadioGroup) findViewById(R.id.genderGroup);
         femaleButton = (RadioButton) findViewById(R.id.femaleButton);
         maleButton = (RadioButton) findViewById(R.id.maleButton);
-        // 주소도 init해야함
+        editAddress = (EditText) findViewById(R.id.editAddress);
+        editAddress2 = (EditText) findViewById(R.id.editAddress2);
         smokeCheck = (CheckBox) findViewById(R.id.smokeCheck);
         curfewCheck = (CheckBox) findViewById(R.id.curfewCheck);
         petCheck = (CheckBox) findViewById(R.id.petCheck);
@@ -141,7 +142,7 @@ public class StudentJoinActivity extends Activity {
             databaseReference.child(id).child("pw").setValue(pw); // 비밀번호
             databaseReference.child(id).child("name").setValue(name); // 이름
             databaseReference.child(id).child("gender").setValue(gender); // 성별
-            // databaseReference.child(id).child("address").setValue(address); // 주소
+            databaseReference.child(id).child("address").setValue(strAddress); // 주소
             databaseReference.child(id).child("smoking").setValue(smoking); // 흡연
             databaseReference.child(id).child("curfew").setValue(curfew); // 통금
             databaseReference.child(id).child("pet").setValue(pet); // 반려동물
@@ -241,6 +242,9 @@ public class StudentJoinActivity extends Activity {
             gender = false;
         
         // 주소
+        String string1 = editAddress.getText().toString();
+        String string2 = editAddress2.getText().toString();
+        strAddress = string1 + " " + string2;
         
         // 특이사항
         if(smokeCheck.isChecked())

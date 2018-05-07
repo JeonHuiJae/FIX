@@ -17,4 +17,31 @@
 
 ○ 동의하지 않을 경우의 처리\n
    - 이용자는 개인정보 수집 동의에 거부할 수 있으며, 이 경우 등록 절차(사실 확인 등)가 제한됨으로 회원가입 상 불이익을 초래할 수 있습니다.</string>
+
+    <string name="agreemnemt_eng">
+
+Consent to providing and usage of personal information
+
+  I (the user) agree to offer personal information based on the
+Article 15 of Privacy Act.
+
+○ Purpose of Collection of Personal Information
+   - Usage of personal identification process
+   - Ensure a smooth communication path for notification, complaint
+      handling, etc.
+   - Ensure accurate mailing address when various mail items
+      occur
+   - Obtain basic information for home sharing matching
+
+○ Items of Personal Information
+   - Name, Regident registration number (or personal ID number),
+     (Mobile) Phone number, Address, Information of housing
+     transaction
+
+○ Retention Period
+   - Based on Privacy Act, used only for the purpose evinced on
+     the law and delete after being stored for a certain period according to the internal regulations
+
+○ Process for disagreement
+   - User can refuse to agree, but there will be a disadvantage in assignment caused by restriction of register process</string>
 </resources>

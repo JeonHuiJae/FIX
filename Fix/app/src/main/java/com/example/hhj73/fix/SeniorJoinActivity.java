@@ -58,7 +58,7 @@ public class SeniorJoinActivity extends Activity {
     boolean pet;
     boolean help;
     String uniqueness;
-    String address;
+    String strAddress;
     String cost;
     EditText joinID;
     EditText pw1;
@@ -72,6 +72,7 @@ public class SeniorJoinActivity extends Activity {
     EditText EditPhone;
     EditText EditCost;
     EditText EditUnique;
+    EditText EditAddress1, EditAddress2;
     CheckBox helpCheck;
     CheckBox petCheck;
     CheckBox curfewCheck;
@@ -131,6 +132,8 @@ public class SeniorJoinActivity extends Activity {
         curfewCheck = (CheckBox) findViewById(R.id.curfewCheck);
         smokeCheck = (CheckBox) findViewById(R.id.smokeCheck);
         EditUnique = (EditText) findViewById(R.id.uniqueness);
+        EditAddress1 = (EditText) findViewById(R.id.address);
+        EditAddress2 = (EditText) findViewById(R.id.address2);
 
 
         if(addcount==true){
@@ -157,7 +160,7 @@ public class SeniorJoinActivity extends Activity {
             str = "male";
         databaseReference.child(id).child("gender").setValue(str); // 성별
         databaseReference.child(id).child("phone").setValue(phoneNumber); // 연락처
-        // databaseReference.child(id).child("address").setValue(address); // 주소
+        databaseReference.child(id).child("address").setValue(strAddress); // 주소
         databaseReference.child(id).child("cost").setValue(cost); // 월세
         databaseReference.child(id).child("smoking").setValue(smoking); // 흡연
         databaseReference.child(id).child("curfew").setValue(curfew); // 통금
@@ -303,7 +306,9 @@ public class SeniorJoinActivity extends Activity {
 
     public void setAddress_cost() {
         // 주소 넣는 구문
-        // address 변수에 넣어주시면 돼요
+       String string1 = EditAddress1.getText().toString();
+       String string2 = EditAddress2.getText().toString();
+       strAddress = string1 + " " + string2;
 
         // 가격 받아옴
         cost = EditCost.getText().toString();

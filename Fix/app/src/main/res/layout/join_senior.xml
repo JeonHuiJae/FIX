@@ -594,7 +594,7 @@
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/agreeOk"
-            android:text="@string/agreement"
+            android:text="@string/agreemnemt_eng"
             android:textSize="25dp"
             android:scrollbars="vertical"
             android:padding="10dp"
