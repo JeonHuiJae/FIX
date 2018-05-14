@@ -7,7 +7,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -49,8 +53,8 @@ public class ChatActivity extends AppCompatActivity {
         myID = intent.getStringExtra("id");
 
         // 상대방 아이디 일단 아무렇게나
-        urName = "윤복자";
-        urID = "senior1";
+        urName = "honghjin";
+        urID = "honghjin";
 
 
         // 채팅방 생성
@@ -62,16 +66,43 @@ public class ChatActivity extends AppCompatActivity {
         room = users[0]+"+"+users[1];
 
         String msg = users[0]+"님이 입장하셨습니다.";
-        ChatData chatData = new ChatData(users[0], msg);
-        databaseReference.child(room).child("chat").push().setValue(chatData);
         chats.add(msg);
 
         msg = users[1]+"님이 입장하셨습니다.";
-        chatData = new ChatData(users[1], msg);
-        databaseReference.child(room).child("chat").push().setValue(chatData);
         chats.add(msg);
 
         arrayAdapter.notifyDataSetChanged();
+
+        databaseReference.child(room).child("chat").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                ChatData chatData = dataSnapshot.getValue(ChatData.class);
+                String msg = chatData.getMessage();
+                chats.add(msg);
+                arrayAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Toast.makeText(ChatActivity.this, "삭제됨 ㄷㄷ", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -88,6 +119,7 @@ public class ChatActivity extends AppCompatActivity {
         // 내가 보낸 메시지 DB에 저장
         ChatData chatData = new ChatData(myID, str);
         databaseReference.child(room).child("chat").push().setValue(chatData);
-
     }
+
+
 }
