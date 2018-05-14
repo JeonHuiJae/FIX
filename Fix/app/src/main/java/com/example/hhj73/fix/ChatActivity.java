@@ -49,12 +49,12 @@ public class ChatActivity extends AppCompatActivity {
         chatList.setAdapter(arrayAdapter);
 
         Intent intent = getIntent();
-        myName = intent.getStringExtra("name");
-        myID = intent.getStringExtra("id");
+   //     myName = intent.getStringExtra("name");
+        myID = intent.getStringExtra("myID");
 
-        // 상대방 아이디 일단 아무렇게나
-        urName = "honghjin";
-        urID = "honghjin";
+        // 상대방
+   //     urName = "honghjin";
+        urID = intent.getStringExtra("urID");
 
 
         // 채팅방 생성
@@ -109,10 +109,10 @@ public class ChatActivity extends AppCompatActivity {
     public void submit(View view) {
         // 채팅 보내기
         String chat = editChat.getText().toString();
-        String str = myName + ": " + chat;
+        String str = myID + ": " + chat;
 
-        chats.add(str);
-        arrayAdapter.notifyDataSetChanged();
+//        chats.add(str);
+//        arrayAdapter.notifyDataSetChanged();
 
         editChat.setText("");
 

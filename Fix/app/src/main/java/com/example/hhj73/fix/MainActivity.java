@@ -67,10 +67,11 @@ public class MainActivity extends AppCompatActivity {
 
                             // 성공하면 어디로 가야함
                             /// 여기다가 하세여
-                            Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), MatchingActivity.class);
                             String name = dataSnapshot.child(inputID).child("name").getValue().toString();
-                            intent.putExtra("name", name);
-                            intent.putExtra("id", inputID);
+//                            intent.putExtra("name", name);
+//                            intent.putExtra("id", inputID);
+                            intent.putExtra("curUser", inputID);
                             startActivity(intent);
                             return;
                         }
