@@ -42,7 +42,10 @@
         <activity android:name=".ChatActivity" />
         <activity android:name=".ConstraintActivity" />
         <activity android:name=".ContractActivity" />
-        <activity android:name=".MatchingActivity"></activity>
+        <activity android:name=".MatchingActivity" />
+        <activity android:name=".Join" />
+        <activity android:name=".SeniorDetail" />
+        <activity android:name=".SeniorMain"></activity>
     </application>
 
 </manifest>

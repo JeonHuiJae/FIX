@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorCream"
+    android:orientation="vertical"
+    tools:context=".SeniorDetail">
+    <FrameLayout
+        android:background="@color/colorMint"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <!--뒤로가기 버튼-->
+        <Button
+            android:layout_marginLeft="5dp"
+            android:background="#00ff0000"
+            android:text="◀"
+            android:textSize="25dp"
+            android:textColor="@color/colorBrightMint"
+            android:layout_gravity="center|left"
+            android:gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <!--채팅내역 들어가는 버튼-->
+        <Button
+            android:layout_marginRight="5dp"
+            android:background="#00ff0000"
+            android:text="三"
+            android:textSize="20dp"
+            android:textColor="@color/colorPowder"
+            android:layout_gravity="center|right"
+            android:gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:layout_gravity="center"
+            android:textSize="22dp"
+            android:textColor="@color/colorPowder"
+            android:gravity="center"
+            android:text="XYLOPHONE HOUSE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+    <LinearLayout
+        android:background="@color/colorDarkMint"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="10dp"></LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:background="@color/colorPowder"
+            android:layout_width="match_parent"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:text="김순자 할머니댁"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBrown"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:background="@color/colorCream"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+            <TextView
+                android:textColor="@color/colorPink"
+                android:layout_marginTop="5dp"
+                android:text="월 200,000원"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textColor="@color/colorBrown"
+                android:layout_marginTop="5dp"
+                android:text="광진구 건국대학교 신공학관 근처"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="15dp"
+                android:background="@color/colorBrightMint"
+                android:textSize="25dp"
+                android:text="흡연X, 동물O, 통금X, 도움O"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="특이사항"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:background="@color/colorDarkMint"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="70dp">
+
+            <!--채팅 요청 보내기 버튼-->
+            <Button
+                android:text="WANT TO TALK!"
+                android:textSize="20dp"
+                android:textColor="@color/colorPowder"
+                android:background="@drawable/mainbtn2"
+                android:layout_gravity="center"
+                android:layout_width="280dp"
+                android:layout_height="60dp" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/test"
     android:orientation="vertical">
 
     <LinearLayout
@@ -33,14 +32,15 @@
         android:paddingRight="10dp"
         android:padding="10dp"
         android:gravity="bottom"
+        android:background="@color/colorPowder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
 
             android:layout_gravity="center"
-            android:text="그 외 특이사항"
+            android:text="Additional Uniqueness"
             android:textSize="25dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPink"
             android:padding="3dp"
             android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
             android:layout_marginBottom="20dp"
             android:gravity="center"
             android:textSize="20dp"
-            android:text="입주자가 알았으면 하는 \n 특이사항을 적어주세요!"
+            android:text="Let Student Know \n Your Uniqueness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
@@ -72,10 +72,12 @@
             android:id="@+id/next7"
             android:onClick="seniorJoinSuccess"
             android:layout_gravity="center"
-            android:text="가입 완료"
+            android:background="@drawable/mainbtn1"
+            android:text="SIGNED UP"
             android:textSize="30dp"
+            android:textColor="@color/colorPowder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="70dp" />
     </LinearLayout>
 
     <!--                             6번째 (특이사항)                                -->
@@ -88,12 +90,13 @@
         android:paddingRight="10dp"
         android:padding="10dp"
         android:gravity="bottom"
+        android:background="@color/colorPowder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:text="특이사항 체크"
+            android:text=" Uniqueness "
             android:textSize="30dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPink"
             android:padding="2dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -103,7 +106,7 @@
             android:layout_marginBottom="30dp"
             android:gravity="center"
             android:textSize="20dp"
-            android:text="*해당되시면 체크해주세요!*"
+            android:text="*Check If You Included!*"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
@@ -115,21 +118,21 @@
                 android:layout_marginBottom="10dp"
                 android:id="@+id/smokeCheck"
                 android:textSize="22dp"
-                android:text="흡연자에요"
+                android:text="I'm Smoker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <CheckBox
                 android:layout_marginBottom="10dp"
                 android:id="@+id/curfewCheck"
-                android:textSize="22dp"
-                android:text="통금이 있는게 좋을것 같아요"
+                android:textSize="21dp"
+                android:text="Want to Have Curfew"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <CheckBox
                 android:layout_marginBottom="10dp"
                 android:id="@+id/petCheck"
                 android:textSize="22dp"
-                android:text="반려동물이 있어요"
+                android:text="I Have A Pet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -137,7 +140,7 @@
                 android:layout_marginBottom="10dp"
                 android:id="@+id/helpCheck"
                 android:textSize="22dp"
-                android:text="도움을 줬으면 좋겠어요"
+                android:text="I Need Help"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -145,10 +148,12 @@
             android:id="@+id/next6"
             android:onClick="next"
             android:layout_gravity="center"
-            android:text="다음으로"
+            android:text="NEXT"
+            android:textColor="@color/colorPowder"
+            android:background="@drawable/mainbtn1"
             android:textSize="30dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="70dp" />
     </LinearLayout>
 
 
@@ -163,20 +168,21 @@
         android:paddingRight="10dp"
         android:padding="10dp"
         android:gravity="bottom"
+        android:background="@color/colorPowder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:text="신분증 인증"
+            android:text=" Ckeck I.D Card "
             android:textSize="30dp"
             android:layout_gravity="center"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPink"
             android:padding="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <ImageView
             android:id="@+id/imageview"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorBrown"
             android:layout_marginBottom="30dp"
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
@@ -189,14 +195,14 @@
             android:layout_height="wrap_content">
             <Button
                 android:onClick="takePhoto"
-                android:text="사진찍기"
+                android:text="TAKE"
                 android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <Button
                 android:onClick="loadPhote"
                 android:textSize="20dp"
-                android:text="앨범에서 불러오기"
+                android:text="LOAD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -204,10 +210,12 @@
             android:id="@+id/next5"
             android:onClick="next"
             android:layout_gravity="center"
-            android:text="다음으로"
+            android:text="NEXT"
+            android:background="@drawable/mainbtn1"
             android:textSize="30dp"
+            android:textColor="@color/colorPowder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="70dp" />
     </LinearLayout>
 
 
@@ -222,6 +230,7 @@
         android:paddingRight="10dp"
         android:padding="10dp"
         android:gravity="bottom"
+        android:background="@color/colorPowder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -232,11 +241,11 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:textSize="25dp"
+                android:textSize="30dp"
                 android:layout_gravity="center"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPink"
                 android:padding="2dp"
-                android:text="집 주소를 알려주세요"
+                android:text="Enter your Address"
                 android:layout_marginBottom="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -256,7 +265,7 @@
         android:layout_height="60dp" />
     <Button
         android:onClick="search"
-        android:text="검색"
+        android:text="Search"
         android:layout_width="80dp"
         android:layout_height="55dp" />
 </LinearLayout>
@@ -266,7 +275,7 @@
                 android:id="@+id/address2"
                 android:textSize="20dp"
                 android:inputType="text"
-                android:hint="상세주소(107동 914호)"
+                android:hint="DetailAdress(107동 914호)"
                 android:layout_width="280dp"
                 android:layout_height="60dp" />
 
@@ -279,9 +288,9 @@
 
             <TextView
                 android:textSize="30dp"
-                android:text="내줄 방의 가격"
+                android:text=" Room Rent "
                 android:layout_gravity="center"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPink"
                 android:padding="2dp"
                 android:layout_marginBottom="20dp"
                 android:layout_width="wrap_content"
@@ -293,18 +302,18 @@
     android:layout_height="wrap_content">
     <EditText
         android:id="@+id/cost"
-        android:hint="예상 월세를 써주세요"
+        android:hint="Monthly Rent"
         android:gravity="right"
         android:paddingRight="10dp"
         android:layout_gravity="right"
-        android:textSize="22dp"
+        android:textSize="25dp"
         android:layout_width="230dp"
         android:layout_height="60dp"
         android:inputType="number"/>
     <TextView
         android:layout_gravity="center"
         android:textSize="30dp"
-        android:text="만원"
+        android:text="KRW"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>
@@ -314,10 +323,12 @@
             android:id="@+id/next4"
             android:onClick="next"
             android:layout_gravity="center"
-            android:text="다음으로"
+            android:text="NEXT"
+            android:textColor="@color/colorPowder"
             android:textSize="30dp"
+            android:background="@drawable/mainbtn1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="70dp" />
     </LinearLayout>
 
     <!--                             3번째 (전화번호)                                -->
@@ -334,9 +345,9 @@
         android:layout_height="match_parent">
         <TextView
             android:layout_gravity="center"
-            android:text="핸드폰 번호 입력해주세요!"
-            android:textSize="25dp"
-            android:background="@color/colorAccent"
+            android:text="Phone Number!"
+            android:textSize="30dp"
+            android:background="@color/colorPink"
             android:padding="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -355,10 +366,12 @@
             android:id="@+id/next3"
             android:onClick="next"
             android:layout_gravity="center"
-            android:text="다음으로"
+            android:text="NEXT"
             android:textSize="30dp"
+            android:textColor="@color/colorPowder"
+            android:background="@drawable/mainbtn1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="70dp" />
     </LinearLayout>
 
 
@@ -374,15 +387,16 @@
         android:paddingRight="10dp"
         android:padding="10dp"
         android:gravity="bottom"
+        android:background="@color/colorPowder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
         <TextView
-            android:text="성함이 어떻게되시나요?"
+            android:text=" What's Your Name? "
             android:textSize="25dp"
             android:padding="2dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPink"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -394,20 +408,20 @@
             <EditText
                 android:id="@+id/name"
                 android:layout_gravity="center"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 android:inputType="text"
                 android:gravity="center"
                 android:layout_width="180dp"
                 android:layout_height="60dp"
-                android:hint="이름 입력!" />
+                android:hint="Enter Name" />
         </LinearLayout>
 
 
         <TextView
-            android:text="생년 월 일을 적어주세요!"
+            android:text=" Birth Year-Month-Day "
             android:textSize="25dp"
             android:padding="2dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPink"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
@@ -423,7 +437,7 @@
             android:layout_height="50dp"
             android:gravity="center"
             android:inputType="number"
-            android:hint="ex) 53년생 6월 27 = 530627" />
+            android:hint="YYMMDD" />
 
 
         <RadioGroup
@@ -437,10 +451,10 @@
 
             <TextView
                 android:layout_marginRight="10dp"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPink"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:text="성별"
+                android:text="Gender"
                 android:textSize="30dp"
                 android:gravity="center"
                 android:layout_width="wrap_content"
@@ -449,7 +463,7 @@
             <RadioButton
                 android:textSize="30dp"
                 android:id="@+id/femaleButton"
-                android:text="여성"
+                android:text="F"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -457,7 +471,7 @@
             <RadioButton
                 android:textSize="30dp"
                 android:id="@+id/maleButton"
-                android:text="남성"
+                android:text="M"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RadioGroup>
@@ -466,10 +480,12 @@
             android:id="@+id/next2"
             android:onClick="next"
             android:layout_gravity="center"
-            android:text="다음으로"
+            android:text="NEXT"
             android:textSize="30dp"
+            android:textColor="@color/colorPowder"
+            android:background="@drawable/mainbtn1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="70dp" />
 
     </LinearLayout>
 
@@ -484,14 +500,15 @@
         android:paddingRight="10dp"
         android:padding="10dp"
         android:gravity="bottom"
+        android:background="@color/colorPowder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:text="사용하실 아이디(ID) "
+            android:text=" Enter Your ID (ID) "
             android:textSize="25dp"
             android:padding="2dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPink"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -508,23 +525,23 @@
                android:inputType="text"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
-                android:hint="아이디 입력" />
+                android:hint="ID Here!" />
             <Button
                 android:onClick="IDcheck"
                 android:id="@+id/IDcheckButton"
                 android:layout_gravity="center"
-                android:text="중복      확인"
+                android:text="double   Check"
                 android:textSize="10dp"
-                android:layout_width="50dp"
+                android:layout_width="70dp"
                 android:layout_height="50dp" />
         </LinearLayout>
 
 
         <TextView
-            android:text="비밀번호를 입력해주세요! "
+            android:text=" Enter your Password "
             android:textSize="25dp"
             android:padding="2dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPink"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
@@ -538,7 +555,7 @@
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:inputType="textPassword"
-            android:hint="8자리이상(숫자, 영문 조합)" />
+            android:hint="8digit (En + Num)" />
 
         <EditText
             android:layout_gravity="center"
@@ -547,13 +564,13 @@
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:inputType="textPassword"
-            android:hint="다시 입력해주세요" />
+            android:hint="Re- enter Please!" />
 
 
         <TextView
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:text="꼭! 기억해주세요!"
+            android:text="Please Remember It!"
             android:textSize="25dp"
             android:textColor="@color/colorAccent"
             android:layout_gravity="center"
@@ -562,11 +579,13 @@
         <Button
             android:id="@+id/next1"
             android:onClick="next"
+            android:textColor="@color/colorPowder"
             android:layout_gravity="center"
-            android:text="다음으로"
+            android:text="NEXT"
             android:textSize="30dp"
+            android:background="@drawable/mainbtn1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="70dp" />
 
     </LinearLayout>
     <!--                           0번째 (동의)                             -->
@@ -574,7 +593,7 @@
     <LinearLayout
 
         android:visibility="visible"
-        android:background="@drawable/test"
+        android:background="@color/colorPowder"
         android:id="@+id/zero"
         android:orientation="vertical"
         android:paddingTop="10dp"
@@ -600,25 +619,28 @@
             android:padding="10dp"
             android:layout_gravity="center"
             android:background="@color/colorMint"
-            android:layout_width="270dp"
+            android:layout_width="290dp"
             android:layout_height="300dp" />
+
         <CheckBox
             android:id="@+id/agree"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:text="동의하겠습니다."
-            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="0dp"
+            android:text="I Agree."
+            android:layout_marginLeft="10dp"
             android:textSize="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
+            android:background="@drawable/mainbtn2"
             android:id="@+id/next0"
             android:onClick="next"
             android:layout_gravity="center"
-            android:text="다음으로"
+            android:textColor="@color/colorPowder"
+            android:text="NEXT"
             android:textSize="30dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="70dp" />
 
     </LinearLayout>
 </FrameLayout>

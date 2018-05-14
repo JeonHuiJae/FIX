@@ -94,14 +94,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void seniorJoin(View view) {
-        Intent intent = new Intent(MainActivity.this, SeniorJoinActivity.class);
-        startActivity(intent); //액티비티 이동
-        overridePendingTransition(0, 0);
-    }
-
-    public void studentJoin(View view) {
-        Intent intent = new Intent(MainActivity.this, StudentJoinActivity.class);
+    public void join(View view) {
+        Intent intent = new Intent(MainActivity.this, Join.class);
         startActivity(intent); //액티비티 이동
         overridePendingTransition(0, 0);
     }
