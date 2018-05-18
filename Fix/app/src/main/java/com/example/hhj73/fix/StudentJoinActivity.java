@@ -63,6 +63,7 @@ public class StudentJoinActivity extends Activity {
     boolean curfew;
     boolean pet;
     boolean help;
+    String phoneNumber;
     String uniqueness;
 
     EditText editId;
@@ -79,6 +80,7 @@ public class StudentJoinActivity extends Activity {
     CheckBox petCheck;
     CheckBox helpCheck;
     EditText editUniqueness;
+    EditText editNumber;
 
 
     @Override
@@ -115,6 +117,7 @@ public class StudentJoinActivity extends Activity {
         petCheck = (CheckBox) findViewById(R.id.petCheck);
         helpCheck = (CheckBox) findViewById(R.id.helpCheck);
         editUniqueness = (EditText) findViewById(R.id.editUniqueness);
+        editNumber = (EditText) findViewById(R.id.editNumber);
 
         if(addcount==true){
             zero.setVisibility(view.GONE);
@@ -135,19 +138,25 @@ public class StudentJoinActivity extends Activity {
         if(emailPassed)
             button.setText("인증완료");
     }
+
     public void studentJoinSuccess(View view) {
         // 학생회원 가입 완료
         if(emailPassed) {
-            databaseReference.child(id).child("type").setValue(false); // 청년 회원임
-            databaseReference.child(id).child("pw").setValue(pw); // 비밀번호
-            databaseReference.child(id).child("name").setValue(name); // 이름
-            databaseReference.child(id).child("gender").setValue(gender); // 성별
-            databaseReference.child(id).child("address").setValue(strAddress); // 주소
-            databaseReference.child(id).child("smoking").setValue(smoking); // 흡연
-            databaseReference.child(id).child("curfew").setValue(curfew); // 통금
-            databaseReference.child(id).child("pet").setValue(pet); // 반려동물
-            databaseReference.child(id).child("help").setValue(help); // 도움
-            databaseReference.child(id).child("unique").setValue(uniqueness); // 특이사항
+
+            User user = new User(false, id, pw, name, null, gender, phoneNumber, strAddress, null, smoking, curfew, pet, help, uniqueness);
+            databaseReference.child(id).setValue(user);
+
+
+//            databaseReference.child(id).child("type").setValue(false); // 청년 회원임
+//            databaseReference.child(id).child("pw").setValue(pw); // 비밀번호
+//            databaseReference.child(id).child("name").setValue(name); // 이름
+//            databaseReference.child(id).child("gender").setValue(gender); // 성별
+//            databaseReference.child(id).child("address").setValue(strAddress); // 주소
+//            databaseReference.child(id).child("smoking").setValue(smoking); // 흡연
+//            databaseReference.child(id).child("curfew").setValue(curfew); // 통금
+//            databaseReference.child(id).child("pet").setValue(pet); // 반려동물
+//            databaseReference.child(id).child("help").setValue(help); // 도움
+//            databaseReference.child(id).child("unique").setValue(uniqueness); // 특이사항
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -240,6 +249,9 @@ public class StudentJoinActivity extends Activity {
             gender = true;
         else if(maleButton.isChecked())
             gender = false;
+
+        // 핸드폰 번호
+        phoneNumber = editNumber.getText().toString();
         
         // 주소
         String string1 = editAddress.getText().toString();

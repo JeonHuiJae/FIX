@@ -149,30 +149,28 @@ public class SeniorJoinActivity extends Activity {
     public void seniorJoinSuccess(View view) {
         // 노인회원 가입 완료
 
-        databaseReference.child(id).child("type").setValue(true); // 노인 회원임
-        databaseReference.child(id).child("pw").setValue(pw); // 비밀번호
-        databaseReference.child(id).child("name").setValue(name); // 이름
-        databaseReference.child(id).child("bday").setValue(bday); // 생일
-        String str;
-        if(gender)
-            str = "female";
-        else
-            str = "male";
+        User user = new User(true, id, pw, name, bday, gender, phoneNumber, strAddress, cost, smoking, curfew, pet, help, uniqueness);
+        databaseReference.child(id).setValue(user);
 
-        databaseReference.child(id).child("gender").setValue(str); // 성별
-        databaseReference.child(id).child("phone").setValue(phoneNumber); // 연락처
-        databaseReference.child(id).child("address").setValue(strAddress); // 주소
-        databaseReference.child(id).child("cost").setValue(cost); // 월세
-        databaseReference.child(id).child("smoking").setValue(smoking); // 흡연
-        databaseReference.child(id).child("curfew").setValue(curfew); // 통금
-        databaseReference.child(id).child("pet").setValue(pet); // 반려동물
-        databaseReference.child(id).child("help").setValue(help); // 도움
-        databaseReference.child(id).child("unique").setValue(uniqueness); // 특이사항
+//        databaseReference.child(id).child("type").setValue(true); // 노인 회원임
+//        databaseReference.child(id).child("pw").setValue(pw); // 비밀번호
+//        databaseReference.child(id).child("name").setValue(name); // 이름
+//        databaseReference.child(id).child("bday").setValue(bday); // 생일
+//
+//        databaseReference.child(id).child("gender").setValue(str); // 성별
+//        databaseReference.child(id).child("phone").setValue(phoneNumber); // 연락처
+//        databaseReference.child(id).child("address").setValue(strAddress); // 주소
+//        databaseReference.child(id).child("cost").setValue(cost); // 월세
+//        databaseReference.child(id).child("smoking").setValue(smoking); // 흡연
+//        databaseReference.child(id).child("curfew").setValue(curfew); // 통금
+//        databaseReference.child(id).child("pet").setValue(pet); // 반려동물
+//        databaseReference.child(id).child("help").setValue(help); // 도움
+//        databaseReference.child(id).child("unique").setValue(uniqueness); // 특이사항
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent); //액티비티 이동
         overridePendingTransition(0, 0);
-        Toast.makeText(this, "가입완료!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Join success.",Toast.LENGTH_SHORT).show();
     }
 
 

@@ -17,6 +17,10 @@ public class User {
     boolean smoking, curfew, pet, help;
     String unique;
 
+    public User() {
+        // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    }
+
     public User(boolean type, String id, String pw, String name, String bday, boolean gender,
                 String phone, String address, String cost, boolean smoking, boolean curfew,
                 boolean pet, boolean help, String unique) {
@@ -93,5 +97,62 @@ public class User {
         return this.unique;
     }
 
+    // set
+
+    public void setType(boolean type) {
+        this.type = type;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setPw(String Pw) {
+        this.pw = pw;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBday(String bday) {
+        this.bday = bday;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public void setSmoking(boolean smoking) {
+        this.smoking = smoking;
+    }
+
+    public void setPet(boolean pet) {
+        this.pet = pet;
+    }
+
+    public void setCurfew(boolean curfew) {
+        this.curfew = curfew;
+    }
+
+    public void setHelp(boolean help) {
+        this.help = help;
+    }
+
+    public void setUnique(String unique) {
+        this.unique = unique;
+    }
 
 }
