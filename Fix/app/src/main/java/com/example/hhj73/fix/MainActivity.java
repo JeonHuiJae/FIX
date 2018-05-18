@@ -67,12 +67,19 @@ public class MainActivity extends AppCompatActivity {
 
                             // 성공하면 어디로 가야함
                             /// 여기다가 하세여
-                            Intent intent = new Intent(getApplicationContext(), MatchingActivity.class);
+
                             String name = dataSnapshot.child(inputID).child("name").getValue().toString();
+                            Boolean type = Boolean.parseBoolean(dataSnapshot.child(inputID).child("type").getValue().toString());
 //                            intent.putExtra("name", name);
 //                            intent.putExtra("id", inputID);
-                            intent.putExtra("curUser", inputID);
-                            startActivity(intent);
+                            if(type){ //어르신
+                                Intent intent = new Intent(getApplicationContext(), SeniorMain.class);
+                                startActivity(intent);
+                            }else{ //학생
+                                Intent intent = new Intent(getApplicationContext(), MatchingActivity.class);
+                                intent.putExtra("curUser", inputID);
+                                startActivity(intent);
+                            }
                             return;
                         }
                         else {

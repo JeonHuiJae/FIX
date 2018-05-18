@@ -97,25 +97,6 @@ public class SeniorJoinActivity extends Activity {
     }
 
     public void init() {
-
-        Intent intent = getIntent();
-        strt = intent.getStringExtra("ADDRESS");
-        addcount=intent.getBooleanExtra("ADDCOUNT",false);
-
-        zero = (LinearLayout)findViewById(R.id.zero);
-        first = (LinearLayout)findViewById(R.id.first);
-        second = (LinearLayout)findViewById(R.id.second);
-        third = (LinearLayout)findViewById(R.id.third);
-        forth = (LinearLayout)findViewById(R.id.forth);
-        fifth = (LinearLayout)findViewById(R.id.fifth);
-        sixth = (LinearLayout)findViewById(R.id.sixth);
-        seventh = (LinearLayout)findViewById(R.id.seventh);
-
-        TextView agree = (TextView)findViewById(R.id.agreeOk);
-        agree.setMovementMethod(new ScrollingMovementMethod());
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-
         joinID = (EditText) findViewById(R.id.JoinID);
         pw1 = (EditText) findViewById(R.id.pw1);
         pw2 = (EditText) findViewById(R.id.pw2);
@@ -134,6 +115,37 @@ public class SeniorJoinActivity extends Activity {
         EditUnique = (EditText) findViewById(R.id.uniqueness);
         EditAddress1 = (EditText) findViewById(R.id.address);
         EditAddress2 = (EditText) findViewById(R.id.address2);
+
+        Intent intent = getIntent();
+        strt = intent.getStringExtra("ADDRESS");
+        addcount=intent.getBooleanExtra("ADDCOUNT",false);
+        phoneNumber =intent.getStringExtra("number");
+        bday =intent.getStringExtra("date");
+        name=intent.getStringExtra("name");
+        id =intent.getStringExtra("id");
+        pw =intent.getStringExtra("pw1");
+        pw2.setText(intent.getStringExtra("pw2"));
+        if(intent.getBooleanExtra("gender",true)==true)
+            gender = true;
+        else
+            gender = false;
+
+
+        zero = (LinearLayout)findViewById(R.id.zero);
+        first = (LinearLayout)findViewById(R.id.first);
+        second = (LinearLayout)findViewById(R.id.second);
+        third = (LinearLayout)findViewById(R.id.third);
+        forth = (LinearLayout)findViewById(R.id.forth);
+        fifth = (LinearLayout)findViewById(R.id.fifth);
+        sixth = (LinearLayout)findViewById(R.id.sixth);
+        seventh = (LinearLayout)findViewById(R.id.seventh);
+
+        TextView agree = (TextView)findViewById(R.id.agreeOk);
+        agree.setMovementMethod(new ScrollingMovementMethod());
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+
 
 
         if(addcount==true){
@@ -345,7 +357,19 @@ public class SeniorJoinActivity extends Activity {
 
        // Toast.makeText(this, "주소 불러왔음",Toast.LENGTH_SHORT).show();      //delete
         Intent address = new Intent(this,Address.class);
+        address.putExtra("activity",true);
+        address.putExtra("name",EditName.getText().toString() );
+        address.putExtra("number",EditPhone.getText().toString());
+        address.putExtra("id",joinID.getText().toString());
+        address.putExtra("pw1", pw1.getText().toString());
+        address.putExtra("pw2", pw2.getText().toString());
+        address.putExtra("date",EditBday.getText().toString());
         address.putExtra("activity",false);
+        if(femaleBtn.isChecked())
+            gender = true;
+        else if(maleBtn.isChecked())
+            gender = false;
+        address.putExtra("gender",gender);
         startActivity(address);
 
     }

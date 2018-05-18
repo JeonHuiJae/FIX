@@ -117,21 +117,21 @@
             <CheckBox
                 android:layout_marginBottom="10dp"
                 android:id="@+id/smokeCheck"
-                android:textSize="22dp"
+                android:textSize="25dp"
                 android:text="I'm Smoker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <CheckBox
                 android:layout_marginBottom="10dp"
                 android:id="@+id/curfewCheck"
-                android:textSize="21dp"
+                android:textSize="25dp"
                 android:text="Want to Have Curfew"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <CheckBox
                 android:layout_marginBottom="10dp"
                 android:id="@+id/petCheck"
-                android:textSize="22dp"
+                android:textSize="25dp"
                 android:text="I Have A Pet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -139,7 +139,7 @@
             <CheckBox
                 android:layout_marginBottom="10dp"
                 android:id="@+id/helpCheck"
-                android:textSize="22dp"
+                android:textSize="25dp"
                 android:text="I Need Help"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -196,12 +196,12 @@
             <Button
                 android:onClick="takePhoto"
                 android:text="TAKE"
-                android:textSize="20dp"
+                android:textSize="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <Button
                 android:onClick="loadPhote"
-                android:textSize="20dp"
+                android:textSize="30dp"
                 android:text="LOAD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -335,6 +335,7 @@
     <LinearLayout
         android:visibility="gone"
         android:id="@+id/third"
+        android:background="@color/colorPowder"
         android:orientation="vertical"
         android:paddingTop="10dp"
         android:paddingLeft="10dp"

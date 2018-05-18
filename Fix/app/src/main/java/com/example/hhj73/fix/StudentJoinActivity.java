@@ -69,6 +69,7 @@ public class StudentJoinActivity extends Activity {
     EditText editPw1;
     EditText editPw2;
     EditText editName;
+    EditText editNumber;
     RadioGroup genderGroup;
     RadioButton femaleButton;
     RadioButton maleButton;
@@ -93,22 +94,15 @@ public class StudentJoinActivity extends Activity {
     }
 
     private void init() {
-        Intent intent = getIntent();
-        strt = intent.getStringExtra("ADDRESS");
-        addcount=intent.getBooleanExtra("ADDCOUNT",false);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-        id = null;
-        pw = null;
-
         editId = (EditText) findViewById(R.id.editId);
         editPw1 = (EditText) findViewById(R.id.editPw1);
         editPw2 = (EditText) findViewById(R.id.editPw2);
         editName = (EditText) findViewById(R.id.editName);
+        editNumber = (EditText) findViewById(R.id.editNumber);
         RadioGroup genderGroup = (RadioGroup) findViewById(R.id.genderGroup);
         femaleButton = (RadioButton) findViewById(R.id.femaleButton);
         maleButton = (RadioButton) findViewById(R.id.maleButton);
-        editAddress = (EditText) findViewById(R.id.editAddress);
+        editAddress = (EditText) findViewById(R.id.Address);
         editAddress2 = (EditText) findViewById(R.id.editAddress2);
         smokeCheck = (CheckBox) findViewById(R.id.smokeCheck);
         curfewCheck = (CheckBox) findViewById(R.id.curfewCheck);
@@ -116,10 +110,28 @@ public class StudentJoinActivity extends Activity {
         helpCheck = (CheckBox) findViewById(R.id.helpCheck);
         editUniqueness = (EditText) findViewById(R.id.editUniqueness);
 
+        Intent intent = getIntent();
+        strt = intent.getStringExtra("ADDRESS");
+        addcount=intent.getBooleanExtra("ADDCOUNT",false);
+        editNumber.setText(intent.getStringExtra("number"));
+        editName.setText(intent.getStringExtra("name"));
+        editId.setText(intent.getStringExtra("id"));
+        editPw1.setText(intent.getStringExtra("pw1"));
+        editPw2.setText(intent.getStringExtra("pw2"));
+        if(intent.getBooleanExtra("gender",true)==true)
+            femaleButton.setChecked(true);
+        else
+            maleButton.setChecked(true);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        id = null;
+        pw = null;
+
+
         if(addcount==true){
             zero.setVisibility(view.GONE);
             first.setVisibility(view.VISIBLE);
-            addEdit= (EditText)findViewById(R.id.address);
+            addEdit= (EditText)findViewById(R.id.Address);
             addEdit.setText(strt);
             // Toast.makeText(this, strt, Toast.LENGTH_SHORT).show();   //test intent values
             addcount=false;
@@ -276,6 +288,16 @@ public class StudentJoinActivity extends Activity {
         // Toast.makeText(this, "주소 불러왔음",Toast.LENGTH_SHORT).show();      //delete
         Intent address = new Intent(this,Address.class);
         address.putExtra("activity",true);
+        address.putExtra("name",editName.getText().toString() );
+        address.putExtra("number",editNumber.getText().toString());
+        address.putExtra("id",editId.getText().toString());
+        address.putExtra("pw1", editPw1.getText().toString());
+        address.putExtra("pw2", editPw2.getText().toString());
+        if(femaleButton.isChecked())
+            gender = true;
+        else if(maleButton.isChecked())
+            gender = false;
+        address.putExtra("gender",gender);
         startActivity(address);
 
     }
