@@ -158,6 +158,7 @@ public class SeniorJoinActivity extends Activity {
             str = "female";
         else
             str = "male";
+
         databaseReference.child(id).child("gender").setValue(str); // 성별
         databaseReference.child(id).child("phone").setValue(phoneNumber); // 연락처
         databaseReference.child(id).child("address").setValue(strAddress); // 주소
@@ -167,7 +168,6 @@ public class SeniorJoinActivity extends Activity {
         databaseReference.child(id).child("pet").setValue(pet); // 반려동물
         databaseReference.child(id).child("help").setValue(help); // 도움
         databaseReference.child(id).child("unique").setValue(uniqueness); // 특이사항
-
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent); //액티비티 이동
