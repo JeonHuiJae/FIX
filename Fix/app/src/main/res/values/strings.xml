@@ -20,28 +20,28 @@
 
     <string name="agreemnemt_eng">
 
-Consent to providing and usage of personal information
+Consent to providing and usage of personal information\n\n
 
   I (the user) agree to offer personal information based on the
-Article 15 of Privacy Act.
+Article 15 of Privacy Act.\n\n
 
-○ Purpose of Collection of Personal Information
-   - Usage of personal identification process
-   - Ensure a smooth communication path for notification, complaint
+○ Purpose of Collection of Personal Information\n
+   - Usage of personal identification process\n
+   - Ensure a smooth communication path for notification, complaint\n
       handling, etc.
-   - Ensure accurate mailing address when various mail items
+   - Ensure accurate mailing address when various mail items\n
       occur
-   - Obtain basic information for home sharing matching
+   - Obtain basic information for home sharing matching\n\n
 
-○ Items of Personal Information
+○ Items of Personal Information\n
    - Name, Regident registration number (or personal ID number),
      (Mobile) Phone number, Address, Information of housing
-     transaction
+     transaction\n\n
 
-○ Retention Period
-   - Based on Privacy Act, used only for the purpose evinced on
-     the law and delete after being stored for a certain period according to the internal regulations
+○ Retention Period\n
+   - Based on Privacy Act, used only for the purpose evinced on\n
+     the law and delete after being stored for a certain period according to the internal regulations\n\n
 
-○ Process for disagreement
+○ Process for disagreement\n
    - User can refuse to agree, but there will be a disadvantage in assignment caused by restriction of register process</string>
 </resources>

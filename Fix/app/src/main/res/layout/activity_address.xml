@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.hhj73.fix.Address"
-    android:background="@drawable/test"
+    android:background="@color/colorMint"
     android:orientation="vertical"
     android:gravity="bottom|center"
     >
@@ -23,20 +23,21 @@
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="60dp"
-
+        android:textColor="@color/colorBrown"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="주소를 선택해주세요"
+        android:text="Select your Address!"
         android:textSize="20dp"
  />
 
     <Button
+        android:background="@drawable/mainbtn2"
         android:id="@+id/addconfirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:textColor="@color/colorPowder"
         android:layout_margin="5dp"
-        android:text="확인"
+        android:text="OK"
         android:textSize="30dp"
         android:onClick="addclick"
  />
