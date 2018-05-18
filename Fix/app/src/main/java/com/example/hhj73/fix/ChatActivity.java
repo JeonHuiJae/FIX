@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -122,4 +124,19 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
+    public void contractLayoutBtn(View view) { //계약서 버튼
+        FrameLayout  layout = (FrameLayout)findViewById(R.id.contractLayout);
+        layout.setVisibility(View.VISIBLE);
+    }
+
+    public void backChat(View view) { //채팅으로 돌어가기
+        FrameLayout layout = (FrameLayout)findViewById(R.id.contractLayout);
+        layout.setVisibility(View.GONE);
+    }
+
+    public void back(View view) { //그냥 뒤로가기
+        Intent intent = new Intent(this, MatchingActivity.class);
+        intent.putExtra("curUser",myID);
+        startActivity(intent);
+    }
 }

@@ -24,6 +24,7 @@
 
             <!--뒤로가기 버튼-->
             <Button
+                android:onClick="back"
                 android:text="◀"
                 android:layout_gravity="center|left"
                 android:background="#00ff0000"
@@ -45,6 +46,7 @@
 
             <!--계약서 버튼-->
             <Button
+                android:onClick="contractLayoutBtn"
                 android:text="계약"
                 android:layout_gravity="center|right"
                 android:background="@color/colorDarkMint"
@@ -94,80 +96,92 @@
 </LinearLayout>
 
     <!--계약서 레이아웃-->
-    <LinearLayout
-        android:visibility="visible"
-        android:background="@color/colorDarkMint"
-        android:layout_width="290dp"
-        android:layout_gravity="right|bottom"
+    <FrameLayout
+        android:id="@+id/contractLayout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="120dp">
-            <ImageView
-                android:layout_gravity="center|bottom"
-                android:background="@color/colorPowder"
-                android:layout_width="100dp"
-                android:layout_marginBottom="6dp"
-                android:layout_height="100dp" />
+        <Button
+            android:background="#00ff0000"
+            android:onClick="backChat"
+            android:layout_width="40dp"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:background="@color/colorDarkMint"
+            android:layout_width="290dp"
+            android:layout_gravity="right|bottom"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
+                <ImageView
+                    android:layout_gravity="center|bottom"
+                    android:background="@color/colorPowder"
+                    android:layout_width="100dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_height="100dp" />
 
-            <!--전화걸기-->
-            <Button
-                android:layout_marginRight="50dp"
-                android:layout_gravity="bottom|right"
-                android:text="call"
-                android:textSize="5dp"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
-        </FrameLayout>
-<TextView
-    android:gravity="center"
-    android:textColor="#dddddd"
-    android:text="GrandMa Soonja Kim"
-    android:textSize="18dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-<LinearLayout
-    android:background="@color/colorMint"
-    android:layout_margin="10dp"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="340dp">
-    <TextView
-        android:text="CONTRACT"
-        android:gravity="center"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:textColor="@color/colorPowder"
-        android:background="@drawable/mainbtn2"
-        android:layout_width="match_parent"
-        android:layout_height="43dp" />
+                <!--전화걸기-->
+                <Button
+                    android:layout_marginRight="50dp"
+                    android:layout_gravity="bottom|right"
+                    android:text="call"
+                    android:textSize="5dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+            </FrameLayout>
+            <TextView
+                android:gravity="center"
+                android:textColor="#dddddd"
+                android:text="GrandMa Soonja Kim"
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:background="@color/colorMint"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="340dp">
+                <TextView
+                    android:text="CONTRACT"
+                    android:gravity="center"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPowder"
+                    android:background="@drawable/mainbtn2"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp" />
 
-    <!--수정요청 버튼-->
-    <Button
-        android:background="@drawable/mainbtn1"
-        android:text="선택사항 수정요청"
-        android:textColor="@color/colorPowder"
-        android:textStyle="bold"
-        android:layout_width="250dp"
-        android:layout_height="43dp" />
+                <!--수정요청 버튼-->
+                <Button
+                    android:background="@drawable/mainbtn1"
+                    android:text="선택사항 수정요청"
+                    android:textColor="@color/colorPowder"
+                    android:textStyle="bold"
+                    android:layout_width="250dp"
+                    android:layout_height="43dp" />
 
-    <!--계약 리스트 들어갈 부분-->
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="210dp">
+                <!--계약 리스트 들어갈 부분-->
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp">
 
-    </ListView>
+                </ListView>
 
-    <!--제출버튼-->
-    <Button
-        android:background="@drawable/mainbtn2"
-        android:textSize="20dp"
-        android:text="SUBMIT!"
-        android:textColor="@color/colorPowder"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp" />
-</LinearLayout>
-    </LinearLayout>
+                <!--제출버튼-->
+                <Button
+                    android:background="@drawable/mainbtn2"
+                    android:textSize="20dp"
+                    android:text="SUBMIT!"
+                    android:textColor="@color/colorPowder"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </FrameLayout>
 </FrameLayout>

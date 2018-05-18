@@ -19,6 +19,14 @@ public class Address extends AppCompatActivity {
     Handler handler;
     String confirm;
 
+    String ID;
+    String Pw1;
+    String Pw2;
+    String Number;
+    Boolean Gender;
+    String Name;
+    String Date;
+
     TextView tv ;
     Boolean activity;
 
@@ -29,7 +37,23 @@ public class Address extends AppCompatActivity {
 
         Intent intent = getIntent();
        activity = intent.getBooleanExtra("activity",true);
-
+        if(activity==true){
+            ID = intent.getStringExtra("id");
+            Pw1 = intent.getStringExtra("pw1");
+            Pw2 = intent.getStringExtra("pw2");
+            Number = intent.getStringExtra("number");
+            Gender = intent.getBooleanExtra("gender",false);
+            Name = intent.getStringExtra("name");
+        }
+        else{
+            ID = intent.getStringExtra("id");
+            Pw1 = intent.getStringExtra("pw1");
+            Pw2 = intent.getStringExtra("pw2");
+            Number = intent.getStringExtra("number");
+            Gender = intent.getBooleanExtra("gender",false);
+            Name = intent.getStringExtra("name");
+            Date = intent.getStringExtra("date");
+        }
         result = (TextView) findViewById(R.id.result);
 
         // WebView 초기화
@@ -68,13 +92,23 @@ public class Address extends AppCompatActivity {
     }
 
     public void addclick(View view) {
-        Intent add = new Intent(this,SeniorJoinActivity.class);
-
-        add.putExtra("ADDRESS",confirm);
+        Intent add;
         if(activity==false)
+        { add = new Intent(this,SeniorJoinActivity.class);
             add.setClass(this,SeniorJoinActivity.class);
+            add.putExtra("date",Date);
+        }
         else
+        {add = new Intent(this,StudentJoinActivity.class);
             add.setClass(this,StudentJoinActivity.class);
+        }
+        add.putExtra("id",ID);
+        add.putExtra("pw1",Pw1);
+        add.putExtra("pw2",Pw2);
+        add.putExtra("name",Name);
+        add.putExtra("number",Number);
+        add.putExtra("gender",Gender);
+        add.putExtra("ADDRESS",confirm);
         add.putExtra("ADDCOUNT",true);
 
         startActivity(add);
