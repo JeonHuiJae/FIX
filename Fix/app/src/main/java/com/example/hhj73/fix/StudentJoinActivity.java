@@ -81,7 +81,6 @@ public class StudentJoinActivity extends Activity {
     CheckBox petCheck;
     CheckBox helpCheck;
     EditText editUniqueness;
-    EditText editNumber;
 
 
     @Override
@@ -111,7 +110,6 @@ public class StudentJoinActivity extends Activity {
         petCheck = (CheckBox) findViewById(R.id.petCheck);
         helpCheck = (CheckBox) findViewById(R.id.helpCheck);
         editUniqueness = (EditText) findViewById(R.id.editUniqueness);
-        editNumber = (EditText) findViewById(R.id.editNumber);
 
         Intent intent = getIntent();
         strt = intent.getStringExtra("ADDRESS");

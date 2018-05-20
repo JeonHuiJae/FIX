@@ -3,12 +3,12 @@ package com.example.hhj73.fix;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -23,9 +23,11 @@ import java.util.Arrays;
 public class ChatActivity extends AppCompatActivity {
 
     EditText editChat;
-    ArrayList<String> chats;
-    ArrayAdapter arrayAdapter;
-    ListView chatList;
+    ArrayList<ChatData> chats;
+    // ArrayAdapter arrayAdapter;
+    RecyclerView chatList;
+    RecyclerView.LayoutManager layoutManager;
+    ChatAdapter chatAdapter;
     String myName;
     String myID;
     DatabaseReference databaseReference;
@@ -46,9 +48,12 @@ public class ChatActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("chats");
         editChat = (EditText) findViewById(R.id.chatText);
         chats = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, chats);
-        chatList = (ListView) findViewById(R.id.chatList);
-        chatList.setAdapter(arrayAdapter);
+        // arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, chats);
+        chatList = (RecyclerView) findViewById(R.id.chatList);
+        chatAdapter = new ChatAdapter(chats);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        chatList.setLayoutManager(layoutManager);
+        chatList.setAdapter(chatAdapter);
 
         Intent intent = getIntent();
    //     myName = intent.getStringExtra("name");
@@ -67,22 +72,22 @@ public class ChatActivity extends AppCompatActivity {
 
         room = users[0]+"+"+users[1];
 
-        String msg = users[0]+"님이 입장하셨습니다.";
-        chats.add(msg);
+//        String msg = users[0]+"님이 입장하셨습니다.";
+//        chats.add(msg);
+//
+//        msg = users[1]+"님이 입장하셨습니다.";
+//        chats.add(msg);
 
-        msg = users[1]+"님이 입장하셨습니다.";
-        chats.add(msg);
-
-        arrayAdapter.notifyDataSetChanged();
+        chatAdapter.notifyDataSetChanged();
 
         databaseReference.child(room).child("chat").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 ChatData chatData = dataSnapshot.getValue(ChatData.class);
-                String msg = chatData.getMessage();
-                chats.add(msg);
-                arrayAdapter.notifyDataSetChanged();
+               // String msg = chatData.getMessage();
+                chats.add(chatData);
+                chatAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -106,6 +111,8 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        TextView roomName = (TextView) findViewById(R.id.roomName);
+        roomName.setText(urID);
     }
 
     public void submit(View view) {
