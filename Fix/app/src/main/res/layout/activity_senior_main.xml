@@ -40,13 +40,12 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="#eeeeee"
-            android:layout_width="130dp"
-            android:layout_height="130dp" />
+            android:layout_width="110dp"
+            android:layout_height="110dp" />
 
         <TextView
             android:id="@+id/profileMessage"
             android:text="I love my family...---(-@"
-            android:layout_marginTop="10dp"
             android:gravity="center"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
