@@ -14,6 +14,7 @@
 
         <!--뒤로가기 버튼-->
         <Button
+            android:onClick="back"
             android:layout_marginLeft="5dp"
             android:background="#00ff0000"
             android:text="◀"
@@ -61,7 +62,8 @@
             android:orientation="vertical"
             android:layout_height="match_parent">
             <TextView
-                android:text="김순자 할머니댁"
+                android:id="@+id/Dtitle"
+                android:text=""
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:textColor="@color/colorBrown"
@@ -71,37 +73,99 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <ImageView
+                android:id="@+id/roomImage"
                 android:background="@color/colorCream"
                 android:layout_width="match_parent"
                 android:layout_height="100dp" />
             <TextView
+                android:id="@+id/rent"
                 android:textColor="@color/colorPink"
                 android:layout_marginTop="5dp"
-                android:text="월 200,000원"
+                android:text=""
                 android:textSize="22dp"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/Daddress"
                 android:textColor="@color/colorBrown"
                 android:layout_marginTop="5dp"
-                android:text="광진구 건국대학교 신공학관 근처"
+                android:text=""
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <TextView
-                android:layout_marginTop="15dp"
-                android:background="@color/colorBrightMint"
-                android:textSize="25dp"
-                android:text="흡연X, 동물O, 통금X, 도움O"
+            <FrameLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="50dp">
+                <LinearLayout
+                    android:visibility="visible"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/smokeO"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/smoke"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                    <ImageView
+                        android:id="@+id/curfewO"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/curfew"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                    <ImageView
+                        android:id="@+id/petO"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/pet"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                    <ImageView
+                        android:id="@+id/helpO"
+                        android:src="@drawable/help"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:visibility="visible"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/smokeX"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/smoke_x"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                    <ImageView
+                        android:id="@+id/curfewX"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/curfew_x"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                    <ImageView
+                        android:id="@+id/petX"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/pet_x"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                    <ImageView
+                        android:id="@+id/helpX"
+                        android:src="@drawable/help_x"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                </LinearLayout>
+            </FrameLayout>
             <TextView
+                android:id="@+id/Duniqueness"
                 android:layout_marginTop="10dp"
                 android:text="특이사항"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:layout_height="90dp" />
         </LinearLayout>
         <LinearLayout
             android:background="@color/colorDarkMint"
@@ -112,6 +176,7 @@
 
             <!--채팅 요청 보내기 버튼-->
             <Button
+                android:onClick="talk"
                 android:text="WANT TO TALK!"
                 android:textSize="20dp"
                 android:textColor="@color/colorPowder"

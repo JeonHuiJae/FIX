@@ -54,6 +54,7 @@ public class SeniorMain extends AppCompatActivity {
         else
             Toast.makeText(this,"no string",Toast.LENGTH_SHORT).show();
         startActivityForResult(editIntent,Edit_PROFILE);
+        overridePendingTransition(0, 0);
     }
 
     @Override

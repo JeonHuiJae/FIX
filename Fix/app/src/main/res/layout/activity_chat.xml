@@ -85,6 +85,7 @@
         android:orientation="horizontal">
 
         <EditText
+           android:nextFocusDown="@id/send"
             android:layout_gravity="center"
             android:background="@color/colorPowder"
             android:id="@+id/chatText"
@@ -93,6 +94,7 @@
             android:layout_height="40dp" />
 
         <Button
+            android:id="@+id/send"
             android:text="SEND"
             android:layout_gravity="center"
             android:textColor="@color/colorPowder"
