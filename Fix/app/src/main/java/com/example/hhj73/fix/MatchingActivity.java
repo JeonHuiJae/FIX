@@ -49,7 +49,7 @@ public class MatchingActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
                 String Mgender = dataSnapshot.child(curUser).child("gender").getValue().toString();
-                if(Mgender.equals("true"))
+                if(Mgender.equals("true")) //어르신과 청년의 저장이 달라서 바꿔놨음^^
                     Mgender = "female";
                 else
                     Mgender = "male";
