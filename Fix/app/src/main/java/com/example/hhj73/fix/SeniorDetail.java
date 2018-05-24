@@ -1,6 +1,8 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,11 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Iterator;
 
@@ -50,6 +57,25 @@ ImageView pet;
         rent = (TextView)findViewById(R.id.rent);
         address = (TextView)findViewById(R.id.Daddress);
         uniqueness = (TextView)findViewById(R.id.Duniqueness);
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
+
+        //사진 검사
+        StorageReference pathRef = storageReference.child("Room/"+urId);
+        pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
+            @Override
+            public void onSuccess(Uri uri) {//있음
+                Glide.with(getApplicationContext())
+                        .load(uri)
+                        .centerCrop()
+                        .into(roomImage);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
 
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

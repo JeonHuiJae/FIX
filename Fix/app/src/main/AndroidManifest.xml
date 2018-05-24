@@ -6,8 +6,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
@@ -47,9 +47,11 @@
         <activity android:name=".Join" />
         <activity android:name=".SeniorDetail" />
         <activity android:name=".SeniorMain" />
-        <activity android:name=".EditProfileActivity"/>
-        <activity android:name=".SelectPhotoMode"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"/>
+        <activity android:name=".EditProfileActivity" />
+        <activity
+            android:name=".SelectPhotoMode"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+        <activity android:name=".SeniorFirst"></activity>
     </application>
 
 </manifest>

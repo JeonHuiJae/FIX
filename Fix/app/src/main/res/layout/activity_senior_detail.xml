@@ -53,6 +53,10 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="370dp">
+
         <LinearLayout
             android:layout_margin="5dp"
             android:background="@color/colorPowder"
@@ -60,7 +64,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/Dtitle"
                 android:text=""
@@ -69,20 +73,21 @@
                 android:textColor="@color/colorBrown"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <ImageView
                 android:id="@+id/roomImage"
                 android:background="@color/colorCream"
-                android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:layout_width="220dp"
+                android:layout_gravity="center"
+                android:layout_height="150dp" />
             <TextView
                 android:id="@+id/rent"
                 android:textColor="@color/colorPink"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text=""
-                android:textSize="22dp"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -96,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <FrameLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
                 <LinearLayout
@@ -167,6 +172,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="90dp" />
         </LinearLayout>
+        </ScrollView>
         <LinearLayout
             android:background="@color/colorDarkMint"
             android:layout_gravity="bottom"

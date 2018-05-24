@@ -18,11 +18,14 @@ public class SeniorMain extends AppCompatActivity {
     final static int Edit_PROFILE = 1234;
     TextView message;
     ImageView photo;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_senior_main);
+        Intent intent = getIntent();
+        id = intent.getStringExtra("curUser");
         init();
 
     }
