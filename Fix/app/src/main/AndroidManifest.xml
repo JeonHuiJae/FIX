@@ -51,7 +51,9 @@
         <activity
             android:name=".SelectPhotoMode"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
-        <activity android:name=".SeniorFirst"></activity>
+        <activity android:name=".SeniorFirst" />
+        <activity android:name=".StudentEditProfile" />
+        <activity android:name=".StudentChatList"></activity>
     </application>
 
 </manifest>

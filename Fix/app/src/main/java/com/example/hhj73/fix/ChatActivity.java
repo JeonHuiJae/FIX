@@ -141,9 +141,10 @@ public class ChatActivity extends AppCompatActivity {
         layout.setVisibility(View.GONE);
     }
 
-    public void back(View view) { //그냥 뒤로가기
-        Intent intent = new Intent(this, MatchingActivity.class);
-        intent.putExtra("curUser",myID);
+    public void back(View view) { //채팅목록으로 뒤로가기
+        Intent intent = new Intent(this, StudentChatList.class);
+        intent.putExtra("id",myID);
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 }

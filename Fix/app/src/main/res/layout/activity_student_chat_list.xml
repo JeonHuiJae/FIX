@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StudentChatList"
+    android:orientation="vertical"
+    android:background="@color/colorMint">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <!--뒤로가기 버튼-->
+        <Button
+            android:onClick="back"
+            android:layout_marginLeft="5dp"
+            android:background="#00ff0000"
+            android:text="◀"
+            android:textSize="25dp"
+            android:textColor="@color/colorPowder"
+            android:layout_gravity="center|left"
+            android:gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:layout_gravity="center"
+            android:textSize="22dp"
+            android:textColor="@color/colorPowder"
+            android:gravity="center"
+            android:text="CHATTING LIST"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+    <LinearLayout
+        android:background="@color/colorDarkMint"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="10dp">
+
+    </LinearLayout>
+
+    <ListView
+        android:background="@color/colorPowder"
+        android:id="@+id/MyChatList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+
+</LinearLayout>
