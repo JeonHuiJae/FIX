@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,12 +15,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 public class SeniorMain extends AppCompatActivity {
 
     final static int Edit_PROFILE = 1234;
     TextView message;
     ImageView photo;
     String id;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +45,17 @@ public class SeniorMain extends AppCompatActivity {
         photo.setBackground(new ShapeDrawable(new OvalShape()));
         if(Build.VERSION.SDK_INT>=21)
             photo.setClipToOutline(true);
-
+        //사진 검사
+        StorageReference pathRef = storageReference.child("Profile/Senior/"+id);
+        pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
+            @Override
+            public void onSuccess(Uri uri) {//있음
+                Glide.with(getApplicationContext())
+                        .load(uri)
+                        .centerCrop()
+                        .into(photo);
+            }
+        });
     }
 
     public void howTo(View view) {
@@ -50,6 +70,7 @@ public class SeniorMain extends AppCompatActivity {
 
     public void editProfile(View view) {
         Intent editIntent = new Intent(this, EditProfileActivity.class);
+        editIntent.putExtra("id",id);
         message = (TextView)findViewById(R.id.profileMessage);
         String str = message.getText().toString();
         if(!str.isEmpty())
@@ -65,7 +86,17 @@ public class SeniorMain extends AppCompatActivity {
         if(requestCode==Edit_PROFILE&&resultCode==RESULT_OK){
             String tmp2 = data.getStringExtra("profileMessage");
             message.setText(tmp2);
-            photo.setImageBitmap((Bitmap) data.getParcelableExtra("profliePhoto"));
+            //사진 검사
+            StorageReference pathRef = storageReference.child("Profile/Senior/"+id);
+            pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
+                @Override
+                public void onSuccess(Uri uri) {//있음
+                    Glide.with(getApplicationContext())
+                            .load(uri)
+                            .centerCrop()
+                            .into(photo);
+                }
+            });
         }
     }
 }
