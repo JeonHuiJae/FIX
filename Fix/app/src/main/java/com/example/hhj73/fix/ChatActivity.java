@@ -17,8 +17,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -85,9 +87,16 @@ public class ChatActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 ChatData chatData = dataSnapshot.getValue(ChatData.class);
-               // String msg = chatData.getMessage();
+                if(chatData.getUserName() == urID) {
+                    // 상대가 보낸 메시지면 배경색 바꾸기
+                    // chatAdapter 에서 접근해야할 문제라 어떻게 해야할지 모르겠어요
+                    // OnBindViewHolder 에서 조건문 설정해서 이렇게 해야하는데 ㅠㅠ
+                    // holder.itemView.setBackgroundColor(Color.WHITE);
+
+                }
                 chats.add(chatData);
                 chatAdapter.notifyDataSetChanged();
+                chatList.smoothScrollToPosition(chatAdapter.getItemCount() - 1); // 아래로 스크롤
             }
 
             @Override
@@ -113,6 +122,7 @@ public class ChatActivity extends AppCompatActivity {
 
         TextView roomName = (TextView) findViewById(R.id.roomName);
         roomName.setText(urID);
+
     }
 
     public void submit(View view) {
@@ -126,7 +136,12 @@ public class ChatActivity extends AppCompatActivity {
         editChat.setText("");
 
         // 내가 보낸 메시지 DB에 저장
-        ChatData chatData = new ChatData(myID, str);
+        // 시간
+        long time = System.currentTimeMillis();
+        SimpleDateFormat dayTime = new SimpleDateFormat("MM-dd hh:mm");
+        String timeStr = dayTime.format(new Date(time));
+
+        ChatData chatData = new ChatData(myID, str, timeStr);
         databaseReference.child(room).child("chat").push().setValue(chatData);
     }
 

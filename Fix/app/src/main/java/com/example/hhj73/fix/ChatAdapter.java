@@ -7,10 +7,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     List<ChatData> m_data;
+
 
     public ChatAdapter(List<ChatData> data) {
         m_data = data;
@@ -26,8 +28,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.r_message.setText(m_data.get(position).getMessage());
-        holder.r_time.setText(m_data.get(position).getUserName());
+        String str = m_data.get(position).getMessage();
+        StringTokenizer stringTokenizer = new StringTokenizer(str, ":");
+        stringTokenizer.nextToken();
+        String msg = stringTokenizer.nextToken();
+        msg = msg.trim();
+
+        holder.r_message.setText(msg);
+        holder.r_time.setText(m_data.get(position).getTime());
+
     }
 
     @Override
@@ -39,7 +48,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
         TextView r_message;
         TextView r_time;
-
 
         public ViewHolder(View itemView) {
             super(itemView);
