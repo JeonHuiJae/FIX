@@ -2,17 +2,23 @@ package com.example.hhj73.fix;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,14 +29,24 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
@@ -81,7 +97,8 @@ public class StudentJoinActivity extends Activity {
     CheckBox petCheck;
     CheckBox helpCheck;
     EditText editUniqueness;
-    EditText editNumber;
+    private Uri filePath;
+    String mCurrentPhotoPath;
 
 
     @Override
@@ -111,7 +128,6 @@ public class StudentJoinActivity extends Activity {
         petCheck = (CheckBox) findViewById(R.id.petCheck);
         helpCheck = (CheckBox) findViewById(R.id.helpCheck);
         editUniqueness = (EditText) findViewById(R.id.editUniqueness);
-        editNumber = (EditText) findViewById(R.id.editNumber);
 
         Intent intent = getIntent();
         strt = intent.getStringExtra("ADDRESS");
@@ -158,6 +174,16 @@ public class StudentJoinActivity extends Activity {
             User user = new User(false, id, pw, name, null, gender, phoneNumber, strAddress, null, smoking, curfew, pet, help, uniqueness);
             databaseReference.child(id).setValue(user);
 
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            String fileName = id+"";
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com")
+                    .child("IDcard/Student/"+fileName); //올리기
+            storageRef.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(StudentJoinActivity.this, "Uploaded!", Toast.LENGTH_SHORT).show();
+                }
+            });
 
 //            databaseReference.child(id).child("type").setValue(false); // 청년 회원임
 //            databaseReference.child(id).child("pw").setValue(pw); // 비밀번호
@@ -340,8 +366,21 @@ public class StudentJoinActivity extends Activity {
             Bitmap.createBitmap(imageBitmap, 0,0,
                     imageBitmap.getWidth(),imageBitmap.getHeight(),matrix,true);
             ((ImageView)findViewById(R.id.imageview)).setImageBitmap(imageBitmap);
+
+            File file = createImageFile();
+            if(file!=null){
+                FileOutputStream fout;
+                try{
+                    fout = new FileOutputStream(file);
+                    imageBitmap.compress(Bitmap.CompressFormat.PNG,70,fout);
+                    fout.flush();
+                }catch (Exception e){}
+                filePath = Uri.fromFile(file);
+            }
+
         }else if(requestCode == REQUEST_STORAGE && resultCode==RESULT_OK){
             try{
+                filePath = data.getData();
                 Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                 Matrix matrix = new Matrix();
                 matrix.postRotate(90); //90도 회전
@@ -351,6 +390,21 @@ public class StudentJoinActivity extends Activity {
             }
             catch (IOException ex){}
         }
+    }
+
+    public File createImageFile(){
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA).format(new Date());
+        String imageFileName = "JPEG_"+timeStamp+"_";
+        File mFileTemp = null;
+        String root = getDir("my_sub_dir",Context.MODE_PRIVATE).getAbsolutePath();
+        File myDir = new File(root +"/Img");
+        if(!myDir.exists()){
+            myDir.mkdir();
+        }
+        try{
+            mFileTemp = File.createTempFile(imageFileName,".jpg",myDir.getAbsoluteFile());
+        }catch (IOException e1){}
+        return mFileTemp;
     }
 
     public void takePhoto(View view) { //사진찍어 신분증 인증

@@ -2,10 +2,12 @@ package com.example.hhj73.fix;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -24,14 +26,23 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 
 /**
  * Created by hhj73 on 2018-04-09.
@@ -83,6 +94,7 @@ public class SeniorJoinActivity extends Activity {
     final int REQUEST_IMAGE_CAPTURE= 123;
     final int REQUEST_STORAGE=234;
 
+    private Uri filePath;
 
     String strt;        //xml 중 address2 에 들어가는 string
     boolean addcount=false;   //화면 다시 시작한 위치
@@ -163,6 +175,18 @@ public class SeniorJoinActivity extends Activity {
 
         User user = new User(true, id, pw, name, bday, gender, phoneNumber, strAddress, cost, smoking, curfew, pet, help, uniqueness);
         databaseReference.child(id).setValue(user);
+
+        //파이어베이스 Storage 저장 (Uri 받아서 저장함)
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        String fileName = id+"";
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com")
+                .child("IDcard/Senior/"+fileName); //올리기
+        storageRef.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(SeniorJoinActivity.this, "Uploaded!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 //        databaseReference.child(id).child("type").setValue(true); // 노인 회원임
 //        databaseReference.child(id).child("pw").setValue(pw); // 비밀번호
@@ -440,8 +464,19 @@ public class SeniorJoinActivity extends Activity {
           Bitmap.createBitmap(imageBitmap, 0,0,
                   imageBitmap.getWidth(),imageBitmap.getHeight(),matrix,true);
         ((ImageView)findViewById(R.id.imageview)).setImageBitmap(imageBitmap);
+          File file = createImageFile();
+          if(file!=null){
+              FileOutputStream fout;
+              try{
+                  fout = new FileOutputStream(file);
+                  imageBitmap.compress(Bitmap.CompressFormat.PNG,70,fout);
+                  fout.flush();
+              }catch (Exception e){}
+              filePath = Uri.fromFile(file);
+          }
       }else if(requestCode == REQUEST_STORAGE && resultCode==RESULT_OK){
           try{
+              filePath = data.getData();
           Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
               Matrix matrix = new Matrix();
               matrix.postRotate(90); //90도 회전
@@ -451,6 +486,21 @@ public class SeniorJoinActivity extends Activity {
           }
           catch (IOException ex){}
       }
+    }
+
+    public File createImageFile(){
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA).format(new Date());
+        String imageFileName = "JPEG_"+timeStamp+"_";
+        File mFileTemp = null;
+        String root = getDir("my_sub_dir", Context.MODE_PRIVATE).getAbsolutePath();
+        File myDir = new File(root +"/Img");
+        if(!myDir.exists()){
+            myDir.mkdir();
+        }
+        try{
+            mFileTemp = File.createTempFile(imageFileName,".jpg",myDir.getAbsoluteFile());
+        }catch (IOException e1){}
+        return mFileTemp;
     }
 
     public void loadPhote(View view) { //앨범에서 신분증 가져오기

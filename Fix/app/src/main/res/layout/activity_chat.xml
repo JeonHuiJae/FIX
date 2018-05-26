@@ -37,7 +37,7 @@
                 android:id="@+id/roomName"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Soonja Kim"
+                android:text=""
                 android:textStyle="bold"
                 android:textColor="@color/colorPowder"
                 android:textSize="25dp"
@@ -59,14 +59,23 @@
         </FrameLayout>
     </LinearLayout>
 
-    <ListView
+    <!--<ListView-->
+        <!--android:background="@color/colorPowder"-->
+        <!--android:id="@+id/chatList"-->
+        <!--android:transcriptMode="alwaysScroll"-->
+        <!--android:layout_weight="7"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp">-->
+    <!--</ListView>-->
+
+    <android.support.v7.widget.RecyclerView
         android:background="@color/colorPowder"
         android:id="@+id/chatList"
         android:transcriptMode="alwaysScroll"
         android:layout_weight="7"
         android:layout_width="match_parent"
         android:layout_height="0dp">
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
     <LinearLayout
         android:background="@color/colorMint"
@@ -76,6 +85,7 @@
         android:orientation="horizontal">
 
         <EditText
+           android:nextFocusDown="@id/send"
             android:layout_gravity="center"
             android:background="@color/colorPowder"
             android:id="@+id/chatText"
@@ -84,6 +94,7 @@
             android:layout_height="40dp" />
 
         <Button
+            android:id="@+id/send"
             android:text="SEND"
             android:layout_gravity="center"
             android:textColor="@color/colorPowder"

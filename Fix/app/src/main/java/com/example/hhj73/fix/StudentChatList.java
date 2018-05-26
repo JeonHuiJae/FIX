@@ -1,8 +1,8 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,50 +18,43 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class MatchingActivity extends AppCompatActivity {
-
-    ListView matchList;
+public class StudentChatList extends AppCompatActivity {
+ListView chatList;
     ArrayList<String> users;
     ArrayAdapter arrayAdapter;
     DatabaseReference databaseReference;
     String curUser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_matching);
+        setContentView(R.layout.activity_student_chat_list);
 
         init();
     }
 
-    public void init() {
+    private void init()
+    {
         Intent intent = getIntent();
-        curUser = intent.getStringExtra("curUser");
-        matchList = (ListView) findViewById(R.id.matchList);
+        curUser = intent.getStringExtra("id");
+        chatList = (ListView) findViewById(R.id.MyChatList);
         users = new ArrayList<>();
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, users);
-        matchList.setAdapter(arrayAdapter);
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        chatList.setAdapter(arrayAdapter);
+        databaseReference = FirebaseDatabase.getInstance().getReference("chats");
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
-                String Mgender = dataSnapshot.child(curUser).child("gender").getValue().toString();
-                if(Mgender.equals("true")) //어르신과 청년의 저장이 달라서 바꿔놨음^^
-                    Mgender = "female";
-                else
-                    Mgender = "male";
-                String Sgender;
-                Boolean type;
-                while(child.hasNext()) {
-                    String id = child.next().getKey();
-                    Sgender = dataSnapshot.child(id).child("gender").getValue().toString();
-                    type = Boolean.parseBoolean(dataSnapshot.child(id).child("type").getValue().toString());
 
-                    if(!id.equals(curUser) && type && Mgender.equals(Sgender)) { //나랑 성별 같은 어르신만.
-                        users.add(id);
+                while(child.hasNext()) {
+                    String roomName = child.next().getKey().toString();
+                    int idx = roomName.indexOf("+");
+                    String StudentId = roomName.substring(0, idx);
+
+                    if(StudentId.equals(curUser)) { //내가 속한 방
+                        users.add(roomName.substring(idx+1));
                         arrayAdapter.notifyDataSetChanged();
                     }
                 }
@@ -73,13 +66,13 @@ public class MatchingActivity extends AppCompatActivity {
             }
         });
 
-        matchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        chatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String str = (String) adapterView.getItemAtPosition(i);
-                Toast.makeText(MatchingActivity.this, str, Toast.LENGTH_SHORT).show();
+                Toast.makeText(StudentChatList.this, str, Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(getApplicationContext(), SeniorDetail.class);
+                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
                 intent.putExtra("myID", curUser);
                 intent.putExtra("urID", str);
                 startActivity(intent);
@@ -89,16 +82,10 @@ public class MatchingActivity extends AppCompatActivity {
 
     }
 
-    public void profile(View view) { //프로필
-        Intent intent = new Intent(this, StudentEditProfile.class);
-        intent.putExtra("id", curUser);
-        startActivity(intent);
-        overridePendingTransition(0, 0);
-    }
-
-    public void ChatList(View view) {
-        Intent intent = new Intent(this, StudentChatList.class);
-        intent.putExtra("id",curUser);
+    //뒤로가기
+    public void back(View view) {
+        Intent intent = new Intent(this, MatchingActivity.class);
+        intent.putExtra("curUser",curUser);
         startActivity(intent);
         overridePendingTransition(0, 0);
     }

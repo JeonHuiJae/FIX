@@ -36,14 +36,16 @@
     </LinearLayout>
 
         <ImageView
+            android:id="@+id/profilePhoto"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="#eeeeee"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_width="110dp"
+            android:layout_height="110dp" />
+
         <TextView
-            android:text="Profile Message"
-            android:layout_marginTop="10dp"
+            android:id="@+id/profileMessage"
+            android:text="I love my family...---(-@"
             android:gravity="center"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
@@ -65,7 +67,8 @@
             android:textSize="22dp"
             android:background="@drawable/mainbtn2"
             android:layout_width="260dp"
-            android:layout_height="70dp" />
+            android:layout_height="70dp"
+            android:onClick="editProfile"/>
 
         <Button
             android:layout_gravity="center"
