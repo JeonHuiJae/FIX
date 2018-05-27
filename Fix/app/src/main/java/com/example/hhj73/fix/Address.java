@@ -1,6 +1,7 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class Address extends AppCompatActivity {
 
@@ -29,6 +32,12 @@ public class Address extends AppCompatActivity {
 
     TextView tv ;
     Boolean activity;
+
+
+
+    String  lnglataddress;
+    double  Longitude;
+    double  Latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,11 +120,22 @@ public class Address extends AppCompatActivity {
         add.putExtra("ADDRESS",confirm);
         add.putExtra("ADDCOUNT",true);
 
-        startActivity(add);
+
+
+        Geocoder geocoder = new Geocoder(this);
+        try{
+            List<android.location.Address> list = geocoder.getFromLocationName(lnglataddress, 5);
+            Latitude = list.get(0).getLatitude();
+            Longitude = list.get(0).getLongitude();
+        }catch(Exception e){
+        }
+
+        String straddress = "lat :"+Latitude+"lng:"+Longitude;
+        Toast.makeText(this,straddress,Toast.LENGTH_SHORT).show();     //나중에 없애기
 
         //Toast.makeText(this, confirm, Toast.LENGTH_SHORT).show();      //리턴 값을 테스트
 
-
+        startActivity(add);
     }
 
     private class AndroidBridge {
@@ -128,6 +148,8 @@ public class Address extends AppCompatActivity {
                     init_webView();   //초기화 안하는 경우 이상해짐 !
 
                     confirm=("("+ arg1+")"+ arg2+ arg3);  // String 전송
+
+                    lnglataddress=arg2;//경도 위도 검색 할때 쓰는 주소
                 }
             });
         }
