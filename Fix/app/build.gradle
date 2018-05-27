@@ -37,6 +37,8 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+
+    implementation 'com.bulong.rudeness:rudeness:latest.release@aar'    //해상도 lib
 }
 
 
