@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
@@ -25,6 +26,7 @@ float lot, lat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_filter);
         //init
         address = (EditText)findViewById(R.id.FilterAddress);
@@ -65,6 +67,7 @@ float lot, lat;
         intent.putExtra("miter",resultMiter);
         intent.putExtra("minCost",MinCost);
         intent.putExtra("maxCost",MaxCost);
+        setResult(RESULT_OK);
         finish();
     }
 
@@ -77,7 +80,7 @@ float lot, lat;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ADDRESS){
+        if (requestCode == ADDRESS && resultCode == RESULT_OK){
                  address.setText(data.getStringExtra("ASSRESS"));
                  String location = data.getStringExtra("location");
             int idx = location.indexOf("/");
