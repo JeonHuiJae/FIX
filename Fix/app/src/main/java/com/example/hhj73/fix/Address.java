@@ -120,8 +120,6 @@ public class Address extends AppCompatActivity {
         add.putExtra("ADDRESS",confirm);
         add.putExtra("ADDCOUNT",true);
 
-
-
         Geocoder geocoder = new Geocoder(this);
         try{
             List<android.location.Address> list = geocoder.getFromLocationName(lnglataddress, 5);
@@ -134,6 +132,7 @@ public class Address extends AppCompatActivity {
         Toast.makeText(this,straddress,Toast.LENGTH_SHORT).show();     //나중에 없애기
 
         //Toast.makeText(this, confirm, Toast.LENGTH_SHORT).show();      //리턴 값을 테스트
+        add.putExtra("location",Latitude+"/"+Longitude);
 
         startActivity(add);
     }

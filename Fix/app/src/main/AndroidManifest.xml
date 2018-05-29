@@ -53,7 +53,8 @@
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
         <activity android:name=".SeniorFirst" />
         <activity android:name=".StudentEditProfile" />
-        <activity android:name=".StudentChatList"></activity>
+        <activity android:name=".StudentChatList" />
+        <activity android:name=".Filter"></activity>
     </application>
 
 </manifest>
