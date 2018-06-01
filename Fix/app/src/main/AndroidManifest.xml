@@ -54,8 +54,12 @@
         <activity android:name=".SeniorFirst" />
         <activity android:name=".StudentEditProfile" />
         <activity android:name=".StudentChatList" />
-        <activity android:name=".Filter"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"></activity>
+        <activity
+            android:name=".Filter"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+        <activity android:name=".MatchedMain" />
+        <activity android:name=".SeniorChatList" />
+        <activity android:name=".ChatActivitySenior"></activity>
     </application>
 
 </manifest>

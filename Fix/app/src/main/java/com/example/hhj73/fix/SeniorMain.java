@@ -99,4 +99,10 @@ public class SeniorMain extends AppCompatActivity {
             });
         }
     }
+
+    public void chatList(View view) {//채팅리스트
+        Intent intent = new Intent(this, SeniorChatList.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
+    }
 }
