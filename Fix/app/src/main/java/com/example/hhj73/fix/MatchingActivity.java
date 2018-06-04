@@ -15,10 +15,35 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
+
+
+class ValueComparator implements Comparator<String> {
+
+    Map<String, Double> base;
+
+    public ValueComparator(Map<String, Double> base) {
+        this.base = base;
+    }
+
+    // Note: this comparator imposes orderings that are inconsistent with equals.
+    public int compare(String a, String b) {
+        if (base.get(a) >= base.get(b)) { //반대로 하면 오름차순 <=
+            return -1;
+        } else {
+            return 1;
+        } // returning 0 would merge keys
+    }
+}
 
 public class MatchingActivity extends AppCompatActivity {
 
@@ -29,16 +54,16 @@ public class MatchingActivity extends AppCompatActivity {
     String curUser;
     final int FILTER = 123;
 
-    float limit;//거리제한
+    double limit;//거리제한
     float pet;
     float help;
     float smoke;
     float curfew;
-    float lot, lat;
+    double lot, lat;
     int minCost, maxCost;
 
-    HashMap<String, Double> distance;
     HashMap<String, Double> score;
+    HashMap<String, String> scoreData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +81,8 @@ public class MatchingActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, users);
         matchList.setAdapter(arrayAdapter);
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
-        distance = new HashMap<>();
         score = new HashMap<>();
+        scoreData = new HashMap<>();
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -126,112 +151,151 @@ public class MatchingActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
 
-        if(requestCode == FILTER && requestCode == RESULT_OK){ //데이터값 입력받을때 예외처리 필요.
-            lot = data.getFloatExtra("lot",0);// 기준점 위치
-            lat = data.getFloatExtra("lat",0);
-            limit = data.getFloatExtra("miter",0);//미터제한
+        if(requestCode == FILTER && resultCode == RESULT_OK) { //데이터값 입력받을때 예외처리 필요.
+            lot = data.getDoubleExtra("lot", 0);// 기준점 위치
+            lat = data.getDoubleExtra("lat", 0);
+            limit = data.getDoubleExtra("miter", Double.MAX_VALUE);//미터제한
 
-            pet = data.getFloatExtra("pet",0); //생활 속성
-            help = data.getFloatExtra("help",0);
-            smoke = data.getFloatExtra("smoke",0);
-            curfew = data.getFloatExtra("curfew",0);
+            pet = data.getFloatExtra("pet", 0); //생활 속성
+            help = data.getFloatExtra("help", 0);
+            smoke = data.getFloatExtra("smoke", 0);
+            curfew = data.getFloatExtra("curfew", 0);
 
-            minCost = data.getIntExtra("minCost",0); // 가격
-            maxCost = data.getIntExtra("maxCost",0);
+            minCost = data.getIntExtra("minCost", 0); // 가격
+            maxCost = data.getIntExtra("maxCost", -1);
 
             //======================================================▼구현해 주세요^^▼===============================================================//
+
+
+            //단계별로 점수를 계산을 한 다음 최종 점수로 순서를 가린다.
+            // 총점 100점중 거리 40, 생활 30, 가격 30 으로 나눠진다.
 
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     double DminScore = Double.MAX_VALUE; // 거리 최소
+                    double AmaxScore = Double.MIN_VALUE; // 속성점수 최대
+                    double CmaxScore = Double.MIN_VALUE; // 가격 최대
 
-                    for(int i=0; i<users.size(); i++) {
+                    Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
+                    ArrayList keySet = new ArrayList(score.keySet());
+
+                    for (int i = 0; i < users.size(); i++) {
                         User user = dataSnapshot.child(users.get(i)).getValue(User.class);
 
                         // 거리 계산
                         // 거리최소 DminScore, 거리 저장 D_score
+                        double D_score = 0;
+                        if (lot != 0 && lat != 0) {
+                            String str = user.location;
+                            StringTokenizer stringTokenizer = new StringTokenizer(str, "/");
+                            float _lat = Float.parseFloat(stringTokenizer.nextToken());
+                            float _lot = Float.parseFloat(stringTokenizer.nextToken());
+                            double dis = Math.sqrt((lat - _lat) * (lat - _lat) + (lot - _lot) * (lot - _lot));
 
-                        String str = user.location;
-                        StringTokenizer stringTokenizer = new StringTokenizer(str, "/");
-                        float _lat = Float.parseFloat(stringTokenizer.nextToken());
-                        float _lot = Float.parseFloat(stringTokenizer.nextToken());
-                        double dis = Math.sqrt((lat-_lat)*(lat-_lat) + (lot-_lot)*(lot-_lot));
-                        double D_score = dis / 300 * (-5); // 거리 점수 저장
-                        distance.put(user.getId(), dis);
-                        score.put(user.getId(), D_score);
-                        if(D_score < DminScore) { // 거리 최소 저장됨
-                            DminScore = D_score;
+                            D_score = dis / 300 * (-5); // 거리 점수 저장
+                            if (D_score > limit)
+                                D_score = -1; // 범위 넘어갈 때 -1
+                            else {
+                                if (D_score < DminScore) { // 거리 최소 저장됨
+                                    DminScore = D_score;
+                                }
+                            }
                         }
-
+                        Toast.makeText(MatchingActivity.this, "거리완료", Toast.LENGTH_SHORT).show();
                         // 속성 계산
                         // 속성 최대 AmaxScore 속성점수 저장 A_score
 
-                        double AmaxScore = Double.MIN_VALUE; // 속성점수 최대
                         double A_score = 0; // 속성점수 저장
                         User me = dataSnapshot.child(curUser).getValue(User.class);
-                        if(me.getCurfew() == user.getCurfew()) {
-                            A_score += same(curfew);
+                        if (curfew != 0) {
+                            if (me.getCurfew() == user.getCurfew()) {
+                                A_score += same(curfew);
+                            } else {
+                                A_score += diff(curfew);
+                            }
                         }
-                        else {
-                            A_score += diff(curfew);
+                        if (help != 0) {
+                            if (me.getHelp() == user.getHelp()) {
+                                A_score += same(help);
+                            } else {
+                                A_score += diff(help);
+                            }
                         }
-                        if(me.getHelp() == user.getHelp()) {
-                            A_score += same(help);
+                        if (pet != 0) {
+                            if (me.getPet() == user.getPet()) {
+                                A_score += same(pet);
+                            } else {
+                                A_score += diff(pet);
+                            }
                         }
-                        else {
-                            A_score += diff(help);
+                        if (smoke != 0) {
+                            if (me.getSmoking() == user.getSmoking()) {
+                                A_score += same(smoke);
+                            } else {
+                                A_score += diff(smoke);
+                            }
                         }
-                        if(me.getPet() == user.getPet()) {
-                            A_score += same(pet);
-                        }
-                        else {
-                            A_score += diff(pet);
-                        }
-                        if(me.getSmoking() == user.getSmoking()) {
-                            A_score += same(smoke);
-                        }
-                        else {
-                            A_score += diff(smoke);
-                        }
-                        if( AmaxScore < A_score) // 속성 최고저장.
-                            AmaxScore = A_score;
 
+                        if (AmaxScore < A_score) // 속성 최고저장.
+                            AmaxScore = A_score;
+                        Toast.makeText(MatchingActivity.this, "속성완료", Toast.LENGTH_SHORT).show();
 
                         // 가격 계산
+                        // 가격 최대 CmaxScore , 가격 저장 C_score
 
+                        double userCost = Double.parseDouble(user.cost);
+                        double C_score = 0;
+
+                        C_score = (userCost / 1000);// 1000원 단워로 점수화
+                        if (CmaxScore < C_score) // 속성 최고저장.
+                            CmaxScore = C_score;
+
+                        if (maxCost != -1 || minCost != 0) {
+                            if (userCost > minCost && userCost < maxCost)
+                                C_score = C_score / 2; // 범위안에 들어가면 반으로
+                            if (maxCost == -1 && userCost > minCost) {
+                                C_score = C_score / 2;
+                            } else { // 범위에 안들어감
+                                C_score = -1;
+                            }
+                        }
+                        Toast.makeText(MatchingActivity.this, "가격완료", Toast.LENGTH_SHORT).show();
+
+                        scoreData.put(user.getId(), D_score + "/" + A_score + "/" + C_score);//총 데이터 저장
                     }
 
 
-                    ArrayList keySet = new ArrayList(score.keySet());
+                    for (int i = 0; i < scoreData.size(); i++) { // 최종점수 계산
+                        String str = scoreData.get(i);
+                        StringTokenizer stringTokenizer = new StringTokenizer(str, "/");
+                        double D_s = Double.parseDouble(stringTokenizer.nextToken()); // 거리 점수
+                        double A_s = Double.parseDouble(stringTokenizer.nextToken()); // 속성 점수
+                        double C_s = Double.parseDouble(stringTokenizer.nextToken()); // 가격 점수
 
-                    for(int j=0; j<score.size(); j++) {
-                        double temp;
-                        temp = (double) keySet.get(j);
-                        temp = ((temp + maxScore) / maxScore )*40;
-                        score.put((String) keySet.get(j), temp);
+                        double DmaxScore = DminScore * (-1);
+                        if (D_s != -1) {// 선택했을 떄만
+                            D_s = ((D_s + DmaxScore) / DmaxScore) * 40; // 거리점수 계산완료
+                        } else
+                            continue;
+
+                        A_s = A_s / AmaxScore * 30; // 속성점수 계산완료
+
+                        if (C_s != -1) {// 범위안에 있을 때만
+                            C_s = (Math.sqrt((C_s - CmaxScore)) / CmaxScore) * 30;
+                            score.put((String) keySet.get(i), D_s + A_s + C_s); //총점 100점 점수 넣기
+                        }
                     }
+                    //점수 내림차순으로 정렬한 후 에 리스트 출력
+                    ValueComparator vc = new ValueComparator(score);
+                    TreeMap<String, Double> sorted_score = new TreeMap<String, Double>(vc); // 정렬
 
-                    // 생활 궁합 점수
+                    for (Map.Entry<String, Double> entry : sorted_score.entrySet()) {
+                        //정렬한 리스트에서 순번을 배열번호로 변경하여 원본 리스트에서 추출
 
-
-
-                    ArrayList arrayList = new ArrayList();
-
-                    for(int k=0; k<users.size(); k++) {
-
+                        users.add(entry.getKey() + ": " + score.get(entry.getKey()));
+                        arrayAdapter.notifyDataSetChanged();
                     }
-
-                    for(int j=0; j<score.size(); j++) {
-                        double temp;
-                        temp = (double) arrayList.get(j);
-                        temp = temp / maxScore * 30;
-
-                        score.put((String) keySet.get(j), temp);
-                    }
-
-
-
                 }
 
                 @Override
@@ -239,72 +303,6 @@ public class MatchingActivity extends AppCompatActivity {
 
                 }
             });
-
-            //단계별로 점수를 계산을 한 다음 최종 점수로 순서를 가린다.
-            // 총점 100점중 거리 40, 생활 30, 가격 30 으로 나눠진다.
-
-            HashMap<String, Double> distance = new HashMap<>();
-
-            //★ 1. 거리 계산 (기준접으로부터 미터제한까지 그 안에 들어가는 어르신만 나온다.)
-            if(lot != 0 && lat !=0){
-                // null값 아니면 기준점으로부터 어르신데이터 위도경도 -> 거리계산 (<어르신아이디, 거리차>해쉬맵 쓰는게 간단할듯)
-
-
-                if(limit > 0) {
-                    // 거리제한 있으면 제한 넘어가는것 제외
-                }
-                //오름차순 정렬
-            }
-            //정렬된 거리차해쉬맵 에서 차이0~300m는 0점 300~600m 는 -5점 300m 단위로 5씩 내려가게 점수준다.
-            //점수 최저값이 -20이라면 모든 점수에 20을 더한다.
-            //20(최고점)으로 나누고 40을 곱한다. (최고점을 40으로 맞추기 위해)
-
-            //★ 2. 생활 궁합 (same, diff 함수 이용)
-            float sum = 0;
-
-            if(pet != 0){//필터링 선택했을 때만.
-                // 어르신과 비교
-                //같을때
-                sum += same(pet);
-                //다를때
-                sum += diff(pet);
-            }
-            if(help !=0){
-                // 어르신과 비교
-                //같을때
-                sum += same(help);
-                //다를때
-                sum += diff(help);
-            }
-            if(curfew !=0){
-                // 어르신과 비교
-                //같을때
-                sum += same(curfew);
-                //다를때
-                sum += diff(curfew);
-            }
-            if(smoke !=0){
-                // 어르신과 비교
-                //같을때
-                sum += same(smoke);
-                //다를때
-                sum += diff(smoke);
-            }
-
-            //4가지 모두 합계한 결과에 최고점으로 나누고 30을 곱한다.
-
-
-            //★ 3. 가격 계산 (<어르신아이디, 가격>해쉬맵 사용)
-            if(maxCost != 0){//가격 제한 뒀을 때.
-                //가격 제한 안의 값만 추려낸다.
-            }
-            // 오름차순으로 정렬
-            // 가장 높은가격 0으로 시작해서 낮아질수록 1점씩더 큰 값으로 더한다.
-            // 최고점으로 나누고 30을 곱한다.
-
-            //★ 4. 최종 계산
-            // 3가지 점수를 ID 별로 하나의 해쉬맵(최종점수)으로 합산한다.
-            // 내림차순으로 정렬하고 출력한다.
         }
     }
 

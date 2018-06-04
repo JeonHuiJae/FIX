@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 public class Filter extends Activity {
 
@@ -21,7 +22,7 @@ RatingBar help;
 RatingBar pet;
 RatingBar smoke;
 RatingBar curfew;
-float lot, lat;
+double lot, lat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +48,26 @@ float lot, lat;
     }
 
     public void setFilter(View view) {//필터 설정 ㄱ ㄱ
-        float petRate, helpRate, smokeRate, curfewRate, resultMiter, MinCost, MaxCost;
-        String resultAddress;
+        float petRate, helpRate, smokeRate, curfewRate;
+        int MinCost, MaxCost;
+        double resultMeter;
+
         petRate = pet.getRating();
         helpRate = help.getRating();
         smokeRate  = smoke.getRating();
         curfewRate = curfew.getRating();
-        resultMiter = Float.parseFloat(miter.getText().toString());
+        if(!miter.getText().toString().equals(""))
+        resultMeter = Double.parseDouble(miter.getText().toString());
+        else resultMeter = Double.MAX_VALUE;
+        if(!minCost.getText().toString().equals(""))
         MinCost = Integer.parseInt( minCost.getText().toString());
+        else MinCost = 0;
+        if(!maxCost.getText().toString().equals(""))
         MaxCost = Integer.parseInt(maxCost.getText().toString());
+        else MaxCost = -1;
 
+        lat = 37.472904;
+        lot = 127.051655;
         Intent intent = new Intent(this, MatchingActivity.class);
         intent.putExtra("help",helpRate);
         intent.putExtra("curfew",curfewRate);
@@ -64,10 +75,10 @@ float lot, lat;
         intent.putExtra("pet",petRate);
         intent.putExtra("lot",lot);
         intent.putExtra("lat",lat);
-        intent.putExtra("miter",resultMiter);
+        intent.putExtra("miter",resultMeter);
         intent.putExtra("minCost",MinCost);
         intent.putExtra("maxCost",MaxCost);
-        setResult(RESULT_OK);
+        setResult(RESULT_OK, intent);
         finish();
     }
 

@@ -33,8 +33,6 @@ public class Address extends AppCompatActivity {
     TextView tv ;
     Boolean activity;
 
-
-
     String  lnglataddress;
     double  Longitude;
     double  Latitude;
