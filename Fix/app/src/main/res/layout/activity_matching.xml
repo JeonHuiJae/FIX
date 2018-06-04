@@ -54,6 +54,7 @@
 
     <!--필터링 재설정하는 버튼-->
     <Button
+        android:onClick="filter"
         android:text="FILTER SETTING"
         android:textSize="20dp"
         android:textColor="@color/colorPowder"

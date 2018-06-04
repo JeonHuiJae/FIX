@@ -46,7 +46,7 @@ public class SelectPhotoMode extends Activity {
     View view;
     private static String imagePath = "";
     Bitmap bitmapPhoto;
-    Uri filePath;
+    Uri filePath = null;
     String id;
     Boolean type;//어르신 true
 
@@ -208,15 +208,15 @@ public class SelectPhotoMode extends Activity {
             fileName = "Senior/"+id;
         else
             fileName = "Student/"+id;
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com")
-                .child("Profile/"+fileName); //올리기
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com").child("Profile/"+fileName); //올리기
+        if(filePath!=null){
         storageRef.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                setResult(RESULT_OK);
-                finish();
-            }
-        });
 
+            }
+        });}
+        setResult(RESULT_OK);
+        finish();
     }
 }

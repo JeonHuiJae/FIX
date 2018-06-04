@@ -81,6 +81,7 @@ public class StudentJoinActivity extends Activity {
     boolean help;
     String phoneNumber;
     String uniqueness;
+    String location;//위도 경도
 
     EditText editId;
     EditText editPw1;
@@ -137,6 +138,7 @@ public class StudentJoinActivity extends Activity {
         editId.setText(intent.getStringExtra("id"));
         editPw1.setText(intent.getStringExtra("pw1"));
         editPw2.setText(intent.getStringExtra("pw2"));
+        location = intent.getStringExtra("location");
         if(intent.getBooleanExtra("gender",true)==true)
             femaleButton.setChecked(true);
         else
@@ -171,7 +173,7 @@ public class StudentJoinActivity extends Activity {
         // 학생회원 가입 완료
         if(emailPassed) {
 
-            User user = new User(false, id, pw, name, null, gender, phoneNumber, strAddress, null, smoking, curfew, pet, help, uniqueness);
+            User user = new User(false, id, pw, name, null, gender, phoneNumber, strAddress, null, smoking, curfew, pet, help, uniqueness, location);
             databaseReference.child(id).setValue(user);
 
             FirebaseStorage storage = FirebaseStorage.getInstance();

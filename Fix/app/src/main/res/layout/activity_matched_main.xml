@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/matched"
+    android:orientation="vertical"
+    tools:context=".MatchedMain">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:background="@color/colorMint"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="22dp"
+                android:textColor="@color/colorPowder"
+                android:gravity="center"
+                android:text="XYLOPHONE HOUSE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="70dp"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:text="asdf x ㅁㄴㅇㄹ"
+            android:layout_width="match_parent"
+            android:layout_height="80dp" />
+        <LinearLayout
+            android:layout_marginTop="160dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="100dp">
+            <ImageView
+                android:id="@+id/p_senior"
+                android:background="@color/colorBrightMint"
+                android:layout_marginRight="75dp"
+                android:layout_width="85dp"
+                android:layout_height="85dp" />
+            <ImageView
+                android:id="@+id/p_student"
+                android:background="@color/colorPink"
+                android:layout_width="85dp"
+                android:layout_height="85dp" />
+        </LinearLayout>
+        <Button
+            android:textColor="@color/colorPowder"
+            android:textSize="30dp"
+            android:text="CHAT"
+            android:layout_marginTop="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/mainbtn1"
+            android:layout_width="180dp"
+            android:layout_height="60dp" />
+        <Button
+            android:textColor="@color/colorPowder"
+            android:textSize="25dp"
+            android:text="EMERGENCY"
+            android:layout_marginTop="150dp"
+            android:layout_gravity="center"
+            android:background="@drawable/mainbtn2"
+            android:layout_width="220dp"
+            android:layout_height="70dp" />
+        <LinearLayout
+            android:background="@color/colorMint"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:layout_height="65dp">
+            <Button
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPowder"
+                android:background="@color/colorDarkMint"
+                android:textSize="25dp"
+                android:text="\?"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+        </LinearLayout>
+    </FrameLayout>
+
+
+
+
+</LinearLayout>

@@ -71,6 +71,7 @@
             android:onClick="editProfile"/>
 
         <Button
+            android:onClick="chatList"
             android:layout_gravity="center"
             android:text="CHAT"
             android:textColor="@color/colorPowder"

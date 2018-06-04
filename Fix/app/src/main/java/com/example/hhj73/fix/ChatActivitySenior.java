@@ -1,8 +1,8 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -22,10 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class ChatActivity extends AppCompatActivity {
-
+public class ChatActivitySenior extends AppCompatActivity {
     EditText editChat;
-    TextView urName;
     ArrayList<ChatData> chats;
     // ArrayAdapter arrayAdapter;
     RecyclerView chatList;
@@ -34,6 +32,7 @@ public class ChatActivity extends AppCompatActivity {
     String myName;
     String myID;
     DatabaseReference databaseReference;
+    TextView urName;
     String urID;
     String users[];
     String room;
@@ -41,8 +40,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
-
+        setContentView(R.layout.activity_chat_senior);
         init();
     }
 
@@ -59,11 +57,11 @@ public class ChatActivity extends AppCompatActivity {
         chatList.setAdapter(chatAdapter);
 
         Intent intent = getIntent();
-   //     myName = intent.getStringExtra("name");
+        //     myName = intent.getStringExtra("name");
         myID = intent.getStringExtra("myID");
 
         // 상대방
-   //     urName = "honghjin";
+        //     urName = "honghjin";
         urID = intent.getStringExtra("urID");
 
 
@@ -107,7 +105,7 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Toast.makeText(ChatActivity.this, "삭제됨 ㄷㄷ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "삭제됨 ㄷㄷ", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -149,7 +147,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
     public void contractLayoutBtn(View view) { //계약서 버튼
-        FrameLayout  layout = (FrameLayout)findViewById(R.id.contractLayout);
+        FrameLayout layout = (FrameLayout)findViewById(R.id.contractLayout);
         layout.setVisibility(View.VISIBLE);
     }
 
@@ -159,7 +157,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void back(View view) { //채팅목록으로 뒤로가기
-        Intent intent = new Intent(this, StudentChatList.class);
+        Intent intent = new Intent(this, SeniorChatList.class);
         intent.putExtra("id",myID);
         startActivity(intent);
         overridePendingTransition(0, 0);
