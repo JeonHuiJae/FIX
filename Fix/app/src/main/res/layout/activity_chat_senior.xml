@@ -131,6 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp">
                 <ImageView
+                    android:id="@+id/urProfile"
                     android:layout_gravity="center|bottom"
                     android:background="@color/colorPowder"
                     android:layout_width="100dp"
@@ -139,12 +140,12 @@
 
                 <!--전화걸기-->
                 <Button
-                    android:layout_marginRight="50dp"
+                    android:layout_marginRight="40dp"
                     android:layout_gravity="bottom|right"
                     android:text="call"
-                    android:textSize="5dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
+                    android:textSize="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
             </FrameLayout>
             <TextView
                 android:id="@+id/UrName"
@@ -168,23 +169,26 @@
                     android:textColor="@color/colorPowder"
                     android:background="@drawable/mainbtn2"
                     android:layout_width="match_parent"
-                    android:layout_height="43dp" />
+                    android:layout_height="45dp" />
 
                 <!--수정요청 버튼-->
                 <Button
                     android:background="@drawable/mainbtn1"
-                    android:text="선택사항 수정요청"
+                    android:text="선택사항 수정동의"
                     android:textColor="@color/colorPowder"
                     android:textStyle="bold"
-                    android:layout_width="250dp"
-                    android:layout_height="43dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp" />
 
                 <!--계약 리스트 들어갈 부분-->
-                <ListView
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="210dp">
-
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 </ListView>
+                </ScrollView>
 
                 <!--제출버튼-->
                 <Button
