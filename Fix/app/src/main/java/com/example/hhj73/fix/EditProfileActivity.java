@@ -41,9 +41,7 @@ public class EditProfileActivity extends Activity {
         message = (EditText)findViewById(R.id.profileMessageInput);
         message.setText(intent.getStringExtra("preMessage"));
         profileImageView = (ImageView)findViewById(R.id.profilePhotoInput);
-        profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
-        if(Build.VERSION.SDK_INT>=21)
-            profileImageView.setClipToOutline(true);
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
         //사진 검사
@@ -61,6 +59,9 @@ public class EditProfileActivity extends Activity {
             public void onFailure(@NonNull Exception e) {
             }
         });
+        profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
+        if(Build.VERSION.SDK_INT>=21)
+            profileImageView.setClipToOutline(true);
     }
 
 
@@ -79,7 +80,6 @@ public class EditProfileActivity extends Activity {
         //사진 검사
         StorageReference pathRef = storageReference.child("Profile/Senior/"+id);
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
-
             @Override
             public void onSuccess(Uri uri) {//있음
                 profileImageView.setImageURI(null);
@@ -91,6 +91,7 @@ public class EditProfileActivity extends Activity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Toast.makeText(EditProfileActivity.this, "로딩지연", Toast.LENGTH_SHORT).show();
             }
         });
     }

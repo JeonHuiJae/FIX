@@ -1,21 +1,32 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +49,8 @@ public class ChatActivity extends AppCompatActivity {
     String users[];
     String room;
 
+    ImageView urPro;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +60,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void init() {
+        urPro = (ImageView)findViewById(R.id.urProfile);
         urName = (TextView)findViewById(R.id.UrName);
         databaseReference = FirebaseDatabase.getInstance().getReference("chats");
         editChat = (EditText) findViewById(R.id.chatText);
@@ -98,6 +112,28 @@ public class ChatActivity extends AppCompatActivity {
                 chats.add(chatData);
                 chatAdapter.notifyDataSetChanged();
                 chatList.smoothScrollToPosition(chatAdapter.getItemCount() - 1); // 아래로 스크롤
+
+                //상대 프로필
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
+                //사진 검사
+                StorageReference pathRef = storageReference.child("Profile/Senior/"+urID);
+                pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
+                    @Override
+                    public void onSuccess(Uri uri) {//있음
+                        Glide.with(getApplicationContext())
+                                .load(uri)
+                                .centerCrop()
+                                .into(urPro);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+                urPro.setBackground(new ShapeDrawable(new OvalShape()));
+                if(Build.VERSION.SDK_INT>=21)
+                    urPro.setClipToOutline(true);
             }
 
             @Override

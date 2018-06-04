@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -55,11 +56,11 @@ public class StudentEditProfile extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
         //사진 검사
-        StorageReference pathRef = storageReference.child("Profile/Student/"+id);
+        StorageReference  pathRef= storageReference.child("Profile/Student/"+id);
+
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
 
             @Override
@@ -73,6 +74,7 @@ public class StudentEditProfile extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Toast.makeText(StudentEditProfile.this, "로딩지연", Toast.LENGTH_SHORT).show();
             }
         });
     }

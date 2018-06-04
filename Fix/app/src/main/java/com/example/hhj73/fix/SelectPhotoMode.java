@@ -213,10 +213,9 @@ public class SelectPhotoMode extends Activity {
         storageRef.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
+                setResult(RESULT_OK);
+                finish();
             }
         });}
-        setResult(RESULT_OK);
-        finish();
     }
 }
