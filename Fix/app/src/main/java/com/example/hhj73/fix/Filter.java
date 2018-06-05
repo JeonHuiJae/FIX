@@ -66,8 +66,8 @@ double lot, lat;
         MaxCost = Integer.parseInt(maxCost.getText().toString());
         else MaxCost = -1;
 
-        lat = 37.472904;
-        lot = 127.051655;
+        lat = 37.538153;
+        lot = 127.075394;
         Intent intent = new Intent(this, MatchingActivity.class);
         intent.putExtra("help",helpRate);
         intent.putExtra("curfew",curfewRate);

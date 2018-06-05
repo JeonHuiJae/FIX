@@ -1,6 +1,7 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,28 +23,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 
-
-class ValueComparator implements Comparator<String> {
-
-    Map<String, Double> base;
-
-    public ValueComparator(Map<String, Double> base) {
-        this.base = base;
-    }
-
-    // Note: this comparator imposes orderings that are inconsistent with equals.
-    public int compare(String a, String b) {
-        if (base.get(a) >= base.get(b)) { //반대로 하면 오름차순 <=
-            return -1;
-        } else {
-            return 1;
-        } // returning 0 would merge keys
-    }
-}
 
 public class MatchingActivity extends AppCompatActivity {
 
@@ -89,12 +73,8 @@ public class MatchingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
-                String Mgender = dataSnapshot.child(curUser).child("gender").getValue().toString();
-                if(Mgender.equals("true")) //어르신과 청년의 저장이 달라서 바꿔놨음^^
-                    Mgender = "female";
-                else
-                    Mgender = "male";
-                String Sgender;
+                String Mgender = dataSnapshot.child(curUser).child("gender").getValue().toString(); // 내 성별
+                String Sgender; // 어르신 성별
                 Boolean type;
                 while(child.hasNext()) {
                     String id = child.next().getKey();
@@ -178,7 +158,6 @@ public class MatchingActivity extends AppCompatActivity {
                     double CmaxScore = Double.MIN_VALUE; // 가격 최대
 
                     Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
-                    ArrayList keySet = new ArrayList(score.keySet());
 
                     for (int i = 0; i < users.size(); i++) {
                         User user = dataSnapshot.child(users.get(i)).getValue(User.class);
@@ -191,10 +170,21 @@ public class MatchingActivity extends AppCompatActivity {
                             StringTokenizer stringTokenizer = new StringTokenizer(str, "/");
                             float _lat = Float.parseFloat(stringTokenizer.nextToken());
                             float _lot = Float.parseFloat(stringTokenizer.nextToken());
-                            double dis = Math.sqrt((lat - _lat) * (lat - _lat) + (lot - _lot) * (lot - _lot));
 
-                            D_score = dis / 300 * (-5); // 거리 점수 저장
-                            if (D_score > limit)
+                            Location locationA = new Location("point A");
+                            locationA.setLatitude(lat);
+                            locationA.setLongitude(lot);
+
+                            Location locationB = new Location("point B");
+                            locationB.setLatitude(_lat);
+                            locationB.setLongitude(_lot);
+
+                             double distance = locationA.distanceTo(locationB);
+
+                            Toast.makeText(MatchingActivity.this, user.getName()+": "+distance, Toast.LENGTH_LONG).show();
+
+                            D_score = distance / 300 * (-5); // 거리 점수 저장
+                            if (distance > limit)
                                 D_score = -1; // 범위 넘어갈 때 -1
                             else {
                                 if (D_score < DminScore) { // 거리 최소 저장됨
@@ -202,7 +192,6 @@ public class MatchingActivity extends AppCompatActivity {
                                 }
                             }
                         }
-                        Toast.makeText(MatchingActivity.this, "거리완료", Toast.LENGTH_SHORT).show();
                         // 속성 계산
                         // 속성 최대 AmaxScore 속성점수 저장 A_score
 
@@ -239,7 +228,6 @@ public class MatchingActivity extends AppCompatActivity {
 
                         if (AmaxScore < A_score) // 속성 최고저장.
                             AmaxScore = A_score;
-                        Toast.makeText(MatchingActivity.this, "속성완료", Toast.LENGTH_SHORT).show();
 
                         // 가격 계산
                         // 가격 최대 CmaxScore , 가격 저장 C_score
@@ -260,14 +248,13 @@ public class MatchingActivity extends AppCompatActivity {
                                 C_score = -1;
                             }
                         }
-                        Toast.makeText(MatchingActivity.this, "가격완료", Toast.LENGTH_SHORT).show();
 
-                        scoreData.put(user.getId(), D_score + "/" + A_score + "/" + C_score);//총 데이터 저장
+                        scoreData.put(users.get(i), D_score + "/" + A_score + "/" + C_score);//총 데이터 저장
                     }
-
+                    ArrayList keySet = new ArrayList(scoreData.keySet());
 
                     for (int i = 0; i < scoreData.size(); i++) { // 최종점수 계산
-                        String str = scoreData.get(i);
+                        String str = scoreData.get(keySet.get(i));
                         StringTokenizer stringTokenizer = new StringTokenizer(str, "/");
                         double D_s = Double.parseDouble(stringTokenizer.nextToken()); // 거리 점수
                         double A_s = Double.parseDouble(stringTokenizer.nextToken()); // 속성 점수
@@ -282,21 +269,43 @@ public class MatchingActivity extends AppCompatActivity {
                         A_s = A_s / AmaxScore * 30; // 속성점수 계산완료
 
                         if (C_s != -1) {// 범위안에 있을 때만
-                            C_s = (Math.sqrt((C_s - CmaxScore)) / CmaxScore) * 30;
+                            C_s = (Math.abs((C_s - CmaxScore)) / CmaxScore) * 30;
                             score.put((String) keySet.get(i), D_s + A_s + C_s); //총점 100점 점수 넣기
                         }
                     }
-                    //점수 내림차순으로 정렬한 후 에 리스트 출력
-                    ValueComparator vc = new ValueComparator(score);
-                    TreeMap<String, Double> sorted_score = new TreeMap<String, Double>(vc); // 정렬
 
-                    for (Map.Entry<String, Double> entry : sorted_score.entrySet()) {
-                        //정렬한 리스트에서 순번을 배열번호로 변경하여 원본 리스트에서 추출
-
-                        users.add(entry.getKey() + ": " + score.get(entry.getKey()));
-                        arrayAdapter.notifyDataSetChanged();
+                    //정렬후 출력 해야하는데.
+                    users.clear();
+                    Iterator it = sortByValue(score).iterator();
+                    while(it.hasNext()) {
+                        String temp = (String) it.next();
+                        users.add(temp + " = " + score.get(temp));
                     }
+                    arrayAdapter.notifyDataSetChanged();
                 }
+
+                public List sortByValue(final Map map) {
+
+                    List<String> list = new ArrayList();
+
+                    list.addAll(map.keySet());
+
+                    Collections.sort(list,new Comparator() {
+
+                        public int compare(Object o1,Object o2) {
+
+                            Object v1 = map.get(o1);
+
+                            Object v2 = map.get(o2);
+
+                            return ((Comparable) v2).compareTo(v1);
+                        }
+                    });
+                    //Collections.reverse(list); // 주석시 오름차순
+                    return list;
+                }
+
+
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -305,6 +314,8 @@ public class MatchingActivity extends AppCompatActivity {
             });
         }
     }
+
+
 
     public float same(float imp){ //속성 같을때
         return (Math.abs(3-imp) + 1) * (4f);
