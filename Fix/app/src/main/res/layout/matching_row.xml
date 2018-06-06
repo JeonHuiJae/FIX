@@ -16,7 +16,6 @@
         android:layout_width="80dp"
         android:layout_height="80dp" />
     <LinearLayout
-        android:background=""
         android:orientation="vertical"
         android:layout_weight="2"
         android:layout_width="0dp"

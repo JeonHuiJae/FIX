@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,9 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -26,14 +23,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.TreeMap;
 
 
 public class MatchingActivity extends AppCompatActivity {
 
     ListView matchList;
-    ArrayList<String> users;
-    ArrayAdapter arrayAdapter;
+    ArrayList<User> users;
+    // ArrayAdapter arrayAdapter;
+    MatchingAdapter matchingAdapter;
     DatabaseReference databaseReference;
     String curUser;
     final int FILTER = 123;
@@ -62,8 +59,9 @@ public class MatchingActivity extends AppCompatActivity {
         curUser = intent.getStringExtra("curUser");
         matchList = (ListView) findViewById(R.id.matchList);
         users = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, users);
-        matchList.setAdapter(arrayAdapter);
+//        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, users);
+//        matchList.setAdapter(arrayAdapter);
+
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
         score = new HashMap<>();
         scoreData = new HashMap<>();
@@ -73,17 +71,30 @@ public class MatchingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
-                String Mgender = dataSnapshot.child(curUser).child("gender").getValue().toString(); // 내 성별
-                String Sgender; // 어르신 성별
-                Boolean type;
+
+                User myInfo = dataSnapshot.child(curUser).getValue(User.class); // 내 정보
+//                String Mgender = dataSnapshot.child(curUser).child("gender").getValue().toString(); // 내 성별
+//                String Sgender; // 어르신 성별
+
+                boolean myGender = myInfo.getGender();
+                boolean Sgender;
+
                 while(child.hasNext()) {
                     String id = child.next().getKey();
-                    Sgender = dataSnapshot.child(id).child("gender").getValue().toString();
-                    type = Boolean.parseBoolean(dataSnapshot.child(id).child("type").getValue().toString());
+                    User senior = dataSnapshot.child(id).getValue(User.class);
+                    // Sgender = dataSnapshot.child(id).child("gender").getValue().toString();
+                    Sgender = senior.getGender(); // 어르신 성별
+                    boolean type = senior.getType();
+                    // type = Boolean.parseBoolean(dataSnapshot.child(id).child("type").getValue().toString());
 
-                    if(!id.equals(curUser) && type && Mgender.equals(Sgender)) { //나랑 성별 같은 어르신만.
-                        users.add(id);
-                        arrayAdapter.notifyDataSetChanged();
+//                    if(!id.equals(curUser) && type && Mgender.equals(Sgender)) { //나랑 성별 같은 어르신만.
+//                        users.add(id);
+//                        matchingAdapter.notifyDataSetChanged();
+//                    }
+
+                    if(myGender == Sgender && type) { // 나랑 성별 같은 어르신
+                        users.add(senior);
+                        // matchingAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -160,13 +171,13 @@ public class MatchingActivity extends AppCompatActivity {
                     Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
 
                     for (int i = 0; i < users.size(); i++) {
-                        User user = dataSnapshot.child(users.get(i)).getValue(User.class);
-
+                        // User user = dataSnapshot.child(users.get(i)).getValue(User.class);
+                        User user = dataSnapshot.child(users.get(i).getId()).getValue(User.class);
                         // 거리 계산
                         // 거리최소 DminScore, 거리 저장 D_score
                         double D_score = 0;
                         if (lot != 0 && lat != 0) {
-                            String str = user.location;
+                            String str = user.getLocation();
                             StringTokenizer stringTokenizer = new StringTokenizer(str, "/");
                             float _lat = Float.parseFloat(stringTokenizer.nextToken());
                             float _lot = Float.parseFloat(stringTokenizer.nextToken());
@@ -249,7 +260,7 @@ public class MatchingActivity extends AppCompatActivity {
                             }
                         }
 
-                        scoreData.put(users.get(i), D_score + "/" + A_score + "/" + C_score);//총 데이터 저장
+                        scoreData.put(users.get(i).getId(), D_score + "/" + A_score + "/" + C_score);//총 데이터 저장
                     }
                     ArrayList keySet = new ArrayList(scoreData.keySet());
 
@@ -279,9 +290,14 @@ public class MatchingActivity extends AppCompatActivity {
                     Iterator it = sortByValue(score).iterator();
                     while(it.hasNext()) {
                         String temp = (String) it.next();
-                        users.add(temp + " = " + score.get(temp));
+                        User u = dataSnapshot.child(temp).getValue(User.class);
+                        // users.add(temp + " = " + score.get(temp));
+                        users.add(u);
+                        Toast.makeText(MatchingActivity.this, u.getName(), Toast.LENGTH_SHORT).show();
                     }
-                    arrayAdapter.notifyDataSetChanged();
+                    matchingAdapter = new MatchingAdapter(getApplicationContext(), users);
+                    matchList.setAdapter(matchingAdapter);
+                    matchingAdapter.notifyDataSetChanged();
                 }
 
                 public List sortByValue(final Map map) {

@@ -65,8 +65,8 @@
 </LinearLayout>
 
     <ListView
-        android:background="@color/colorPowder"
         android:id="@+id/matchList"
+        android:background="@color/colorPowder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
