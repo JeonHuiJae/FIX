@@ -2,18 +2,27 @@ package com.example.hhj73.fix;
 
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,11 +38,13 @@ public class MatchingActivity extends AppCompatActivity {
 
     ListView matchList;
     ArrayList<User> users;
+    ArrayList<Uri> roomPic;
     // ArrayAdapter arrayAdapter;
     MatchingAdapter matchingAdapter;
     DatabaseReference databaseReference;
     String curUser;
     final int FILTER = 123;
+    Uri _uri;
 
     double limit;//거리제한
     float pet;
@@ -58,6 +69,7 @@ public class MatchingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         curUser = intent.getStringExtra("curUser");
         matchList = (ListView) findViewById(R.id.matchList);
+        roomPic = new ArrayList<>();
         users = new ArrayList<>();
 //        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, users);
 //        matchList.setAdapter(arrayAdapter);
@@ -65,6 +77,8 @@ public class MatchingActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
         score = new HashMap<>();
         scoreData = new HashMap<>();
+        matchingAdapter = new MatchingAdapter(getApplicationContext(), users, roomPic);
+        matchList.setAdapter(matchingAdapter);
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -85,16 +99,11 @@ public class MatchingActivity extends AppCompatActivity {
                     // Sgender = dataSnapshot.child(id).child("gender").getValue().toString();
                     Sgender = senior.getGender(); // 어르신 성별
                     boolean type = senior.getType();
-                    // type = Boolean.parseBoolean(dataSnapshot.child(id).child("type").getValue().toString());
-
-//                    if(!id.equals(curUser) && type && Mgender.equals(Sgender)) { //나랑 성별 같은 어르신만.
-//                        users.add(id);
-//                        matchingAdapter.notifyDataSetChanged();
-//                    }
 
                     if(myGender == Sgender && type) { // 나랑 성별 같은 어르신
                         users.add(senior);
-                        // matchingAdapter.notifyDataSetChanged();
+                        roomPic.add(loadRoomPic(senior.getId()));
+                        matchingAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -108,17 +117,33 @@ public class MatchingActivity extends AppCompatActivity {
         matchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String str = (String) adapterView.getItemAtPosition(i);
-                Toast.makeText(MatchingActivity.this, str, Toast.LENGTH_SHORT).show();
+                User user = (User)(adapterView.getItemAtPosition(i));
 
                 Intent intent = new Intent(getApplicationContext(), SeniorDetail.class);
                 intent.putExtra("myID", curUser);
-                intent.putExtra("urID", str);
+                intent.putExtra("urID", user.getId());
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }
         });
 
+    }
+
+    public Uri loadRoomPic(String id){ // 왜이러는걸까.
+        _uri = null;
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
+
+        //사진 검사
+        StorageReference pathRef = storageReference.child("Room/"+id);
+        pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                _uri = uri;
+            }
+        });
+        return  _uri;
     }
 
     public void profile(View view) { //프로필
@@ -191,8 +216,6 @@ public class MatchingActivity extends AppCompatActivity {
                             locationB.setLongitude(_lot);
 
                              double distance = locationA.distanceTo(locationB);
-
-                            Toast.makeText(MatchingActivity.this, user.getName()+": "+distance, Toast.LENGTH_LONG).show();
 
                             D_score = distance / 300 * (-5); // 거리 점수 저장
                             if (distance > limit)
@@ -293,10 +316,8 @@ public class MatchingActivity extends AppCompatActivity {
                         User u = dataSnapshot.child(temp).getValue(User.class);
                         // users.add(temp + " = " + score.get(temp));
                         users.add(u);
-                        Toast.makeText(MatchingActivity.this, u.getName(), Toast.LENGTH_SHORT).show();
                     }
-                    matchingAdapter = new MatchingAdapter(getApplicationContext(), users);
-                    matchList.setAdapter(matchingAdapter);
+
                     matchingAdapter.notifyDataSetChanged();
                 }
 

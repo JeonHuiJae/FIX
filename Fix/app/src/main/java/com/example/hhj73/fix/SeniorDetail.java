@@ -37,6 +37,7 @@ ImageView smoke;
 ImageView help;
 ImageView curfew;
 ImageView pet;
+User senior;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference;
 
@@ -47,7 +48,6 @@ ImageView pet;
         Intent intent = getIntent();
         myId = intent.getStringExtra("myID");
         urId = intent.getStringExtra("urID");
-
         init();
     }
 
@@ -82,35 +82,36 @@ ImageView pet;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
+                senior = dataSnapshot.child(urId).getValue(User.class);
                 String add;
-                if(dataSnapshot.child(urId).child("gender").getValue().toString().equals("female"))
+                if(senior.getGender())
                     add = " 할머니댁";
                 else
                     add = " 할아버지댁";
 
-                title.setText(dataSnapshot.child(urId).child("name").getValue().toString()+add);
-                rent.setText("월 "+dataSnapshot.child(urId).child("cost").getValue().toString()+"원");
-                address.setText(dataSnapshot.child(urId).child("address").getValue().toString());
-                uniqueness.setText(dataSnapshot.child(urId).child("unique").getValue().toString());
+                title.setText(senior.getName()+add);
+                rent.setText("월 "+senior.getCost()+"원");
+                address.setText(senior.getAddress());
+                uniqueness.setText(senior.getUnique());
 
-                if(dataSnapshot.child(urId).child("smoking").getValue().toString()=="true")
+                if(senior.getSmoking())
                     smoke = (ImageView)findViewById(R.id.smokeX);
                 else
                     smoke = (ImageView)findViewById(R.id.smokeO);
                 smoke.setVisibility(View.INVISIBLE);
-                if(dataSnapshot.child(urId).child("curfew").getValue().toString()=="true")
+                if(senior.getCurfew())
                     curfew = (ImageView)findViewById(R.id.curfewX);
                 else
                     curfew = (ImageView)findViewById(R.id.curfewO);
                 curfew.setVisibility(View.INVISIBLE);
 
-                if(dataSnapshot.child(urId).child("pet").getValue().toString()=="true")
+                if(senior.getPet())
                     pet = (ImageView)findViewById(R.id.petX);
                 else
                     pet = (ImageView)findViewById(R.id.petO);
                 pet.setVisibility(View.INVISIBLE);
 
-                if(dataSnapshot.child(urId).child("help").getValue().toString()=="true")
+                if(senior.getHelp())
                     help = (ImageView)findViewById(R.id.helpX);
                 else
                     help = (ImageView)findViewById(R.id.helpO);

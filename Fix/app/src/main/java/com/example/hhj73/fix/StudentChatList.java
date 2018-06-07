@@ -20,7 +20,8 @@ import java.util.Iterator;
 
 public class StudentChatList extends AppCompatActivity {
 ListView chatList;
-    ArrayList<String> users;
+    ArrayList<User> users;
+    ArrayList<String> userId;
     ArrayAdapter arrayAdapter;
     DatabaseReference databaseReference;
     String curUser;
@@ -38,6 +39,7 @@ ListView chatList;
         curUser = intent.getStringExtra("id");
         chatList = (ListView) findViewById(R.id.MyChatList);
         users = new ArrayList<>();
+        userId = new ArrayList<>();
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, users);
         chatList.setAdapter(arrayAdapter);
         databaseReference = FirebaseDatabase.getInstance().getReference("chats");
@@ -54,9 +56,25 @@ ListView chatList;
                     String StudentId = roomName.substring(0, idx);
 
                     if(StudentId.equals(curUser)) { //내가 속한 방
-                        users.add(roomName.substring(idx+1));
+                        userId.add(roomName.substring(idx+1));
                         arrayAdapter.notifyDataSetChanged();
                     }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(int i=0;i<userId.size();i++){
+                    User user = dataSnapshot.child(userId.get(i)).getValue(User.class);
+                    users.add(user);
                 }
             }
 
@@ -69,12 +87,11 @@ ListView chatList;
         chatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String str = (String) adapterView.getItemAtPosition(i);
-                Toast.makeText(StudentChatList.this, str, Toast.LENGTH_SHORT).show();
+                User user = (User) adapterView.getItemAtPosition(i);
 
                 Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
                 intent.putExtra("myID", curUser);
-                intent.putExtra("urID", str);
+                intent.putExtra("urID", user.getId());
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }

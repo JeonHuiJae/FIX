@@ -21,7 +21,8 @@ import java.util.Iterator;
 public class SeniorChatList extends AppCompatActivity {
 String id;
 ListView chatList;
-ArrayList<String> users;
+ArrayList<User> users;
+ArrayList<String> userId;
 ArrayAdapter arrayAdapter;
 DatabaseReference databaseReference;
     @Override
@@ -34,6 +35,7 @@ DatabaseReference databaseReference;
     }
     private void init()
     {
+        userId = new ArrayList<String>();
         Intent intent = getIntent();
         chatList = (ListView) findViewById(R.id.MyChatList);
         users = new ArrayList<>();
@@ -53,9 +55,25 @@ DatabaseReference databaseReference;
                     String StudentId = roomName.substring(idx+1);
 
                     if(StudentId.equals(id)) { //내가 속한 방
-                        users.add(roomName.substring(0, idx));
+                        userId.add(roomName.substring(0, idx));
                         arrayAdapter.notifyDataSetChanged();
                     }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(int i=0;i<userId.size();i++){
+                    User user = dataSnapshot.child(userId.get(i)).getValue(User.class);
+                    users.add(user);
                 }
             }
 
@@ -68,11 +86,11 @@ DatabaseReference databaseReference;
         chatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String str = (String) adapterView.getItemAtPosition(i);
+                User user = (User) adapterView.getItemAtPosition(i);
 
                 Intent intent = new Intent(getApplicationContext(), ChatActivitySenior.class);
                 intent.putExtra("myID", id);
-                intent.putExtra("urID", str);
+                intent.putExtra("urID", user.getId());
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }

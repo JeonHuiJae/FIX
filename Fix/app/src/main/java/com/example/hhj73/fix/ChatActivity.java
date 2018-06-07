@@ -1,12 +1,15 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -32,11 +36,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 
 public class ChatActivity extends AppCompatActivity {
 
     EditText editChat;
     TextView urName;
+
     ArrayList<ChatData> chats;
     // ArrayAdapter arrayAdapter;
     RecyclerView chatList;
@@ -48,6 +54,9 @@ public class ChatActivity extends AppCompatActivity {
     String urID;
     String users[];
     String room;
+    User you;
+    Uri urNumber;
+    final int callRequest = 123;
 
     ImageView urPro;
 
@@ -75,7 +84,6 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
    //     myName = intent.getStringExtra("name");
         myID = intent.getStringExtra("myID");
-
         // 상대방
    //     urName = "honghjin";
         urID = intent.getStringExtra("urID");
@@ -157,8 +165,22 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                you =  dataSnapshot.child(urID).getValue(User.class);
+                urName.setText(you.getName()); // 이름
+                urNumber = Uri.parse(you.getPhone());// 전화번호
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         TextView roomName = (TextView) findViewById(R.id.roomName);
-        urName.setText(urID);
         roomName.setText(urID);
 
     }
@@ -184,20 +206,68 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
-    public void contractLayoutBtn(View view) { //계약서 버튼
+    public void contractLayoutBtn(View view) { // 계약서 버튼
         FrameLayout  layout = (FrameLayout)findViewById(R.id.contractLayout);
         layout.setVisibility(View.VISIBLE);
     }
 
-    public void backChat(View view) { //채팅으로 돌어가기
+    public void backChat(View view) { // 채팅으로 돌어가기
         FrameLayout layout = (FrameLayout)findViewById(R.id.contractLayout);
         layout.setVisibility(View.GONE);
     }
 
-    public void back(View view) { //채팅목록으로 뒤로가기
+    public void back(View view) { // 채팅목록으로 뒤로가기
         Intent intent = new Intent(this, StudentChatList.class);
         intent.putExtra("id",myID);
         startActivity(intent);
         overridePendingTransition(0, 0);
     }
+
+    public void call(View view) { // 전화걸기
+        Intent callIntent = new Intent(Intent.ACTION_CALL, urNumber);
+        if(checkAppPermission(new String[]{android.Manifest.permission.CALL_PHONE}))//call phone 체크
+            startActivity(callIntent);
+        else
+            askPermission(new String[]{android.Manifest.permission.CALL_PHONE}, callRequest);//요구
+
+    }
+    boolean checkAppPermission(String[] requestPermission){
+        boolean[] requestResult = new boolean[requestPermission.length];
+        for(int i=0; i< requestResult.length; i++){
+            requestResult[i] = (ContextCompat.checkSelfPermission(this,
+                    requestPermission[i]) == PackageManager.PERMISSION_GRANTED );
+            if(!requestResult[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void askPermission(String[] requestPermission, int REQ_PERMISSION) {
+        ActivityCompat.requestPermissions(
+                this,
+                requestPermission,
+                REQ_PERMISSION
+        );
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case callRequest :
+                if (checkAppPermission(permissions)) {
+                    Toast.makeText(this, "승인완료",Toast.LENGTH_SHORT).show();
+                    askPermission(new String[]{android.Manifest.permission.CALL_PHONE}, callRequest);
+                    // 퍼미션 동의했을 때 할 일
+                } else {
+                    Toast.makeText(this, "사용 불가",Toast.LENGTH_SHORT).show();
+                    // 퍼미션 동의하지 않았을 때 할일
+                    finish();
+                }
+                break;
+        }
+    }
+
 }

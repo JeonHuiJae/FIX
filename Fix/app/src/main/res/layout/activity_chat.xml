@@ -137,6 +137,7 @@
 
                 <!--전화걸기-->
                 <Button
+                    android:onClick="call"
                     android:layout_marginRight="50dp"
                     android:layout_gravity="bottom|right"
                     android:text="call"
