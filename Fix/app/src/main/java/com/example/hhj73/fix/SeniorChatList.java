@@ -1,6 +1,7 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,28 +20,33 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class SeniorChatList extends AppCompatActivity {
-String id;
-ListView chatList;
-ArrayList<User> users;
-ArrayList<String> userId;
-ArrayAdapter arrayAdapter;
-DatabaseReference databaseReference;
+    ListView chatList;
+    ArrayList<User> users;
+    ArrayList<String> userId;
+    ArrayList<Uri> userPic;
+    ChatListAdapter_Senior adapter;
+    DatabaseReference databaseReference;
+    DatabaseReference databaseReference2;
+    String curUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_senior_chat_list);
-        Intent intent = getIntent();
-        id = intent.getStringExtra("id");
+        setContentView(R.layout.activity_student_chat_list);
+
         init();
     }
+
     private void init()
     {
-        userId = new ArrayList<String>();
         Intent intent = getIntent();
+        curUser = intent.getStringExtra("id");
         chatList = (ListView) findViewById(R.id.MyChatList);
         users = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, users);
-        chatList.setAdapter(arrayAdapter);
+        userId = new ArrayList<>();
+        userPic = new ArrayList<>();
+
+        adapter = new ChatListAdapter_Senior(getApplicationContext(), users, userPic);
+        chatList.setAdapter(adapter);
         databaseReference = FirebaseDatabase.getInstance().getReference("chats");
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -54,9 +60,8 @@ DatabaseReference databaseReference;
                     int idx = roomName.indexOf("+");
                     String StudentId = roomName.substring(idx+1);
 
-                    if(StudentId.equals(id)) { //내가 속한 방
+                    if(StudentId.equals(curUser)) { //내가 속한 방
                         userId.add(roomName.substring(0, idx));
-                        arrayAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -67,14 +72,16 @@ DatabaseReference databaseReference;
             }
         });
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(int i=0;i<userId.size();i++){
+                for(int i=0; i < userId.size() ; i++){
                     User user = dataSnapshot.child(userId.get(i)).getValue(User.class);
                     users.add(user);
+                    userPic.add(null);
                 }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -89,7 +96,7 @@ DatabaseReference databaseReference;
                 User user = (User) adapterView.getItemAtPosition(i);
 
                 Intent intent = new Intent(getApplicationContext(), ChatActivitySenior.class);
-                intent.putExtra("myID", id);
+                intent.putExtra("myID", curUser);
                 intent.putExtra("urID", user.getId());
                 startActivity(intent);
                 overridePendingTransition(0, 0);
@@ -97,9 +104,12 @@ DatabaseReference databaseReference;
         });
 
     }
-    public void back(View view) {//뒤로가기
+
+    //뒤로가기
+    public void back(View view) {
         Intent intent = new Intent(this, SeniorMain.class);
-        intent.putExtra("curUser", id);
+        intent.putExtra("curUser",curUser);
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 }

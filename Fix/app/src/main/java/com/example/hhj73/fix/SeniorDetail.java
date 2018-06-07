@@ -27,6 +27,7 @@ import java.util.Iterator;
 public class SeniorDetail extends AppCompatActivity {
 String urId;
 String myId;
+Boolean type;
 
 TextView title;
 ImageView roomImage;
@@ -48,6 +49,7 @@ User senior;
         Intent intent = getIntent();
         myId = intent.getStringExtra("myID");
         urId = intent.getStringExtra("urID");
+        type = intent.getBooleanExtra("type", true);
         init();
     }
 
@@ -136,7 +138,10 @@ User senior;
     public void back(View view) { //그냥 뒤로가기
         Intent intent = new Intent(this, MatchingActivity.class);
         intent.putExtra("curUser",myId);
-        startActivity(intent);
+        if(type)
+            startActivity(intent);
+        else
+            finish();
         overridePendingTransition(0, 0);
     }
 }

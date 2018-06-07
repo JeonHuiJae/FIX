@@ -99,4 +99,9 @@ double lot, lat;
             lot = Float.parseFloat(location.substring(idx+1));
         }
     }
+
+    public void cancel(View view) {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
 }

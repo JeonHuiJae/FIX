@@ -51,6 +51,7 @@ public class ChatActivity extends AppCompatActivity {
     String myName;
     String myID;
     DatabaseReference databaseReference;
+    DatabaseReference databaseReference2;
     String urID;
     String users[];
     String room;
@@ -81,7 +82,7 @@ public class ChatActivity extends AppCompatActivity {
         chatList.setLayoutManager(layoutManager);
         chatList.setAdapter(chatAdapter);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
    //     myName = intent.getStringExtra("name");
         myID = intent.getStringExtra("myID");
         // 상대방
@@ -93,7 +94,6 @@ public class ChatActivity extends AppCompatActivity {
         users = new String[2];
         users[0] = myID;
         users[1] = urID;
-        Arrays.sort(users);
 
         room = users[0]+"+"+users[1];
 
@@ -139,6 +139,18 @@ public class ChatActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                     }
                 });
+
+                urPro.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent1 = new Intent(getApplicationContext(), SeniorDetail.class);
+                        intent1.putExtra("myID", myID);
+                        intent1.putExtra("urID", urID);
+                        intent1.putExtra("type", false);
+                        startActivity(intent1);
+                    }
+                });
+
                 urPro.setBackground(new ShapeDrawable(new OvalShape()));
                 if(Build.VERSION.SDK_INT>=21)
                     urPro.setClipToOutline(true);
@@ -165,12 +177,14 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 you =  dataSnapshot.child(urID).getValue(User.class);
                 urName.setText(you.getName()); // 이름
+                TextView roomName = (TextView) findViewById(R.id.roomName);
+                roomName.setText(you.getName()+" 어르신");
                 urNumber = Uri.parse(you.getPhone());// 전화번호
             }
 
@@ -180,8 +194,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        TextView roomName = (TextView) findViewById(R.id.roomName);
-        roomName.setText(urID);
+
 
     }
 
@@ -259,7 +272,6 @@ public class ChatActivity extends AppCompatActivity {
             case callRequest :
                 if (checkAppPermission(permissions)) {
                     Toast.makeText(this, "승인완료",Toast.LENGTH_SHORT).show();
-                    askPermission(new String[]{android.Manifest.permission.CALL_PHONE}, callRequest);
                     // 퍼미션 동의했을 때 할 일
                 } else {
                     Toast.makeText(this, "사용 불가",Toast.LENGTH_SHORT).show();

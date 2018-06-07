@@ -1,6 +1,7 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,8 +23,10 @@ public class StudentChatList extends AppCompatActivity {
 ListView chatList;
     ArrayList<User> users;
     ArrayList<String> userId;
-    ArrayAdapter arrayAdapter;
+    ArrayList<Uri> userPic;
+    ChatListAdapter adapter;
     DatabaseReference databaseReference;
+    DatabaseReference databaseReference2;
     String curUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +43,10 @@ ListView chatList;
         chatList = (ListView) findViewById(R.id.MyChatList);
         users = new ArrayList<>();
         userId = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, users);
-        chatList.setAdapter(arrayAdapter);
+        userPic = new ArrayList<>();
+
+        adapter = new ChatListAdapter(getApplicationContext(), users, userPic);
+        chatList.setAdapter(adapter);
         databaseReference = FirebaseDatabase.getInstance().getReference("chats");
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -57,7 +62,6 @@ ListView chatList;
 
                     if(StudentId.equals(curUser)) { //내가 속한 방
                         userId.add(roomName.substring(idx+1));
-                        arrayAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -68,14 +72,16 @@ ListView chatList;
             }
         });
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(int i=0;i<userId.size();i++){
+                for(int i=0; i < userId.size() ; i++){
                     User user = dataSnapshot.child(userId.get(i)).getValue(User.class);
                     users.add(user);
+                    userPic.add(null);
                 }
+                adapter.notifyDataSetChanged();
             }
 
             @Override

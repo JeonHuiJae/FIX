@@ -38,13 +38,12 @@ public class MatchingActivity extends AppCompatActivity {
 
     ListView matchList;
     ArrayList<User> users;
-    ArrayList<Uri> roomPic;
     // ArrayAdapter arrayAdapter;
     MatchingAdapter matchingAdapter;
     DatabaseReference databaseReference;
     String curUser;
     final int FILTER = 123;
-    Uri _uri;
+    final int DETAIL = 234;
 
     double limit;//거리제한
     float pet;
@@ -69,7 +68,6 @@ public class MatchingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         curUser = intent.getStringExtra("curUser");
         matchList = (ListView) findViewById(R.id.matchList);
-        roomPic = new ArrayList<>();
         users = new ArrayList<>();
 //        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, users);
 //        matchList.setAdapter(arrayAdapter);
@@ -77,7 +75,7 @@ public class MatchingActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
         score = new HashMap<>();
         scoreData = new HashMap<>();
-        matchingAdapter = new MatchingAdapter(getApplicationContext(), users, roomPic);
+        matchingAdapter = new MatchingAdapter(getApplicationContext(), users);
         matchList.setAdapter(matchingAdapter);
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -102,7 +100,6 @@ public class MatchingActivity extends AppCompatActivity {
 
                     if(myGender == Sgender && type) { // 나랑 성별 같은 어르신
                         users.add(senior);
-                        roomPic.add(loadRoomPic(senior.getId()));
                         matchingAdapter.notifyDataSetChanged();
                     }
                 }
@@ -122,30 +119,13 @@ public class MatchingActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), SeniorDetail.class);
                 intent.putExtra("myID", curUser);
                 intent.putExtra("urID", user.getId());
-                startActivity(intent);
+                intent.putExtra("type", false);
+                startActivityForResult(intent, DETAIL);
                 overridePendingTransition(0, 0);
             }
         });
 
     }
-
-    public Uri loadRoomPic(String id){ // 왜이러는걸까.
-        _uri = null;
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
-
-        //사진 검사
-        StorageReference pathRef = storageReference.child("Room/"+id);
-        pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                _uri = uri;
-            }
-        });
-        return  _uri;
-    }
-
     public void profile(View view) { //프로필
         Intent intent = new Intent(this, StudentEditProfile.class);
         intent.putExtra("id", curUser);
@@ -168,6 +148,7 @@ public class MatchingActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
 
         if(requestCode == FILTER && resultCode == RESULT_OK) { //데이터값 입력받을때 예외처리 필요.
+            init();
             lot = data.getDoubleExtra("lot", 0);// 기준점 위치
             lat = data.getDoubleExtra("lat", 0);
             limit = data.getDoubleExtra("miter", Double.MAX_VALUE);//미터제한
@@ -274,11 +255,14 @@ public class MatchingActivity extends AppCompatActivity {
                             CmaxScore = C_score;
 
                         if (maxCost != -1 || minCost != 0) {
-                            if (userCost > minCost && userCost < maxCost)
+                            if (userCost >= minCost && userCost <= maxCost)
                                 C_score = C_score / 2; // 범위안에 들어가면 반으로
-                            if (maxCost == -1 && userCost > minCost) {
+                            else if (maxCost == -1 && userCost >= minCost) {
                                 C_score = C_score / 2;
-                            } else { // 범위에 안들어감
+                            }else if(minCost == 0 && userCost <= maxCost){
+                                C_score = C_score / 2;
+                            }
+                            else { // 범위에 안들어감
                                 C_score = -1;
                             }
                         }
