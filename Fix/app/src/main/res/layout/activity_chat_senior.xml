@@ -182,14 +182,10 @@
                     android:layout_height="45dp" />
 
                 <!--계약 리스트 들어갈 부분-->
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="210dp">
                 <ListView
+                    android:id="@+id/detailContractList"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </ListView>
-                </ScrollView>
+                    android:layout_height="210dp"/>
 
                 <!--제출버튼-->
                 <Button

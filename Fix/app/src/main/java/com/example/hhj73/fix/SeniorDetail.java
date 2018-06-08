@@ -2,14 +2,12 @@ package com.example.hhj73.fix;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,25 +21,28 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
 public class SeniorDetail extends AppCompatActivity {
-String urId;
-String myId;
-Boolean type;
+    String urId;
+    String myId;
+    Boolean type;
 
-TextView title;
-ImageView roomImage;
-TextView rent;
-TextView address;
-TextView uniqueness;
-TextView messgae;
-ImageView smoke;
-ImageView help;
-ImageView curfew;
-ImageView pet;
-User senior;
+    TextView title;
+    ImageView roomImage;
+    TextView rent;
+    TextView address;
+    TextView uniqueness;
+    TextView messgae;
+    ImageView smoke;
+    ImageView help;
+    ImageView curfew;
+    ImageView pet;
+    User senior;
+    ContractData contractData;
+    ArrayList<ContractData> contractDataArrayList;
 
     long now = System.currentTimeMillis();
     Date date;
@@ -50,6 +51,7 @@ User senior;
     int SeniorOld;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference;
+    DatabaseReference databaseReference_con;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +62,16 @@ User senior;
         urId = intent.getStringExtra("urID");
         type = intent.getBooleanExtra("type", true);
         init();
+        getContractListFromDB();
+    }
+
+    private void getContractListFromDB(){
+        databaseReference = firebaseDatabase.getReference("contracts");
+        
     }
 
     private void init() {
+        contractDataArrayList = new ArrayList<>();
         messgae = (TextView)findViewById(R.id.profileMessage);
         title = (TextView)findViewById(R.id.Dtitle);
         roomImage = (ImageView)findViewById(R.id.roomImage);
@@ -94,7 +103,7 @@ User senior;
         });
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference = firebaseDatabase.getReference("users");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -146,8 +155,14 @@ User senior;
             }
         });
     }
+    //myId = 학생, urId = 어르신
+    public void make_first_contract(String myId, String urId){
 
+
+
+    }
     public void talk(View view) {//채팅으로
+        make_first_contract(myId,urId);
         Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
         intent.putExtra("myID", myId);
         intent.putExtra("urID", urId);

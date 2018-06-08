@@ -34,9 +34,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -85,9 +83,9 @@ public class ChatActivity extends AppCompatActivity {
         chatList.setAdapter(chatAdapter);
 
         final Intent intent = getIntent();
-   //     myName = intent.getStringExtra("name");
+   //     myName = intent.getStringExtra("name"); student
         myID = intent.getStringExtra("myID");
-        // 상대방
+        // 상대방 senior
    //     urName = "honghjin";
         urID = intent.getStringExtra("urID");
 
