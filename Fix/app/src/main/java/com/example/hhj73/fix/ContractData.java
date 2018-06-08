@@ -13,6 +13,8 @@ public class ContractData {
 
     private DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD");
     private Date contractwritedate;
+    private String studentName;
+    private String seniorName;
     private Date startdate;
     private int monthperiod;
     private int monthlyfee;
@@ -33,8 +35,10 @@ public class ContractData {
 
     //생성자 오버로딩
     //특별사항이 없는 경우
-    ContractData(Date startdate, int monthperiod, int monthlyfee, boolean breakfast_j, boolean breakfast_s, boolean smoking_j, boolean smoking_s,
+    ContractData(Date startdate, String studentName, String seniorName, int monthperiod, int monthlyfee, boolean breakfast_j, boolean breakfast_s, boolean smoking_j, boolean smoking_s,
                  boolean pet_j, boolean pet_s, boolean cerfew_j, boolean cerfew_s, boolean help_j, boolean help_s){
+        this.studentName = studentName;
+        this.seniorName = seniorName;
         this.startdate = startdate;
         this.monthperiod = monthperiod;
         this.monthlyfee = monthlyfee;

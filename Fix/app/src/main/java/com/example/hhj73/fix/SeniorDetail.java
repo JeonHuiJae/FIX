@@ -21,7 +21,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -42,7 +41,7 @@ public class SeniorDetail extends AppCompatActivity {
     ImageView pet;
     User senior;
     ContractData contractData;
-    ArrayList<ContractData> contractDataArrayList;
+
 
     long now = System.currentTimeMillis();
     Date date;
@@ -51,7 +50,7 @@ public class SeniorDetail extends AppCompatActivity {
     int SeniorOld;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference;
-    DatabaseReference databaseReference_con;
+    DatabaseReference database_contract_temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +61,11 @@ public class SeniorDetail extends AppCompatActivity {
         urId = intent.getStringExtra("urID");
         type = intent.getBooleanExtra("type", true);
         init();
-        getContractListFromDB();
     }
 
-    private void getContractListFromDB(){
-        databaseReference = firebaseDatabase.getReference("contracts");
-        
-    }
 
     private void init() {
-        contractDataArrayList = new ArrayList<>();
+
         messgae = (TextView)findViewById(R.id.profileMessage);
         title = (TextView)findViewById(R.id.Dtitle);
         roomImage = (ImageView)findViewById(R.id.roomImage);
@@ -102,6 +96,8 @@ public class SeniorDetail extends AppCompatActivity {
             }
         });
 
+        database_contract_temp = firebaseDatabase.getReference("temp_contracts");
+        
 
         databaseReference = firebaseDatabase.getReference("users");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
