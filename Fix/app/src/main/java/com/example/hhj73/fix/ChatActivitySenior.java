@@ -1,11 +1,14 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -43,10 +47,17 @@ public class ChatActivitySenior extends AppCompatActivity {
     String myName;
     String myID;
     DatabaseReference databaseReference;
+    DatabaseReference databaseReference_user;
+    DatabaseReference databaseReference_family;
     TextView urName;
     String urID;
     String users[];
     String room;
+    Uri urNumber;
+    User you;
+    User me;
+    final int callRequest = 123;
+    final int DETAIL = 234;
 
     ImageView urPro;
 
@@ -81,9 +92,8 @@ public class ChatActivitySenior extends AppCompatActivity {
 
         // 채팅방 생성
         users = new String[2];
-        users[0] = myID;
-        users[1] = urID;
-        Arrays.sort(users);
+        users[0] = urID;
+        users[1] = myID;
 
         room = users[0]+"+"+users[1];
 
@@ -132,6 +142,16 @@ public class ChatActivitySenior extends AppCompatActivity {
                 urPro.setBackground(new ShapeDrawable(new OvalShape()));
                 if(Build.VERSION.SDK_INT>=21)
                     urPro.setClipToOutline(true);
+
+                urPro.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent1 = new Intent(getApplicationContext(), StudentDetail.class);
+                        intent1.putExtra("myID", myID);
+                        intent1.putExtra("urID", urID);
+                        startActivityForResult(intent1, DETAIL);
+                    }
+                });
             }
 
             @Override
@@ -155,9 +175,23 @@ public class ChatActivitySenior extends AppCompatActivity {
             }
         });
 
-        TextView roomName = (TextView) findViewById(R.id.roomName);
-        urName.setText(urID);
-        roomName.setText(urID);
+        databaseReference_user = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference_user.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                me =  dataSnapshot.child(myID).getValue(User.class);
+                you =  dataSnapshot.child(urID).getValue(User.class);
+                urName.setText(you.getName()); // 이름
+                TextView roomName = (TextView) findViewById(R.id.roomName);
+                roomName.setText(you.getName()+" 학생");
+                urNumber = Uri.parse(you.getPhone());// 전화번호
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -197,5 +231,73 @@ public class ChatActivitySenior extends AppCompatActivity {
         intent.putExtra("id",myID);
         startActivity(intent);
         overridePendingTransition(0, 0);
+    }
+
+    public void call(View view) {
+        Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+urNumber));
+        if(checkAppPermission(new String[]{android.Manifest.permission.CALL_PHONE}))//call phone 체크
+            startActivity(callIntent);
+        else
+            askPermission(new String[]{android.Manifest.permission.CALL_PHONE}, callRequest);//요구
+
+    }
+    boolean checkAppPermission(String[] requestPermission){
+        boolean[] requestResult = new boolean[requestPermission.length];
+        for(int i=0; i< requestResult.length; i++){
+            requestResult[i] = (ContextCompat.checkSelfPermission(this,
+                    requestPermission[i]) == PackageManager.PERMISSION_GRANTED );
+            if(!requestResult[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void askPermission(String[] requestPermission, int REQ_PERMISSION) {
+        ActivityCompat.requestPermissions(
+                this,
+                requestPermission,
+                REQ_PERMISSION
+        );
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case callRequest :
+                if (checkAppPermission(permissions)) {
+                    Toast.makeText(this, "승인완료",Toast.LENGTH_SHORT).show();
+                    // 퍼미션 동의했을 때 할 일
+                } else {
+                    Toast.makeText(this, "사용 불가",Toast.LENGTH_SHORT).show();
+                    // 퍼미션 동의하지 않았을 때 할일
+                    finish();
+                }
+                break;
+        }
+    }
+
+
+    public void contractSubmit(View view) { // 계약서 제출
+        // you 학생 me 어르신
+        databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
+        databaseReference_family.child(room).child("seniorAgree").setValue(true);
+        Toast.makeText(this, "Agree Ok", Toast.LENGTH_SHORT).show();
+        databaseReference_family.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child(room).child("studentAgree").exists()){
+                    Family family = new Family(you.getPhone(), me.getPhone(), you.getName(), me.getName(), you.getId(), me.getId());
+                    databaseReference_family.child(room).setValue(family);
+                    Toast.makeText(ChatActivitySenior.this, "Now We are Family!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 }

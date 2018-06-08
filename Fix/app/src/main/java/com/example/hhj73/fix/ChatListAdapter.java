@@ -15,8 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -65,9 +67,12 @@ public class ChatListAdapter extends BaseAdapter{
         final ImageView userImage = (ImageView) convertView.findViewById(R.id.listRowImage);
         TextView userName = (TextView) convertView.findViewById(R.id.listRowTitle);
 
-
+        Glide.with(context)
+                .load(R.color.colorCream)
+                .centerCrop()
+                .into(userImage);
         //사진 검사
-        StorageReference pathRef = storageReference.child("Room/"+ users.get(position).getId());
+        StorageReference pathRef = storageReference.child("Profile/Senior/"+ users.get(position).getId());
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -84,10 +89,7 @@ public class ChatListAdapter extends BaseAdapter{
 
         userName.setText(users.get(position).getName()+" 어르신");
 
-        Glide.with(context)
-                .load(roomPic.get(position))
-                .centerCrop()
-                .into(userImage);
+
 //        /* (위젯에 대한 이벤트리스너를 지정하고 싶다면 여기에 작성하면된다..)  */
 
 

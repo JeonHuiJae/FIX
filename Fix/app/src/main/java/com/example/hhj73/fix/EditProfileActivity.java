@@ -13,11 +13,17 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -27,7 +33,9 @@ public class EditProfileActivity extends Activity {
     private Bitmap photo;
     private EditText message;
     String id;
-
+    Boolean type;
+    DatabaseReference databaseReference;
+    User me;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +45,24 @@ public class EditProfileActivity extends Activity {
     }
     public void init(){
         Intent intent = getIntent();
+        type = intent.getBooleanExtra("type",false);
         id = intent.getStringExtra("id");
         message = (EditText)findViewById(R.id.profileMessageInput);
-        message.setText(intent.getStringExtra("preMessage"));
         profileImageView = (ImageView)findViewById(R.id.profilePhotoInput);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                me =  dataSnapshot.child(id).getValue(User.class);
+                message.setText(me.getProfileMsg());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
@@ -53,6 +75,9 @@ public class EditProfileActivity extends Activity {
                         .load(uri)
                         .centerCrop()
                         .into(profileImageView);
+                profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
+                if(Build.VERSION.SDK_INT>=21)
+                    profileImageView.setClipToOutline(true);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -87,6 +112,9 @@ public class EditProfileActivity extends Activity {
                         .load(uri)
                         .centerCrop()
                         .into(profileImageView);
+                profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
+                if(Build.VERSION.SDK_INT>=21)
+                   profileImageView.setClipToOutline(true);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -97,10 +125,12 @@ public class EditProfileActivity extends Activity {
     }
 
     public void saveProfile(View view) {
-        message = (EditText)findViewById(R.id.profileMessageInput);
-        String tmp = message.getText().toString();
-        Intent saveIntent = new Intent(this,SeniorMain.class);
-        saveIntent.putExtra("profileMessage",tmp);
+        databaseReference.child(id).child("profileMsg").setValue(message.getText().toString());
+
+        Intent saveIntent;
+        if(type)
+            finish();
+        saveIntent= new Intent(this,SeniorMain.class);
         saveIntent.putExtra("curUser",id);
         setResult(RESULT_OK,saveIntent);
         startActivity(saveIntent);

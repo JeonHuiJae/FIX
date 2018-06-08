@@ -31,7 +31,7 @@ public class SeniorChatList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_chat_list);
+        setContentView(R.layout.activity_senior_chat_list);
 
         init();
     }

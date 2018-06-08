@@ -173,7 +173,7 @@ public class StudentJoinActivity extends Activity {
         // 학생회원 가입 완료
         if(emailPassed) {
 
-            User user = new User(false, id, pw, name, null, gender, phoneNumber, strAddress, null, smoking, curfew, pet, help, uniqueness, location);
+            User user = new User(false, id, pw, name, null, gender, phoneNumber, strAddress, null, smoking, curfew, pet, help, uniqueness, location,"");
             databaseReference.child(id).setValue(user);
 
             FirebaseStorage storage = FirebaseStorage.getInstance();

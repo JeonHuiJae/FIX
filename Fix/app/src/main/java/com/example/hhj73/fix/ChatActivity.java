@@ -51,11 +51,13 @@ public class ChatActivity extends AppCompatActivity {
     String myName;
     String myID;
     DatabaseReference databaseReference;
-    DatabaseReference databaseReference2;
+    DatabaseReference databaseReference_user;
+    DatabaseReference databaseReference_family;
     String urID;
     String users[];
     String room;
     User you;
+    User me;
     Uri urNumber;
     final int callRequest = 123;
 
@@ -177,10 +179,11 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        databaseReference2 = FirebaseDatabase.getInstance().getReference("users");
-        databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference_user = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference_user.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                me = dataSnapshot.child(myID).getValue(User.class);
                 you =  dataSnapshot.child(urID).getValue(User.class);
                 urName.setText(you.getName()); // 이름
                 TextView roomName = (TextView) findViewById(R.id.roomName);
@@ -237,7 +240,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void call(View view) { // 전화걸기
-        Intent callIntent = new Intent(Intent.ACTION_CALL, urNumber);
+        Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+urNumber));
         if(checkAppPermission(new String[]{android.Manifest.permission.CALL_PHONE}))//call phone 체크
             startActivity(callIntent);
         else
@@ -282,4 +285,24 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    public void contractSubmit(View view) {
+        // you 어르신 me 학생
+        databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
+        databaseReference_family.child(room).child("studentAgree").setValue(true);
+        Toast.makeText(this, "Agree Ok", Toast.LENGTH_SHORT).show();
+        databaseReference_family.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child(room).child("seniorAgree").exists()){
+                    Family family = new Family(me.getPhone(), you.getPhone(), me.getName(), you.getName(), me.getId(), you.getId());
+                    databaseReference_family.child(room).setValue(family);
+                    Toast.makeText(ChatActivity.this, "Now We are Family!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
 }

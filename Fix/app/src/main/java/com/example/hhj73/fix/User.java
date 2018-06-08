@@ -17,6 +17,7 @@ public class User {
     boolean smoking, curfew, pet, help;
     String unique;
     String location;
+    String profileMsg;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -24,7 +25,7 @@ public class User {
 
     public User(boolean type, String id, String pw, String name, String bday, boolean gender,
                 String phone, String address, String cost, boolean smoking, boolean curfew,
-                boolean pet, boolean help, String unique, String location) {
+                boolean pet, boolean help, String unique, String location, String profileMsg) {
 
         this.type = type;
         this.id = id;
@@ -41,6 +42,7 @@ public class User {
         this.help = help;
         this.unique = unique;
         this.location = location;
+        this.profileMsg = profileMsg;
     }
 
     public boolean getType() {
@@ -101,6 +103,8 @@ public class User {
 
     public  String getLocation() {return  this.location;}
 
+    public  String getProfileMsg() {return  this.profileMsg;}
+
     // set
 
     public void setType(boolean type) {
@@ -160,5 +164,7 @@ public class User {
     }
 
     public void setLocation(String location){this.location = location;}
+
+    public void setProfileMsg(String profileMsg){this.profileMsg = profileMsg;}
 
 }

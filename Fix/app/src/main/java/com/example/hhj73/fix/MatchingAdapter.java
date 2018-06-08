@@ -2,6 +2,7 @@ package com.example.hhj73.fix;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -73,6 +75,11 @@ public class MatchingAdapter extends BaseAdapter{
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
 
+
+        Glide.with(context)
+                .load(R.color.colorCream)
+                .centerCrop()
+                .into(rowImage);
         //사진 검사
         StorageReference pathRef = storageReference.child("Room/"+ users.get(position).getId());
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -84,7 +91,6 @@ public class MatchingAdapter extends BaseAdapter{
                         .into(rowImage);
             }
         });
-
 
 //        /* (위젯에 대한 이벤트리스너를 지정하고 싶다면 여기에 작성하면된다..)  */
 

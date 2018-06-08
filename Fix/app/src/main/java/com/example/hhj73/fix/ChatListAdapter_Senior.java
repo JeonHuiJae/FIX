@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -21,6 +24,8 @@ public class ChatListAdapter_Senior extends BaseAdapter {
     ArrayList<User> users;
     ArrayList<Uri> roomPic;
     Context context;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
 
     public ChatListAdapter_Senior(Context context, ArrayList<User> users, ArrayList<Uri> roomPic) {
         this.context = context;
@@ -45,7 +50,7 @@ public class ChatListAdapter_Senior extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Context context = parent.getContext();
+        final Context context = parent.getContext();
 
         /* 'listview_custom' Layout을 inflate하여 convertView 참조 획득 */
         if (convertView == null) {
@@ -54,8 +59,24 @@ public class ChatListAdapter_Senior extends BaseAdapter {
         }
 
         /* 'listview_custom'에 정의된 위젯에 대한 참조 획득 */
-        ImageView userImage = (ImageView) convertView.findViewById(R.id.listRowImage);
+        final ImageView userImage = (ImageView) convertView.findViewById(R.id.listRowImage);
         TextView userName = (TextView) convertView.findViewById(R.id.listRowTitle);
+
+        Glide.with(context)
+                .load(R.color.colorCream)
+                .centerCrop()
+                .into(userImage);
+        //사진 검사
+        StorageReference pathRef = storageReference.child("Profile/Student/"+ users.get(position).getId());
+        pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context)
+                        .load(uri)
+                        .centerCrop()
+                        .into(userImage);
+            }
+        });
 
         userImage.setBackground(new ShapeDrawable(new OvalShape()));
         if(Build.VERSION.SDK_INT>=21)
@@ -63,10 +84,7 @@ public class ChatListAdapter_Senior extends BaseAdapter {
 
         userName.setText(users.get(position).getName()+" 학생");
 
-        Glide.with(context)
-                .load(roomPic.get(position))
-                .centerCrop()
-                .into(userImage);
+
 //        /* (위젯에 대한 이벤트리스너를 지정하고 싶다면 여기에 작성하면된다..)  */
 
 

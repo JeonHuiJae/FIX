@@ -1,15 +1,16 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,49 +27,41 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 
-public class SeniorDetail extends AppCompatActivity {
-String urId;
-String myId;
-Boolean type;
+public class StudentDetail extends AppCompatActivity {
+    String urId;
 
-TextView title;
-ImageView roomImage;
-TextView rent;
-TextView address;
-TextView uniqueness;
-TextView messgae;
-ImageView smoke;
-ImageView help;
-ImageView curfew;
-ImageView pet;
-User senior;
+    TextView title;
+    ImageView userImage;
+    TextView uniqueness;
+    TextView message;
+    ImageView smoke;
+    ImageView help;
+    ImageView curfew;
+    ImageView pet;
+    User student;
 
     long now = System.currentTimeMillis();
     Date date;
     SimpleDateFormat sdf;
     String getTime;
-    int SeniorOld;
+    int StudentOld;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_senior_detail);
+        setContentView(R.layout.activity_student_detail);
         Intent intent = getIntent();
-        myId = intent.getStringExtra("myID");
         urId = intent.getStringExtra("urID");
-        type = intent.getBooleanExtra("type", true);
         init();
     }
 
     private void init() {
-        messgae = (TextView)findViewById(R.id.profileMessage);
         title = (TextView)findViewById(R.id.Dtitle);
-        roomImage = (ImageView)findViewById(R.id.roomImage);
-        rent = (TextView)findViewById(R.id.rent);
-        address = (TextView)findViewById(R.id.Daddress);
+        userImage = (ImageView)findViewById(R.id.userImage);
         uniqueness = (TextView)findViewById(R.id.Duniqueness);
+        message = (TextView)findViewById(R.id.profileMessage);
 
         date = new Date(now);
         sdf = new SimpleDateFormat("yyyy");
@@ -78,14 +71,17 @@ User senior;
         StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
 
         //사진 검사
-        StorageReference pathRef = storageReference.child("Room/"+urId);
+        StorageReference pathRef = storageReference.child("Profile/Student/"+urId);
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
             @Override
             public void onSuccess(Uri uri) {//있음
                 Glide.with(getApplicationContext())
                         .load(uri)
                         .centerCrop()
-                        .into(roomImage);
+                        .into(userImage);
+                userImage.setBackground(new ShapeDrawable(new OvalShape()));
+                if(Build.VERSION.SDK_INT>=21)
+                    userImage.setClipToOutline(true);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -99,40 +95,36 @@ User senior;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
-                senior = dataSnapshot.child(urId).getValue(User.class);
+                student = dataSnapshot.child(urId).getValue(User.class);
                 String add;
-                messgae.setText(senior.getProfileMsg());
-                SeniorOld = 1900 + Integer.parseInt(senior.getBday())/10000;
-                SeniorOld = Integer.parseInt(getTime) - SeniorOld;
 
-                if(senior.getGender())
-                    add = " 할머니댁 ("+SeniorOld+"세)";
-                else
-                    add = " 할아버지댁("+SeniorOld+"세)";
+                message.setText(student.getProfileMsg());
+                StudentOld = 1900 + Integer.parseInt(student.getBday())/10000;
+                StudentOld = Integer.parseInt(getTime) - StudentOld;
 
-                title.setText(senior.getName()+add);
-                rent.setText("월 "+senior.getCost()+"원");
-                address.setText(senior.getAddress());
-                uniqueness.setText(senior.getUnique());
+                    add = " 학생("+StudentOld+"살)";
 
-                if(senior.getSmoking())
+                title.setText(student.getName()+add);
+                uniqueness.setText(student.getUnique());
+
+                if(student.getSmoking())
                     smoke = (ImageView)findViewById(R.id.smokeX);
                 else
                     smoke = (ImageView)findViewById(R.id.smokeO);
                 smoke.setVisibility(View.INVISIBLE);
-                if(senior.getCurfew())
+                if(student.getCurfew())
                     curfew = (ImageView)findViewById(R.id.curfewX);
                 else
                     curfew = (ImageView)findViewById(R.id.curfewO);
                 curfew.setVisibility(View.INVISIBLE);
 
-                if(senior.getPet())
+                if(student.getPet())
                     pet = (ImageView)findViewById(R.id.petX);
                 else
                     pet = (ImageView)findViewById(R.id.petO);
                 pet.setVisibility(View.INVISIBLE);
 
-                if(senior.getHelp())
+                if(student.getHelp())
                     help = (ImageView)findViewById(R.id.helpX);
                 else
                     help = (ImageView)findViewById(R.id.helpO);
@@ -147,19 +139,8 @@ User senior;
         });
     }
 
-    public void talk(View view) {//채팅으로
-        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-        intent.putExtra("myID", myId);
-        intent.putExtra("urID", urId);
-        startActivity(intent);
-    }
-
     public void back(View view) { //그냥 뒤로가기
-        Intent intent = new Intent(this, MatchingActivity.class);
-        intent.putExtra("curUser",myId);
-        if(type)
-            startActivity(intent);
-        else
+        Intent intent = new Intent(this, ChatActivitySenior.class);
             finish();
         overridePendingTransition(0, 0);
     }

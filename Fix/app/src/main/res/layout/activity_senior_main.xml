@@ -44,8 +44,7 @@
             android:layout_height="110dp" />
 
         <TextView
-            android:id="@+id/profileMessage"
-            android:text="I love my family...---(-@"
+            android:id="@+id/myID"
             android:gravity="center"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
@@ -70,15 +69,32 @@
             android:layout_height="70dp"
             android:onClick="editProfile"/>
 
-        <Button
-            android:onClick="chatList"
-            android:layout_gravity="center"
-            android:text="CHAT"
-            android:textColor="@color/colorPowder"
-            android:textSize="23dp"
-            android:background="@drawable/mainbtn1"
-            android:layout_width="200dp"
-            android:layout_height="60dp" />
+            <FrameLayout
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/mainbtn1"
+                    android:onClick="chatList"
+                    android:text="CHAT"
+                    android:textColor="@color/colorPowder"
+                    android:textSize="23dp" />
+
+                <Button
+                    android:id="@+id/ChatNum"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="right"
+                    android:background="@color/colorPink"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/colorPowder" />
+            </FrameLayout>
+
     </LinearLayout>
         <LinearLayout
             android:background="@color/colorMint"

@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference;
+    DatabaseReference databaseReference_family;
 
     EditText id;
     EditText pw;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     String inputID;
     String inputPW;
+    boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void init() {
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
 
         id = (EditText) findViewById(R.id.inputID);
         pw = (EditText) findViewById(R.id.inputPW);
@@ -78,7 +81,37 @@ public class MainActivity extends AppCompatActivity {
                             Boolean type = Boolean.parseBoolean(dataSnapshot.child(inputID).child("type").getValue().toString());
 //                            intent.putExtra("name", name);
 //                            intent.putExtra("id", inputID);
+
+                            // 가족 생성된 후로
+
+                            // 가족 생성X 일 경우
                             if(type){ //어르신
+                                databaseReference_family.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        Iterator<DataSnapshot> child2 = dataSnapshot.getChildren().iterator();
+
+                                        while(child2.hasNext()) {
+                                            String roomName = child2.next().getKey().toString();
+                                            int idx = roomName.indexOf("+");
+                                            String SeniorId = roomName.substring(idx+1);
+
+                                            if(SeniorId.equals(inputID)) { //내가 속한 방
+                                                flag = true;
+                                                Intent intentMatched = new Intent(getApplicationContext(), MatchedMain.class);
+                                                intentMatched.putExtra("myID",inputID);
+                                                intentMatched.putExtra("urID",roomName.substring(0,idx));// 상대 아이디
+                                                intentMatched.putExtra("type", true);// 어르신
+                                                startActivity(intentMatched);
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
                                 FirebaseStorage storage = FirebaseStorage.getInstance();
                                 StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
 
@@ -87,23 +120,53 @@ public class MainActivity extends AppCompatActivity {
                                 pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
                                     @Override
                                     public void onSuccess(Uri uri) {//있음
+                                        if(!flag){
                                         Intent intent = new Intent(getApplicationContext(), SeniorMain.class);
                                         intent.putExtra("curUser", inputID);
-                                        startActivity(intent);
+                                        startActivity(intent);}
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {//없음
                                     @Override
                                     public void onFailure(@NonNull Exception e) {//없음
+                                        if(!flag){
                                         Intent intent = new Intent(getApplicationContext(),SeniorFirst.class);
                                         intent.putExtra("curUser",inputID);
-                                        startActivity(intent);
+                                        startActivity(intent);}
                                     }
                                 });
 
                             }else{ //학생
+
+                                databaseReference_family.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        Iterator<DataSnapshot> child2 = dataSnapshot.getChildren().iterator();
+
+                                        while(child2.hasNext()) {
+                                            String roomName = child2.next().getKey().toString();
+                                            int idx = roomName.indexOf("+");
+                                            String StudentId = roomName.substring(0, idx);
+
+                                            if(StudentId.equals(inputID)) { //내가 속한 방
+                                                flag = true;
+                                                Intent intentMatched = new Intent(getApplicationContext(), MatchedMain.class);
+                                                intentMatched.putExtra("myID",inputID);
+                                                intentMatched.putExtra("urID",roomName.substring(idx+1));// 상대 아이디
+                                                intentMatched.putExtra("type", false);// 학생
+                                                startActivity(intentMatched);
+                                            }
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
+
+                                if(!flag){
                                 Intent intent = new Intent(getApplicationContext(), MatchingActivity.class);
                                 intent.putExtra("curUser", inputID);
                                 startActivity(intent);
+                                }
                             }
                             return;
                         }

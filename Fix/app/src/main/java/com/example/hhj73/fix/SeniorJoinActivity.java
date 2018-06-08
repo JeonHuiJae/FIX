@@ -175,7 +175,7 @@ public class SeniorJoinActivity extends Activity {
     public void seniorJoinSuccess(View view) {
         // 노인회원 가입 완료
 
-        User user = new User(true, id, pw, name, bday, gender, phoneNumber, strAddress, cost, smoking, curfew, pet, help, uniqueness,location);
+        User user = new User(true, id, pw, name, bday, gender, phoneNumber, strAddress, cost, smoking, curfew, pet, help, uniqueness,location, "");
         databaseReference.child(id).setValue(user);
 
         //파이어베이스 Storage 저장 (Uri 받아서 저장함)

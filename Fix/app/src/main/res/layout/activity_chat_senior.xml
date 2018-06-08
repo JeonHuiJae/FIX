@@ -31,9 +31,9 @@
                     android:textColor="@color/colorPowder"
                     android:gravity="center"
                     android:layout_marginLeft="5dp"
-                    android:textSize="20dp"
-                    android:layout_width="55dp"
-                    android:layout_height="50dp" />
+                    android:textSize="15dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp" />
                 <TextView
                     android:id="@+id/roomName"
                     android:layout_gravity="center"
@@ -50,7 +50,7 @@
                     android:onClick="contractLayoutBtn"
                     android:text="계약"
                     android:layout_gravity="center|right"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorDarkMint"
                     android:textColor="@color/colorPowder"
                     android:gravity="center"
                     android:textSize="20dp"
@@ -140,6 +140,7 @@
 
                 <!--전화걸기-->
                 <Button
+                    android:onClick="call"
                     android:layout_marginRight="40dp"
                     android:layout_gravity="bottom|right"
                     android:text="call"
@@ -192,6 +193,7 @@
 
                 <!--제출버튼-->
                 <Button
+                    android:onClick="contractSubmit"
                     android:background="@drawable/mainbtn2"
                     android:textSize="20dp"
                     android:text="SUBMIT!"

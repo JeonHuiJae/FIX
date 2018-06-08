@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,8 +19,16 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.Iterator;
 
 public class SeniorMain extends AppCompatActivity {
 
@@ -27,8 +36,10 @@ public class SeniorMain extends AppCompatActivity {
     TextView message;
     ImageView photo;
     String id;
+    DatabaseReference databaseReference;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
+    int roomNum=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +51,8 @@ public class SeniorMain extends AppCompatActivity {
 
     }
     public void init(){
-        message = (TextView)findViewById(R.id.profileMessage);
+        message = (TextView)findViewById(R.id.myID);
+        message.setText(id+" 님");
         photo = (ImageView)findViewById(R.id.profilePhoto);
         photo.setBackground(new ShapeDrawable(new OvalShape()));
         if(Build.VERSION.SDK_INT>=21)
@@ -54,6 +66,31 @@ public class SeniorMain extends AppCompatActivity {
                         .load(uri)
                         .centerCrop()
                         .into(photo);
+            }
+        });
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("chats");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
+
+                while(child.hasNext()) {
+                    String roomName = child.next().getKey().toString();
+                    int idx = roomName.indexOf("+");
+                    String StudentId = roomName.substring(idx+1);
+
+                    if(StudentId.equals(id)) { //내가 속한 방
+                        roomNum++;
+                    }
+                }
+                Button roomNumB = (Button)findViewById(R.id.ChatNum);
+                roomNumB.setText(roomNum+"");
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }
@@ -71,12 +108,6 @@ public class SeniorMain extends AppCompatActivity {
     public void editProfile(View view) {
         Intent editIntent = new Intent(this, EditProfileActivity.class);
         editIntent.putExtra("id",id);
-        message = (TextView)findViewById(R.id.profileMessage);
-        String str = message.getText().toString();
-        if(!str.isEmpty())
-            editIntent.putExtra("preMessage",str);
-        else
-            Toast.makeText(this,"no string",Toast.LENGTH_SHORT).show();
         startActivityForResult(editIntent,Edit_PROFILE);
         overridePendingTransition(0, 0);
     }
