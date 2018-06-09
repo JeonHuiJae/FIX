@@ -65,6 +65,12 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
     ListView contractlistView;
     ContractAdapter contractAdapter;
 
+    final static int CONDITION = R.id.conditionBtn;
+    final static int FEE = R.id.monthlyFeeBtn;
+    final static int PERIOD = R.id.periodMonthBtn;
+    final static int EDATE = R.id.effectiveDateBtn;
+    final static int SPECAIL = R.id.extraspecialBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -351,7 +357,26 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
 
     @Override
     public void onListBtnClick(int position) {
-        ContractData c = (ContractData)contractArrayList.get(position);
-
+        ContractData c = (ContractData)contractArrayList.get(0);
+        switch (position){
+            case CONDITION:
+                Toast.makeText(this,"CONDITION",Toast.LENGTH_SHORT).show();
+                break;
+            case FEE:
+                Toast.makeText(this,"FEE",Toast.LENGTH_SHORT).show();
+                break;
+            case PERIOD:
+                Toast.makeText(this,"PERIOD",Toast.LENGTH_SHORT).show();
+                break;
+            case EDATE:
+                Toast.makeText(this,"EDATE",Toast.LENGTH_SHORT).show();
+                break;
+            case SPECAIL:
+                Toast.makeText(this,"SPECIAL",Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                Toast.makeText(this,"DEFAULT",Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -70,11 +70,11 @@ public class ContractAdapter extends ArrayAdapter<ContractData> implements View.
         TextView monthlyfee = (TextView) v.findViewById(R.id.monthlyFee);
         TextView address = (TextView)v.findViewById(R.id.address_contract);
 
-        Button effectiveDateBtn = (Button)v.findViewById(R.id.effectiveDateBtn);
-        Button monthPeroidBtn = (Button)v.findViewById(R.id.periodMonthBtn);
-        Button monthlyFeeBtn = (Button)v.findViewById(R.id.monthlyFeeBtn);
-        Button conditionBtn = (Button)v.findViewById(R.id.conditionBtn);
-        Button extraspecialBtn = (Button)v.findViewById(R.id.extraspecialBtn);
+        ImageButton effectiveDateBtn = (ImageButton) v.findViewById(R.id.effectiveDateBtn);
+        ImageButton monthPeroidBtn = (ImageButton)v.findViewById(R.id.periodMonthBtn);
+        ImageButton monthlyFeeBtn = (ImageButton)v.findViewById(R.id.monthlyFeeBtn);
+        ImageButton conditionBtn = (ImageButton)v.findViewById(R.id.conditionBtn);
+        ImageButton extraspecialBtn = (ImageButton)v.findViewById(R.id.extraspecialBtn);
 
         final int color_unConsent=v.getResources().getColor(R.color.colorLightRed);
         final int color_Consent=v.getResources().getColor(R.color.colorLightGreen);
@@ -137,15 +137,15 @@ public class ContractAdapter extends ArrayAdapter<ContractData> implements View.
 
         }
 
-        conditionBtn.setTag("Condition");
+        conditionBtn.setTag(R.id.conditionBtn);
         conditionBtn.setOnClickListener(this);
-        monthlyFeeBtn.setTag("Fee");
+        monthlyFeeBtn.setTag(R.id.monthlyFeeBtn);
         monthlyFeeBtn.setOnClickListener(this);
-        monthPeroidBtn.setTag("Peroid");
+        monthPeroidBtn.setTag(R.id.periodMonthBtn);
         monthPeroidBtn.setOnClickListener(this);
-        effectiveDateBtn.setTag("eDate");
+        effectiveDateBtn.setTag(R.id.effectiveDateBtn);
         effectiveDateBtn.setOnClickListener(this);
-        extraspecialBtn.setTag("Special");
+        extraspecialBtn.setTag(R.id.extraspecialBtn);
         extraspecialBtn.setOnClickListener(this);
 
 
