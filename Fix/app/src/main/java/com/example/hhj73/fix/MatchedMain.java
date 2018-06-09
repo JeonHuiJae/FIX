@@ -148,7 +148,7 @@ public class MatchedMain extends AppCompatActivity {
         p_stu.setImageURI(null);
         p_sin.setImageURI(null);
         // 어르신 사진 검사
-        pathRef = storageReference.child("Profile/Senior/"+senior);
+        pathRef = storageReference.child("Profile/Senior/"+senior+".JPG");
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
             @Override
             public void onSuccess(Uri uri) {//있음
@@ -163,7 +163,7 @@ public class MatchedMain extends AppCompatActivity {
             }
         });
         // 학생 사진 검사
-        pathRef = storageReference.child("Profile/Student/"+student);
+        pathRef = storageReference.child("Profile/Student/"+student+".JPG");
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
             @Override
             public void onSuccess(Uri uri) {//있음

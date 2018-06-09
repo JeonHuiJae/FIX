@@ -71,7 +71,7 @@ public class StudentDetail extends AppCompatActivity {
         StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
 
         //사진 검사
-        StorageReference pathRef = storageReference.child("Profile/Student/"+urId);
+        StorageReference pathRef = storageReference.child("Profile/Student/"+urId+".JPG");
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
             @Override
             public void onSuccess(Uri uri) {//있음

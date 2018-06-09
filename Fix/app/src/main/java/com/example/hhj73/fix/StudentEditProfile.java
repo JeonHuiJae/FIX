@@ -60,7 +60,7 @@ public class StudentEditProfile extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
         //사진 검사
-        StorageReference pathRef = storageReference.child("Profile/Student/"+id);
+        StorageReference pathRef = storageReference.child("Profile/Student/"+id+".JPG");
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
             @Override
             public void onSuccess(Uri uri) {//있음
@@ -91,7 +91,7 @@ public class StudentEditProfile extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
         //사진 검사
-        StorageReference  pathRef= storageReference.child("Profile/Student/"+id);
+        StorageReference  pathRef= storageReference.child("Profile/Student/"+id+".JPG");
 
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
 

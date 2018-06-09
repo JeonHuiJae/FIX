@@ -79,7 +79,7 @@ public class MatchingAdapter extends BaseAdapter {
                 .centerCrop()
                 .into(rowImage);
         //사진 검사
-        StorageReference pathRef = storageReference.child("Room/"+ users.get(position).getId());
+        StorageReference pathRef = storageReference.child("Room/"+ users.get(position).getId()+".JPG");
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

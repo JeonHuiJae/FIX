@@ -205,9 +205,9 @@ public class SelectPhotoMode extends Activity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         String fileName;
         if(type)
-            fileName = "Senior/"+id;
+            fileName = "Senior/"+id+".JPG";
         else
-            fileName = "Student/"+id;
+            fileName = "Student/"+id+".JPG";
         StorageReference storageRef = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com").child("Profile/"+fileName); //올리기
         if(filePath!=null){
         storageRef.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

@@ -67,7 +67,7 @@ public class EditProfileActivity extends Activity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
         //사진 검사
-        StorageReference pathRef = storageReference.child("Profile/Senior/"+id);
+        StorageReference pathRef = storageReference.child("Profile/Senior/"+id+".JPG");
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
             @Override
             public void onSuccess(Uri uri) {//있음
@@ -103,7 +103,7 @@ public class EditProfileActivity extends Activity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
         //사진 검사
-        StorageReference pathRef = storageReference.child("Profile/Senior/"+id);
+        StorageReference pathRef = storageReference.child("Profile/Senior/"+id+".JPG");
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
             @Override
             public void onSuccess(Uri uri) {//있음
@@ -130,11 +130,12 @@ public class EditProfileActivity extends Activity {
         Intent saveIntent;
         if(type)
             finish();
+        else{
         saveIntent= new Intent(this,SeniorMain.class);
         saveIntent.putExtra("curUser",id);
         setResult(RESULT_OK,saveIntent);
         startActivity(saveIntent);
-        overridePendingTransition(0, 0);
+        overridePendingTransition(0, 0);}
     }
 
     public void logout(View view) {

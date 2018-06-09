@@ -118,7 +118,7 @@ public class SeniorMain extends AppCompatActivity {
             String tmp2 = data.getStringExtra("profileMessage");
             message.setText(tmp2);
             //사진 검사
-            StorageReference pathRef = storageReference.child("Profile/Senior/"+id);
+            StorageReference pathRef = storageReference.child("Profile/Senior/"+id+".JPG");
             pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
                 @Override
                 public void onSuccess(Uri uri) {//있음
