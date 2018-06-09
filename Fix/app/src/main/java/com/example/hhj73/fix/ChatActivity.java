@@ -349,19 +349,4 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    public void editContract(View view) {
-
-        //계약자들 - 오토 수정불가
-        //계약시작날짜 - 사용자입력 수정가능
-        //계약기간 - 사용자입력 수정가능
-        //계약만료날짜 - 오토 자동계산
-        //아침, 흡연, 펫, 통금, 도움, 특이합의사항
-        //소재지 - 오토 수정불가
-        //월세 - 오토 수정가능
-        //어르신 and 학생 나누어서
-
-
-
-
-    }
 }

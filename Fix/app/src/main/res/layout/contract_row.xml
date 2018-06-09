@@ -52,12 +52,27 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:text="계약 실효날짜"/>
-        <TextView
-            android:id="@+id/effectiveDate"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:text="YYYY년 MM월 DD일" />
+            android:layout_gravity="center"
+            android:paddingRight="5dp">
+            <TextView
+                android:id="@+id/effectiveDate"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:text="YYYY년 MM월 DD일" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:src="@drawable/pencil_edit_button"
+                android:background="@color/colorCream"/>
+
+        </LinearLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,12 +85,28 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:text="계약 기간"/>
-        <TextView
-            android:id="@+id/periodMonth"
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:text="MM개월" />
+            android:layout_gravity="center"
+            android:paddingRight="5dp">
+            <TextView
+                android:id="@+id/periodMonth"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="MM개월" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:src="@drawable/pencil_edit_button"
+                android:background="@color/colorCream"/>
+
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -125,13 +156,29 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:text="월세"/>
-        <TextView
-            android:id="@+id/monthlyFee"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="100000원   " />
+            android:layout_gravity="center"
+            android:paddingRight="5dp">
+            <TextView
+                android:id="@+id/monthlyFee"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="100,000원"
+                android:clickable="true"
+                android:paddingRight="20dp"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:src="@drawable/pencil_edit_button"
+                android:background="@color/colorCream"/>
+
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -217,6 +264,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingRight="10dp">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:layout_gravity="right"
+            android:src="@drawable/pencil_edit_button"
+            android:background="@color/colorCream" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="5dp">
         <TextView
@@ -230,10 +290,12 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:background="@color/colorLightRed"
             android:lineSpacingExtra="7sp" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -254,9 +316,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingRight="10dp">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:layout_gravity="right"
+            android:src="@drawable/pencil_edit_button"
+            android:background="@color/colorCream" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="5dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center">
         <TextView
             android:layout_width="0dp"

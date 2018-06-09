@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -111,7 +112,10 @@ public class ContractAdapter extends ArrayAdapter<ContractData> {
             }
 
             writedate.setText(contractData.getContractwritedate());
-            monthlyfee.setText(contractData.getMonthlyfee()+"원  ");
+            int tempFee = Integer.parseInt(contractData.getMonthlyfee());
+            DecimalFormat df = new DecimalFormat("###,###,###,###");
+            String formalFee = df.format(tempFee);
+            monthlyfee.setText(formalFee+"원");
             address.setText(contractData.getAddress());
             extraspecial.setText(contractData.getExtraspecial());
 

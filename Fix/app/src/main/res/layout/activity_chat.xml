@@ -59,9 +59,8 @@
         </FrameLayout>
     </LinearLayout>
 
-<<<<<<< HEAD
-    <android.support.v7.widget.RecyclerView
-=======
+
+
     <!--<ListView-->
         <!--android:background="@color/colorPowder"-->
         <!--android:id="@+id/chatList"-->
@@ -72,7 +71,7 @@
     <!--</ListView>-->
 
     <ListView
->>>>>>> 39ab174e7e3a329d9bcb2650c8c082e9d6f3e3ec
+
         android:background="@color/colorPowder"
         android:id="@+id/chatList"
         android:transcriptMode="alwaysScroll"
@@ -176,7 +175,6 @@
                 <!--수정요청 버튼-->
                 <Button
                     android:background="@drawable/mainbtn1"
-                    android:onClick="editContract"
                     android:text="계약서 내용 추가/변경"
                     android:textColor="@color/colorPowder"
                     android:textStyle="bold"
