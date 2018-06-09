@@ -6,17 +6,16 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,15 +33,14 @@ import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 public class ChatActivitySenior extends AppCompatActivity {
     EditText editChat;
     ArrayList<ChatData> chats;
     // ArrayAdapter arrayAdapter;
-    RecyclerView chatList;
-    RecyclerView.LayoutManager layoutManager;
+    ListView chatList;
+    // RecyclerView.LayoutManager layoutManager;
     ChatAdapter chatAdapter;
     String myName;
     String myID;
@@ -75,20 +73,20 @@ public class ChatActivitySenior extends AppCompatActivity {
         editChat = (EditText) findViewById(R.id.chatText);
         chats = new ArrayList<>();
         // arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, chats);
-        chatList = (RecyclerView) findViewById(R.id.chatList);
-        chatAdapter = new ChatAdapter(chats);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        chatList.setLayoutManager(layoutManager);
-        chatList.setAdapter(chatAdapter);
+        chatList = (ListView) findViewById(R.id.chatList);
+
+        // layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        // chatList.setLayoutManager(layoutManager);
+
 
         Intent intent = getIntent();
-        //     myName = intent.getStringExtra("name");
         myID = intent.getStringExtra("myID");
 
         // 상대방
-        //     urName = "honghjin";
         urID = intent.getStringExtra("urID");
 
+        chatAdapter = new ChatAdapter(getApplicationContext(), chats, myID);
+        chatList.setAdapter(chatAdapter);
 
         // 채팅방 생성
         users = new String[2];
@@ -119,13 +117,13 @@ public class ChatActivitySenior extends AppCompatActivity {
                 }
                 chats.add(chatData);
                 chatAdapter.notifyDataSetChanged();
-                chatList.smoothScrollToPosition(chatAdapter.getItemCount() - 1); // 아래로 스크롤
+                // chatList.smoothScrollToPosition(chatAdapter.getItemCount() - 1); // 아래로 스크롤
 
                 //상대 프로필
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
                 //사진 검사
-                StorageReference pathRef = storageReference.child("Profile/Student/"+urID);
+                StorageReference pathRef = storageReference.child("Profile/Student/"+urID+".JPG");
                 pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
                     @Override
                     public void onSuccess(Uri uri) {//있음

@@ -59,14 +59,27 @@
         </FrameLayout>
     </LinearLayout>
 
+<<<<<<< HEAD
     <android.support.v7.widget.RecyclerView
+=======
+    <!--<ListView-->
+        <!--android:background="@color/colorPowder"-->
+        <!--android:id="@+id/chatList"-->
+        <!--android:transcriptMode="alwaysScroll"-->
+        <!--android:layout_weight="7"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp">-->
+    <!--</ListView>-->
+
+    <ListView
+>>>>>>> 39ab174e7e3a329d9bcb2650c8c082e9d6f3e3ec
         android:background="@color/colorPowder"
         android:id="@+id/chatList"
         android:transcriptMode="alwaysScroll"
         android:layout_weight="7"
         android:layout_width="match_parent"
         android:layout_height="0dp">
-    </android.support.v7.widget.RecyclerView>
+    </ListView>
 
     <LinearLayout
         android:background="@color/colorMint"

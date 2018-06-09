@@ -1,12 +1,10 @@
 package com.example.hhj73.fix;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class ChatListAdapter extends BaseAdapter{
+public class ChatListAdapter extends BaseAdapter {
 
     ArrayList<User> users;
     ArrayList<Uri> roomPic;
@@ -72,7 +67,7 @@ public class ChatListAdapter extends BaseAdapter{
                 .centerCrop()
                 .into(userImage);
         //사진 검사
-        StorageReference pathRef = storageReference.child("Profile/Senior/"+ users.get(position).getId());
+        StorageReference pathRef = storageReference.child("Profile/Senior/"+ users.get(position).getId()+".JPG");
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

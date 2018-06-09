@@ -67,7 +67,7 @@ public class ChatListAdapter_Senior extends BaseAdapter {
                 .centerCrop()
                 .into(userImage);
         //사진 검사
-        StorageReference pathRef = storageReference.child("Profile/Student/"+ users.get(position).getId());
+        StorageReference pathRef = storageReference.child("Profile/Student/"+ users.get(position).getId()+".JPG");
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

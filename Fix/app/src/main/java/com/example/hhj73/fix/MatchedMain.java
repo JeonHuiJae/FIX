@@ -31,6 +31,8 @@ public class MatchedMain extends AppCompatActivity {
     ImageView p_sin;
     TextView title;
     Family family;
+    String senior;
+    String student;
 
     DatabaseReference databaseReference;
     StorageReference pathRef;
@@ -54,7 +56,6 @@ public class MatchedMain extends AppCompatActivity {
         p_stu = (ImageView)findViewById(R.id.p_student);
         title = (TextView)findViewById(R.id.matchedTitle);
 
-        String senior,student;
         if(type){
             senior = myID;
             student = urID;
@@ -63,6 +64,8 @@ public class MatchedMain extends AppCompatActivity {
             student = myID;
         }
         final String room = student+"+"+senior;
+
+        loadProfile();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("families");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -77,12 +80,75 @@ public class MatchedMain extends AppCompatActivity {
             }
         });
 
+
+        // 클릭이벤트
+
+        if(myID.equals(senior)){ // 내가 어르신이면
+            // 내사진 누르면 프로필 수정으로
+            // 상대사진 누르면 정보보기로
+            p_sin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    intentProfile = new Intent(getApplicationContext(), EditProfileActivity.class);
+                    intentProfile.putExtra("id", myID);
+                    intentProfile.putExtra("type", true);
+                    startActivityForResult(intentProfile, CODE);
+                }
+            });
+
+            p_stu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    intentProfile = new Intent(getApplicationContext(), StudentDetail.class);
+                    intentProfile.putExtra("urID", urID);
+                    startActivityForResult(intentProfile, CODE);
+                }
+            });
+
+        }else{ // 학생이면
+            p_sin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    intentProfile = new Intent(getApplicationContext(), SeniorDetail.class);
+                    intentProfile.putExtra("myID", myID);
+                    intentProfile.putExtra("urID", urID);
+                    intentProfile.putExtra("type", false);
+                    startActivityForResult(intentProfile, CODE);
+                }
+            });
+
+            p_stu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    intentProfile = new Intent(getApplicationContext(), StudentEditProfile.class);
+                    intentProfile.putExtra("id", myID);
+                    intentProfile.putExtra("type", true);
+                    startActivityForResult(intentProfile, CODE);
+                }
+            });
+        }
+    }
+
+    public void goChat(View view) { //==========================================구현해주셈
+        Intent intent; // 매칭후 채팅 엑티비티 만들고 연결.
+        //if(type)
+            //intent = new Intent(this ,);
+        //else
+            //intent = new Intent(this, ChatActivity.class);
+        //intent.putExtra("myID", myID);
+        //intent.putExtra("urID", urID);
+
+    }
+
+    public void loadProfile(){
         //프로필사진
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
 
+        p_stu.setImageURI(null);
+        p_sin.setImageURI(null);
         // 어르신 사진 검사
-        pathRef = storageReference.child("Profile/Senior/"+senior);
+        pathRef = storageReference.child("Profile/Senior/"+senior+".JPG");
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
             @Override
             public void onSuccess(Uri uri) {//있음
@@ -96,8 +162,8 @@ public class MatchedMain extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
             }
         });
-        // 어르신 사진 검사
-        pathRef = storageReference.child("Profile/Student/"+student);
+        // 학생 사진 검사
+        pathRef = storageReference.child("Profile/Student/"+student+".JPG");
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
             @Override
             public void onSuccess(Uri uri) {//있음
@@ -119,67 +185,19 @@ public class MatchedMain extends AppCompatActivity {
         p_stu.setBackground(new ShapeDrawable(new OvalShape()));
         if(Build.VERSION.SDK_INT >= 21)
             p_stu.setClipToOutline(true);
-
-        // 클릭이벤트
-
-        if(myID.equals(senior)){ // 내가 어르신이면
-            // 내사진 누르면 프로필 수정으로
-            // 상대사진 누르면 정보보기로
-            p_sin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    intentProfile = new Intent(getApplicationContext(), EditProfileActivity.class);
-                    intentProfile.putExtra("id", myID);
-                    intentProfile.putExtra("type", true);
-                    startActivityForResult(intentProfile, CODE);
-                }
-            });
-
-            p_stu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    intentProfile = new Intent(getApplicationContext(), StudentDetail.class);
-                    intentProfile.putExtra("urId", urID);
-                    startActivityForResult(intentProfile, CODE);
-                }
-            });
-
-        }else{ // 학생이면
-            p_sin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    intentProfile = new Intent(getApplicationContext(), SeniorDetail.class);
-                    intentProfile.putExtra("myID", myID);
-                    intentProfile.putExtra("urID", urID);
-                    intentProfile.putExtra("type", false);
-                    startActivityForResult(intentProfile, CODE);
-                }
-            });
-
-            p_stu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    intentProfile = new Intent(getApplicationContext(), StudentEditProfile.class);
-                    intentProfile.putExtra("id", urID);
-                    intentProfile.putExtra("type", true);
-                    startActivityForResult(intentProfile, CODE);
-                }
-            });
-        }
-    }
-
-    public void goChat(View view) { //==========================================구현해주셈
-        Intent intent; // 매칭후 채팅 엑티비티 만들고 연결.
-        //if(type)
-            //intent = new Intent(this ,);
-        //else
-            //intent = new Intent(this, ChatActivity.class);
-        //intent.putExtra("myID", myID);
-        //intent.putExtra("urID", urID);
-
     }
 
     public void goContract(View view) { // 계약서 목록 출력 =========================구현해 주라긔
 
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    if(requestCode == CODE){
+        loadProfile();
+    }
     }
 }
