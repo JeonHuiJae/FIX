@@ -69,14 +69,14 @@
         <!--android:layout_height="0dp">-->
         <!--</ListView>-->
 
-        <android.support.v7.widget.RecyclerView
+        <ListView
             android:background="@color/colorPowder"
             android:id="@+id/chatList"
             android:transcriptMode="alwaysScroll"
             android:layout_weight="7"
             android:layout_width="match_parent"
             android:layout_height="0dp">
-        </android.support.v7.widget.RecyclerView>
+        </ListView>
 
         <LinearLayout
             android:background="@color/colorMint"
