@@ -1,5 +1,6 @@
 package com.example.hhj73.fix;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ShapeDrawable;
@@ -12,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -369,6 +371,8 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
                 Toast.makeText(this,"PERIOD",Toast.LENGTH_SHORT).show();
                 break;
             case EDATE:
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this,onDateSetListener,2018,6-1,10);
+                datePickerDialog.show();
                 Toast.makeText(this,"EDATE",Toast.LENGTH_SHORT).show();
                 break;
             case SPECAIL:
@@ -379,4 +383,14 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
                 break;
         }
     }
+    private DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            int mon = month+1;
+            String tempDate = year+"년 "+mon+"월 "+dayOfMonth+"일";
+            contractData.setStartdate(tempDate);
+            contractAdapter.notifyDataSetChanged();
+            databaseReference_contract.child(room).setValue(contractData);
+        }
+    };
 }
