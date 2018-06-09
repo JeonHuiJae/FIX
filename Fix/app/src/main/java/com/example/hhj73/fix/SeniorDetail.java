@@ -96,9 +96,6 @@ public class SeniorDetail extends AppCompatActivity {
             }
         });
 
-        database_contract_temp = firebaseDatabase.getReference("temp_contracts");
-        
-
         databaseReference = firebaseDatabase.getReference("users");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

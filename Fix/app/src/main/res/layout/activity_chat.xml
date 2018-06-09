@@ -59,15 +59,6 @@
         </FrameLayout>
     </LinearLayout>
 
-    <!--<ListView-->
-        <!--android:background="@color/colorPowder"-->
-        <!--android:id="@+id/chatList"-->
-        <!--android:transcriptMode="alwaysScroll"-->
-        <!--android:layout_weight="7"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp">-->
-    <!--</ListView>-->
-
     <android.support.v7.widget.RecyclerView
         android:background="@color/colorPowder"
         android:id="@+id/chatList"
@@ -158,7 +149,7 @@
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:layout_height="340dp">
+                android:layout_height="400dp">
                 <TextView
                     android:text="CONTRACT"
                     android:gravity="center"
@@ -172,6 +163,7 @@
                 <!--수정요청 버튼-->
                 <Button
                     android:background="@drawable/mainbtn1"
+                    android:onClick="editContract"
                     android:text="계약서 내용 추가/변경"
                     android:textColor="@color/colorPowder"
                     android:textStyle="bold"
@@ -183,7 +175,7 @@
                 <ListView
                     android:id="@+id/detailContractList"
                     android:layout_width="match_parent"
-                    android:layout_height="210dp"/>
+                    android:layout_height="250dp"/>
 
                 <!--제출버튼-->
                 <Button

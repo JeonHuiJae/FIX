@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class ChatActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     DatabaseReference databaseReference_user;
     DatabaseReference databaseReference_family;
+    DatabaseReference databaseReference_contract;
     String urID;
     String users[];
     String room;
@@ -60,6 +62,10 @@ public class ChatActivity extends AppCompatActivity {
     final int callRequest = 123;
 
     ImageView urPro;
+    ContractData contractData;
+    ArrayList<ContractData> contractArrayList;
+    ListView contractlistView;
+    ContractAdapter contractAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,7 +201,24 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        databaseReference_contract = FirebaseDatabase.getInstance().getReference("contracts");
 
+        databaseReference_contract.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Toast.makeText(getApplicationContext(),"finding..",Toast.LENGTH_SHORT).show();
+                contractData = dataSnapshot.child(room).getValue(ContractData.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        contractArrayList = new ArrayList<>();
+        contractlistView = (ListView)findViewById(R.id.detailContractList);
 
     }
 
@@ -223,6 +246,29 @@ public class ChatActivity extends AppCompatActivity {
     public void contractLayoutBtn(View view) { // 계약서 버튼
         FrameLayout  layout = (FrameLayout)findViewById(R.id.contractLayout);
         layout.setVisibility(View.VISIBLE);
+        if (contractData == null){
+            Toast.makeText(getApplicationContext(),"don't exist",Toast.LENGTH_SHORT).show();
+
+            //학생이름, 어르신이름, 월세, 주소, 어르신흡연, 학생흡연, 어르신펫, 학생펫, 어르신통금, 학생통금, 어르신도움, 학생 도움
+            contractData= new ContractData(me.getName(),you.getName(),you.getCost(),you.getAddress(),you.getSmoking(),me.getSmoking(),
+                    you.getPet(),me.getPet(),you.getCurfew(),me.getCurfew(),you.getHelp(),me.getHelp(),you.getUnique(),me.getUnique());
+            Toast.makeText(this,contractData.getStartdate(),Toast.LENGTH_SHORT).show();
+            databaseReference_contract.child(room).setValue(contractData);
+        }else{
+            Toast.makeText(getApplicationContext(),"exist",Toast.LENGTH_SHORT).show();
+        }
+        contractArrayList.add(contractData);
+        contractAdapter = new ContractAdapter(this,R.layout.contract_row,contractArrayList);
+        contractlistView.setAdapter(contractAdapter);
+
+        //계약시작날짜 - 사용자입력 수정가능
+        //계약자들 - 오토 수정불가
+        //계약기간 - 사용자입력 수정가능
+        //주소 - 오토 수정불가
+        //월세 - 오토 수정가능
+        //어르신 and 학생 나누어서
+        //아침, 흡연, 펫, 통금, 도움, 특이합의사항
+
     }
 
     public void backChat(View view) { // 채팅으로 돌어가기
@@ -302,5 +348,21 @@ public class ChatActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+
+    public void editContract(View view) {
+
+        //계약자들 - 오토 수정불가
+        //계약시작날짜 - 사용자입력 수정가능
+        //계약기간 - 사용자입력 수정가능
+        //계약만료날짜 - 오토 자동계산
+        //아침, 흡연, 펫, 통금, 도움, 특이합의사항
+        //소재지 - 오토 수정불가
+        //월세 - 오토 수정가능
+        //어르신 and 학생 나누어서
+
+
+
+
     }
 }
