@@ -1,8 +1,11 @@
 package com.example.hhj73.fix;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
@@ -36,6 +39,8 @@ import com.google.firebase.storage.StorageReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import biz.kasual.materialnumberpicker.MaterialNumberPicker;
 
 public class ChatActivity extends AppCompatActivity implements ContractAdapter.ListBtnClickListener {
 
@@ -361,27 +366,51 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
     public void onListBtnClick(int position) {
         ContractData c = (ContractData)contractArrayList.get(0);
         switch (position){
-            case CONDITION:
+            case CONDITION://흡연 등등의 조건
                 Toast.makeText(this,"CONDITION",Toast.LENGTH_SHORT).show();
                 break;
-            case FEE:
+            case FEE: //월세
                 Toast.makeText(this,"FEE",Toast.LENGTH_SHORT).show();
                 break;
-            case PERIOD:
+            case PERIOD: //계약기간 월단위
                 Toast.makeText(this,"PERIOD",Toast.LENGTH_SHORT).show();
+                setPeroidDialog();
                 break;
-            case EDATE:
+            case EDATE: // 실효날짜 ok
                 DatePickerDialog datePickerDialog = new DatePickerDialog(this,onDateSetListener,2018,6-1,10);
                 datePickerDialog.show();
                 Toast.makeText(this,"EDATE",Toast.LENGTH_SHORT).show();
                 break;
-            case SPECAIL:
+            case SPECAIL: //특이사항 추가 및 제거
                 Toast.makeText(this,"SPECIAL",Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Toast.makeText(this,"DEFAULT",Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+    private void setPeroidDialog(){
+        MaterialNumberPicker numberPicker = new MaterialNumberPicker.Builder(this)
+                .minValue(6)
+                .maxValue(60)
+                .defaultValue(1)
+                .backgroundColor(Color.WHITE)
+                .separatorColor(Color.TRANSPARENT)
+                .textColor(Color.BLACK)
+                .textSize(20)
+                .enableFocusability(false)
+                .wrapSelectorWheel(true)
+                .build();
+        AlertDialog ad = new AlertDialog.Builder(this)
+                .setTitle("계약기간(월 단위)")
+                .setView(numberPicker)
+                .setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(),which+"",Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
     private DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override

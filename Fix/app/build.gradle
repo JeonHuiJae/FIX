@@ -39,6 +39,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
 
     implementation 'com.bulong.rudeness:rudeness:latest.release@aar'    //해상도 lib
+    implementation 'biz.kasual:materialnumberpicker:1.2.1'               //커스텀 넘버피커
 }
 
 
