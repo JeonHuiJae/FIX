@@ -42,7 +42,6 @@ public class ContractData {
         this.monthlyfee = monthlyfee;
         this.address = address;
 
-
         try {
             Date date = dateFormat.parse(this.startdate);
             Calendar cal = Calendar.getInstance();

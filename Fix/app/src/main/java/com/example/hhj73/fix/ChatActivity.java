@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -369,10 +370,11 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
             case CONDITION://흡연 등등의 조건
                 Toast.makeText(this,"CONDITION",Toast.LENGTH_SHORT).show();
                 break;
-            case FEE: //월세
+            case FEE: //월세 ok
+                setFeeDialog();
                 Toast.makeText(this,"FEE",Toast.LENGTH_SHORT).show();
                 break;
-            case PERIOD: //계약기간 월단위
+            case PERIOD: //계약기간 월단위 ok
                 Toast.makeText(this,"PERIOD",Toast.LENGTH_SHORT).show();
                 setPeroidDialog();
                 break;
@@ -389,8 +391,26 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
                 break;
         }
     }
+    private void  setFeeDialog(){
+        final EditText feeInput = new EditText(this);
+        feeInput.setGravity(Gravity.RIGHT);
+
+        AlertDialog ad = new AlertDialog.Builder(this)
+                .setTitle("월세 변경(원 단위)")
+                .setView(feeInput)
+                .setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(),feeInput.getText(),Toast.LENGTH_SHORT).show();
+                        contractData.setMonthlyfee(feeInput.getText().toString());
+                        contractAdapter.notifyDataSetChanged();
+                        databaseReference_contract.child(room).setValue(contractData);
+                    }
+                })
+                .show();
+    }
     private void setPeroidDialog(){
-        MaterialNumberPicker numberPicker = new MaterialNumberPicker.Builder(this)
+        final MaterialNumberPicker numberPicker = new MaterialNumberPicker.Builder(this)
                 .minValue(6)
                 .maxValue(60)
                 .defaultValue(1)
@@ -407,7 +427,9 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
                 .setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),which+"",Toast.LENGTH_SHORT).show();
+                        contractData.setMonthperiod(numberPicker.getValue());
+                        contractAdapter.notifyDataSetChanged();
+                        databaseReference_contract.child(room).setValue(contractData);
                     }
                 })
                 .show();
