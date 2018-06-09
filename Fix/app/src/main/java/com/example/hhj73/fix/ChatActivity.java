@@ -35,7 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements ContractAdapter.ListBtnClickListener {
 
     EditText editChat;
     TextView urName;
@@ -257,7 +257,7 @@ public class ChatActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"exist",Toast.LENGTH_SHORT).show();
         }
         contractArrayList.add(contractData);
-        contractAdapter = new ContractAdapter(this,R.layout.contract_row,contractArrayList);
+        contractAdapter = new ContractAdapter(this,R.layout.contract_row,contractArrayList,this);
         contractlistView.setAdapter(contractAdapter);
 
         //계약시작날짜 - 사용자입력 수정가능
@@ -349,4 +349,9 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onListBtnClick(int position) {
+        ContractData c = (ContractData)contractArrayList.get(position);
+
+    }
 }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -17,13 +18,22 @@ import java.util.ArrayList;
  * Created by skrud on 2018-06-10.
  */
 
-public class ContractAdapter extends ArrayAdapter<ContractData> {
+public class ContractAdapter extends ArrayAdapter<ContractData> implements View.OnClickListener {
+
+    public interface ListBtnClickListener{
+        void onListBtnClick(int position);
+    }
+
+    //생성자로부터 전달된 listBtnClickListener를 저장한다.
+    private ListBtnClickListener listBtnClickListener;
+
     final ArrayList<ContractData> m_contractData;
     final Context context;
-    public ContractAdapter(@NonNull Context context, int resource, @NonNull ArrayList<ContractData> objects) {
+    public ContractAdapter(@NonNull Context context, int resource, @NonNull ArrayList<ContractData> objects, ListBtnClickListener clickListener) {
         super(context, resource, objects);
         this.m_contractData = objects;
         this.context =context;
+        this.listBtnClickListener = clickListener;
     }
 
     @SuppressLint("ResourceAsColor")
@@ -59,6 +69,12 @@ public class ContractAdapter extends ArrayAdapter<ContractData> {
         TextView writedate = (TextView) v.findViewById(R.id.writedate);
         TextView monthlyfee = (TextView) v.findViewById(R.id.monthlyFee);
         TextView address = (TextView)v.findViewById(R.id.address_contract);
+
+        Button effectiveDateBtn = (Button)v.findViewById(R.id.effectiveDateBtn);
+        Button monthPeroidBtn = (Button)v.findViewById(R.id.periodMonthBtn);
+        Button monthlyFeeBtn = (Button)v.findViewById(R.id.monthlyFeeBtn);
+        Button conditionBtn = (Button)v.findViewById(R.id.conditionBtn);
+        Button extraspecialBtn = (Button)v.findViewById(R.id.extraspecialBtn);
 
         final int color_unConsent=v.getResources().getColor(R.color.colorLightRed);
         final int color_Consent=v.getResources().getColor(R.color.colorLightGreen);
@@ -121,6 +137,24 @@ public class ContractAdapter extends ArrayAdapter<ContractData> {
 
         }
 
+        conditionBtn.setTag("Condition");
+        conditionBtn.setOnClickListener(this);
+        monthlyFeeBtn.setTag("Fee");
+        monthlyFeeBtn.setOnClickListener(this);
+        monthPeroidBtn.setTag("Peroid");
+        monthPeroidBtn.setOnClickListener(this);
+        effectiveDateBtn.setTag("eDate");
+        effectiveDateBtn.setOnClickListener(this);
+        extraspecialBtn.setTag("Special");
+        extraspecialBtn.setOnClickListener(this);
+
+
         return v;
+    }
+    @Override
+    public void onClick(View v) {
+        if(this.listBtnClickListener!=null){
+            this.listBtnClickListener.onListBtnClick((int)v.getTag());
+        }
     }
 }

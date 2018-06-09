@@ -65,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:text="YYYY년 MM월 DD일" />
             <ImageButton
+                android:id="@+id/effectiveDateBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
@@ -100,6 +101,7 @@
                 android:clickable="true"
                 android:text="MM개월" />
             <ImageButton
+                android:id="@+id/periodMonthBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
@@ -172,6 +174,7 @@
                 android:clickable="true"
                 android:paddingRight="20dp"/>
             <ImageButton
+                android:id="@+id/monthlyFeeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
@@ -267,6 +270,7 @@
         android:orientation="vertical"
         android:paddingRight="10dp">
         <ImageButton
+            android:id="@+id/conditionBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
@@ -319,6 +323,7 @@
         android:orientation="vertical"
         android:paddingRight="10dp">
         <ImageButton
+            android:id="@+id/extraspecialBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
