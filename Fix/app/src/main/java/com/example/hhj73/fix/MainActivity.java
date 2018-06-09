@@ -82,9 +82,6 @@ public class MainActivity extends AppCompatActivity {
 //                            intent.putExtra("name", name);
 //                            intent.putExtra("id", inputID);
 
-                            // 가족 생성된 후로
-
-                            // 가족 생성X 일 경우
                             if(type){ //어르신
                                 databaseReference_family.addValueEventListener(new ValueEventListener() {
                                     @Override
@@ -96,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                                             int idx = roomName.indexOf("+");
                                             String SeniorId = roomName.substring(idx+1);
 
-                                            if(SeniorId.equals(inputID)) { //내가 속한 방
+                                            if(SeniorId.equals(inputID) && dataSnapshot.child(roomName).child("id_student").exists()) { //내가 속한 방
                                                 flag = true;
                                                 Intent intentMatched = new Intent(getApplicationContext(), MatchedMain.class);
                                                 intentMatched.putExtra("myID",inputID);
@@ -147,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                                             int idx = roomName.indexOf("+");
                                             String StudentId = roomName.substring(0, idx);
 
-                                            if(StudentId.equals(inputID)) { //내가 속한 방
+                                            if(StudentId.equals(inputID)&& dataSnapshot.child(roomName).child("id_student").exists()) { //내가 속한 방
                                                 flag = true;
                                                 Intent intentMatched = new Intent(getApplicationContext(), MatchedMain.class);
                                                 intentMatched.putExtra("myID",inputID);
