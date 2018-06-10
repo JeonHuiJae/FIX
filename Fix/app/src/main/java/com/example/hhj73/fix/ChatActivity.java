@@ -540,8 +540,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
                 default:
                     break;
             }
-            contractAdapter.notifyDataSetChanged();
-            databaseReference_contract.setValue(contractData);
+
         }
         else{   //동의가 안된 상태 -> 라디오변화 체크 -> 동의면 동의&디테일 둘다 저장, -> 미합의면 그대로
             RadioGroup radioGroup = (RadioGroup) v.findViewById(rg_id);
@@ -571,33 +570,70 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
                 }
 
             }
-            contractAdapter.notifyDataSetChanged();
-            databaseReference_contract.setValue(contractData);
         }
+        contractAdapter.notifyDataSetChanged();
+        databaseReference_contract.child(room).setValue(contractData);
     }
     private void setSpecailDialog(){
-        String special = contractData.getExtraspecial();
-        final EditText specialText = new EditText(this);
-        specialText.setLines(10);
-        specialText.setMinLines(5);
-        specialText.setMaxLines(20);
-        specialText.setPadding(10,5,10,5);
-        specialText.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-        specialText.setText(special);
 
-        AlertDialog ad = new AlertDialog.Builder(this)
-                .setTitle("특이 사항 수정")
-                .setView(specialText)
-                .setMessage("입력해주세요.")
-                .setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        contractData.setExtraspecial(specialText.getText().toString());
-                        contractAdapter.notifyDataSetChanged();
-                        databaseReference_contract.child(room).setValue(contractData);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.consent_special_dialog,null);
+        String special = contractData.getExtraspecial();
+        final EditText editText = (EditText)dialogView.findViewById(R.id.special_consent_detail);
+        editText.setText(special);
+
+        final RadioGroup rg = (RadioGroup)dialogView.findViewById(R.id.special_rd);
+
+        if(contractData.isExtraConsent()){
+            rg.getChildAt(0).setEnabled(false);
+            rg.getChildAt(1).setEnabled(false);
+        }
+        else{
+            RadioButton rb = (RadioButton) dialogView.findViewById(R.id.radio_special_unconsent);
+            rb.setChecked(true);
+            editText.setEnabled(false);
+            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    RadioButton radioButton = (RadioButton)group.findViewById(checkedId);
+                    String isConsent = radioButton.getText().toString();
+                    if(isConsent.equals("합의")){
+                        editText.setEnabled(true);
                     }
-                })
-                .show();
+                    else if(isConsent.equals("미합의")){
+                        editText.setEnabled(false);
+                    }
+                }
+            });
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("특이 사항 수정 및 합의");
+        builder.setMessage("수정양식은 자유롭게 적으시면 됩니다.");
+        builder.setView(dialogView);
+        builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                RadioButton rb = (RadioButton)dialogView.findViewById(rg.getCheckedRadioButtonId());
+                if(contractData.isExtraConsent()){
+                    EditText et = (EditText)dialogView.findViewById(R.id.special_consent_detail);
+                    String detail = et.getText().toString();
+                    contractData.setExtraspecial(detail);
+                }else{
+                    if(rb.getText().toString().equals("합의")){
+                        EditText et = (EditText)dialogView.findViewById(R.id.special_consent_detail);
+                        String detail = et.getText().toString();
+                        contractData.setExtraConsent(true);
+                        contractData.setExtraspecial(detail);
+                    }
+                }
+                contractAdapter.notifyDataSetChanged();
+                databaseReference_contract.child(room).setValue(contractData);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
     private void  setFeeDialog(){
         final EditText feeInput = new EditText(this);
