@@ -22,7 +22,7 @@ public class ContractData {
     private String monthlyfee;
     private String address;
     private boolean smokingConsent,petConsent, cerfewConsent, helpConsent, extraConsent;
-    private int homecomingtime;
+    private String smoke_detail, pet_detail, cerfew_detail, help_detail;
     private String extraspecial;
     private boolean finalagree;
 
@@ -172,12 +172,36 @@ public class ContractData {
         this.cerfewConsent = cerfewConsent;
     }
 
-    public int getHomecomingtime() {
-        return homecomingtime;
+    public String getSmoke_detail() {
+        return smoke_detail;
     }
 
-    public void setHomecomingtime(int homecomingtime) {
-        this.homecomingtime = homecomingtime;
+    public void setSmoke_detail(String smoke_detail) {
+        this.smoke_detail = smoke_detail;
+    }
+
+    public String getPet_detail() {
+        return pet_detail;
+    }
+
+    public void setPet_detail(String pet_detail) {
+        this.pet_detail = pet_detail;
+    }
+
+    public String getCerfew_detail() {
+        return cerfew_detail;
+    }
+
+    public void setCerfew_detail(String cerfew_detail) {
+        this.cerfew_detail = cerfew_detail;
+    }
+
+    public String getHelp_detail() {
+        return help_detail;
+    }
+
+    public void setHelp_detail(String help_detail) {
+        this.help_detail = help_detail;
     }
 
     public boolean isHelpConsent() {
@@ -202,6 +226,10 @@ public class ContractData {
 
     public void setExtraConsent(boolean extraConsent) {
         this.extraConsent = extraConsent;
+    }
+
+    public void setCerfewConsent(boolean cerfewConsent) {
+        this.cerfewConsent = cerfewConsent;
     }
 
     public boolean isFinalagree() {

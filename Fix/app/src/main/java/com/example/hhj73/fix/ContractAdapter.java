@@ -89,6 +89,7 @@ public class ContractAdapter extends ArrayAdapter<ContractData> implements View.
             if (contractData.isSmokingConsent()) {
                 smoking.setBackgroundColor(color_Consent);
                 smoking_consent.setText("합의");
+                smoking_detail.setText(contractData.getSmoke_detail());
             }
             else {
                 smoking.setBackgroundColor(color_unConsent);
@@ -97,6 +98,7 @@ public class ContractAdapter extends ArrayAdapter<ContractData> implements View.
             if (contractData.isPetConsent()) {
                 pet.setBackgroundColor(color_Consent);
                 pet_consent.setText("합의");
+                pet_detail.setText(contractData.getPet_detail());
             }
             else {
                 pet.setBackgroundColor(color_unConsent);
@@ -105,6 +107,7 @@ public class ContractAdapter extends ArrayAdapter<ContractData> implements View.
             if (contractData.isCerfewConsent()) {
                 cerfew.setBackgroundColor(color_Consent);
                 cerfew_consent.setText("합의");
+                cerfew_detail.setText(contractData.getCerfew_detail());
             }
             else {
                 cerfew.setBackgroundColor(color_unConsent);
@@ -113,6 +116,7 @@ public class ContractAdapter extends ArrayAdapter<ContractData> implements View.
             if (contractData.isHelpConsent()) {
                 help.setBackgroundColor(color_Consent);
                 help_consent.setText("합의");
+                help_detail.setText(contractData.getHelp_detail());
             }
             else {
                 help.setBackgroundColor(color_unConsent);

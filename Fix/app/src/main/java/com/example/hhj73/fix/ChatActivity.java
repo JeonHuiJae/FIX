@@ -370,7 +370,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
     public void onListBtnClick(int position) {
         ContractData c = (ContractData)contractArrayList.get(0);
         switch (position){
-            case CONDITION://흡연 등등의 조건
+            case CONDITION://흡연 등등의 조건 ok
                 Toast.makeText(this,"CONDITION",Toast.LENGTH_SHORT).show();
                 setConsent();
                 break;
@@ -504,11 +504,6 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
             });
         }
 
-
-
-
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("조건 수정");
         builder.setMessage("전부 합의하셔야 하고, 합의 내용은 안적어도 무관합니다.");
@@ -516,33 +511,70 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
         builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-//                RadioGroup rg;
-//                RadioButton rb;
-//                EditText et;
-//                if (smoke){
-//                    rg = (RadioGroup)findViewById(R.id.smoke_rd);
-//                    rb = (RadioButton)findViewById(R.id.radio_smoke_consent);
-//                    rb.setChecked(true);
-//                    rg.setClickable(false);
-//                    et = (EditText)findViewById(R.id.smoke_consent_detail);
-//                    et.setClickable(true);
-//                }
-//                if (pet){
-//                    rg = (RadioGroup)findViewById(R.id.smoke_rd);
-//                    rb = (RadioButton)findViewById(R.id.radio_smoke_consent);
-//                    rb.setChecked(true);
-//                    rg.setClickable(false);
-//                    et = (EditText)findViewById(R.id.smoke_consent_detail);
-//                    et.setClickable(true);
-//                }
-
+                setChangedConsent(R.id.smoke_rd,R.id.smoke_consent_detail,dialogView,smoke);
+                setChangedConsent(R.id.pet_rd,R.id.pet_consent_detail,dialogView,pet);
+                setChangedConsent(R.id.cerfew_rd,R.id.cerfew_consent_detail,dialogView,cerfew);
+                setChangedConsent(R.id.help_rd,R.id.help_consent_detail,dialogView,help);
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+    private void setChangedConsent(int rg_id, int et_id, View v, boolean b){
+        if (b) {  //동의가 이미 된 상태 -> 라디오 변화 신경 쓸 필요 ㄴㄴ, 동의변화도 체크할 필요 없음, 디테일변화만
+            EditText et = (EditText)v.findViewById(et_id);
+            String detail = et.getText().toString();
+            switch (rg_id){
+                case R.id.smoke_rd:
+                    contractData.setSmoke_detail(detail);
+                    break;
+                case R.id.pet_rd:
+                    contractData.setPet_detail(detail);
+                    break;
+                case R.id.cerfew_rd:
+                    contractData.setCerfew_detail(detail);
+                    break;
+                case R.id.help_rd:
+                    contractData.setHelp_detail(detail);
+                    break;
+                default:
+                    break;
+            }
+            contractAdapter.notifyDataSetChanged();
+            databaseReference_contract.setValue(contractData);
+        }
+        else{   //동의가 안된 상태 -> 라디오변화 체크 -> 동의면 동의&디테일 둘다 저장, -> 미합의면 그대로
+            RadioGroup radioGroup = (RadioGroup) v.findViewById(rg_id);
+            RadioButton rb = (RadioButton)v.findViewById(radioGroup.getCheckedRadioButtonId());
+            if(rb.getText().toString().equals("합의")){
+                EditText et = (EditText)v.findViewById(et_id);
+                String detail = et.getText().toString();
+                switch (rg_id){
+                    case R.id.smoke_rd:
+                        contractData.setSmokingConsent(true);
+                        contractData.setSmoke_detail(detail);
+                        break;
+                    case R.id.pet_rd:
+                        contractData.setPetConsent(true);
+                        contractData.setPet_detail(detail);
+                        break;
+                    case R.id.cerfew_rd:
+                        contractData.setCerfewConsent(true);
+                        contractData.setCerfew_detail(detail);
+                        break;
+                    case R.id.help_rd:
+                        contractData.setHelpConsent(true);
+                        contractData.setHelp_detail(detail);
+                        break;
+                    default:
+                        break;
+                }
 
+            }
+            contractAdapter.notifyDataSetChanged();
+            databaseReference_contract.setValue(contractData);
+        }
+    }
     private void setSpecailDialog(){
         String special = contractData.getExtraspecial();
         final EditText specialText = new EditText(this);
