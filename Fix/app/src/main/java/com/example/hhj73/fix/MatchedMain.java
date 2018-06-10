@@ -138,6 +138,10 @@ public class MatchedMain extends AppCompatActivity {
         //intent.putExtra("myID", myID);
         //intent.putExtra("urID", urID);
 
+        intent = new Intent(this, ChatAfterMatchedActivity.class);
+        intent.putExtra("myID", myID);
+        intent.putExtra("urID", urID);
+        startActivity(intent);
     }
 
     public void loadProfile(){

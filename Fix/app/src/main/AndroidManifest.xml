@@ -61,7 +61,8 @@
         <activity android:name=".MatchedMain" />
         <activity android:name=".SeniorChatList" />
         <activity android:name=".ChatActivitySenior" />
-        <activity android:name=".StudentDetail"></activity>
+        <activity android:name=".StudentDetail" />
+        <activity android:name=".ChatAfterMatchedActivity"></activity>
     </application>
 
 </manifest>

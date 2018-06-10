@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.hhj73.fix.ChatAfterMatchedActivity"
+    android:orientation="vertical"
+    android:gravity="bottom">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/colorDarkMint"
+            android:layout_height="65dp">
+            <FrameLayout
+                android:background="@color/colorMint"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <!--뒤로가기 버튼-->
+                <Button
+                    android:onClick="back"
+                    android:text="◀"
+                    android:layout_gravity="center|left"
+                    android:background="#00ff0000"
+                    android:textColor="@color/colorBrightMint"
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+                <TextView
+                    android:id="@+id/roomName"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPowder"
+                    android:textSize="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <ListView
+            android:background="@color/colorPowder"
+            android:id="@+id/chatList"
+            android:transcriptMode="alwaysScroll"
+            android:layout_weight="7"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+        </ListView>
+
+        <LinearLayout
+            android:background="@color/colorMint"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:nextFocusDown="@id/send"
+                android:layout_gravity="center"
+                android:background="@color/colorPowder"
+                android:id="@+id/chatText"
+                android:layout_marginLeft="10dp"
+                android:layout_width="250dp"
+                android:layout_height="40dp" />
+
+            <Button
+                android:id="@+id/send"
+                android:text="SEND"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPowder"
+                android:background="@color/colorPink"
+                android:layout_marginRight="5dp"
+                android:onClick="submit"
+                android:layout_width="50dp"
+                android:layout_height="40dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
