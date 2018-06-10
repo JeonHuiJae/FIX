@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -394,9 +396,6 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
                 break;
         }
     }
-    private void checkConsent(View v){
-
-    }
     public void setConsent(){
         final boolean smoke = contractData.isSmokingConsent();
         final boolean pet = contractData.isPetConsent();
@@ -405,7 +404,111 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
 
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.consent_dialog,null);
-        checkConsent(dialogView);
+        RadioGroup rg;
+        RadioButton rb;
+
+        if(smoke){
+            rg = dialogView.findViewById(R.id.smoke_rd);
+            rg.getChildAt(0).setEnabled(false);
+            rg.getChildAt(1).setEnabled(false);
+        }else {
+            rb = dialogView.findViewById(R.id.radio_smoke_unconsent);
+            rb.setChecked(true);
+            final EditText et = dialogView.findViewById(R.id.smoke_consent_detail);
+            et.setEnabled(false);
+            rg = dialogView.findViewById(R.id.smoke_rd);
+            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    RadioButton radioButton = (RadioButton)group.findViewById(checkedId);
+                    String isConsent = radioButton.getText().toString();
+                    if(isConsent.equals("합의")){
+                        et.setEnabled(true);
+                    }
+                    else if(isConsent.equals("미합의")){
+                        et.setEnabled(false);
+                    }
+                }
+            });
+        }
+        if(pet){
+            rg = dialogView.findViewById(R.id.pet_rd);
+            rg.getChildAt(0).setEnabled(false);
+            rg.getChildAt(1).setEnabled(false);
+        }else {
+            rb = dialogView.findViewById(R.id.radio_pet_unconsent);
+            rb.setChecked(true);
+            final EditText et = dialogView.findViewById(R.id.pet_consent_detail);
+            et.setEnabled(false);
+            rg = dialogView.findViewById(R.id.pet_rd);
+            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    RadioButton radioButton = (RadioButton)group.findViewById(checkedId);
+                    String isConsent = radioButton.getText().toString();
+                    if(isConsent.equals("합의")){
+                        et.setEnabled(true);
+                    }
+                    else if(isConsent.equals("미합의")){
+                        et.setEnabled(false);
+                    }
+                }
+            });
+        }
+        if(cerfew){
+            rg = dialogView.findViewById(R.id.cerfew_rd);
+            rg.getChildAt(0).setEnabled(false);
+            rg.getChildAt(1).setEnabled(false);
+        }else {
+            rb = dialogView.findViewById(R.id.radio_cerfew_unconsent);
+            rb.setChecked(true);
+            final EditText et = dialogView.findViewById(R.id.cerfew_consent_detail);
+            et.setEnabled(false);
+            rg = dialogView.findViewById(R.id.cerfew_rd);
+            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    RadioButton radioButton = (RadioButton)group.findViewById(checkedId);
+                    String isConsent = radioButton.getText().toString();
+                    if(isConsent.equals("합의")){
+                        et.setEnabled(true);
+                    }
+                    else if(isConsent.equals("미합의")){
+                        et.setEnabled(false);
+                    }
+                }
+            });
+        }
+        if(help){
+            rg = dialogView.findViewById(R.id.help_rd);
+            rg.getChildAt(0).setEnabled(false);
+            rg.getChildAt(1).setEnabled(false);
+        }else {
+            rb = dialogView.findViewById(R.id.radio_help_unconsent);
+            rb.setChecked(true);
+            final EditText et = dialogView.findViewById(R.id.help_consent_detail);
+            et.setEnabled(false);
+            rg = dialogView.findViewById(R.id.help_rd);
+            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    RadioButton radioButton = (RadioButton)group.findViewById(checkedId);
+                    String isConsent = radioButton.getText().toString();
+                    if(isConsent.equals("합의")){
+                        et.setEnabled(true);
+                    }
+                    else if(isConsent.equals("미합의")){
+                        et.setEnabled(false);
+                    }
+                }
+            });
+        }
+
+
+
+
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("조건 수정");
         builder.setMessage("전부 합의하셔야 하고, 합의 내용은 안적어도 무관합니다.");

@@ -13,6 +13,7 @@
             android:layout_weight="0.7"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:gravity="center"
             android:layout_gravity="center"
             android:text="흡연"/>
         <RadioGroup
@@ -26,12 +27,12 @@
                 android:id="@+id/radio_smoke_consent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="합의"/>
             <RadioButton
                 android:id="@+id/radio_smoke_unconsent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
                 android:text="미합의"/>
         </RadioGroup>
         <EditText
@@ -41,7 +42,6 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:layout_gravity="center"
-            android:clickable="false"
             android:hint="합의내용"/>
     </LinearLayout>
     <LinearLayout
@@ -52,6 +52,7 @@
             android:layout_weight="0.7"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:gravity="center"
             android:layout_gravity="center"
             android:text="동물"/>
         <RadioGroup
@@ -65,12 +66,12 @@
                 android:id="@+id/radio_pet_consent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="합의"/>
             <RadioButton
                 android:id="@+id/radio_pet_unconsent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
                 android:text="미합의"/>
         </RadioGroup>
         <EditText
@@ -80,7 +81,6 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:layout_gravity="center"
-            android:clickable="false"
             android:hint="합의내용"/>
     </LinearLayout>
     <LinearLayout
@@ -91,6 +91,7 @@
             android:layout_weight="0.7"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:gravity="center"
             android:layout_gravity="center"
             android:text="통금"/>
         <RadioGroup
@@ -104,12 +105,12 @@
                 android:id="@+id/radio_cerfew_consent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="합의"/>
             <RadioButton
                 android:id="@+id/radio_cerfew_unconsent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
                 android:text="미합의"/>
         </RadioGroup>
         <EditText
@@ -119,7 +120,6 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:layout_gravity="center"
-            android:clickable="false"
             android:hint="합의내용"/>
     </LinearLayout>
     <LinearLayout
@@ -130,6 +130,7 @@
             android:layout_weight="0.7"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:gravity="center"
             android:layout_gravity="center"
             android:text="도움"/>
         <RadioGroup
@@ -143,12 +144,12 @@
                 android:id="@+id/radio_help_consent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="합의"/>
             <RadioButton
                 android:id="@+id/radio_help_unconsent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
                 android:text="미합의"/>
         </RadioGroup>
         <EditText
@@ -158,7 +159,6 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:layout_gravity="center"
-            android:clickable="false"
             android:hint="합의내용"/>
     </LinearLayout>
 
