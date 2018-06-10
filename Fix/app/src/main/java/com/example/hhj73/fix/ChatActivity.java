@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -369,6 +370,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
         switch (position){
             case CONDITION://흡연 등등의 조건
                 Toast.makeText(this,"CONDITION",Toast.LENGTH_SHORT).show();
+                setConsent();
                 break;
             case FEE: //월세 ok
                 setFeeDialog();
@@ -383,13 +385,84 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
                 datePickerDialog.show();
                 Toast.makeText(this,"EDATE",Toast.LENGTH_SHORT).show();
                 break;
-            case SPECAIL: //특이사항 추가 및 제거
+            case SPECAIL: //특이사항 추가 및 제거 ok
                 Toast.makeText(this,"SPECIAL",Toast.LENGTH_SHORT).show();
+                setSpecailDialog();
                 break;
             default:
                 Toast.makeText(this,"DEFAULT",Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+    private void checkConsent(View v){
+
+    }
+    public void setConsent(){
+        final boolean smoke = contractData.isSmokingConsent();
+        final boolean pet = contractData.isPetConsent();
+        final boolean cerfew = contractData.isCerfewConsent();
+        final boolean help = contractData.isHelpConsent();
+
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.consent_dialog,null);
+        checkConsent(dialogView);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("조건 수정");
+        builder.setMessage("전부 합의하셔야 하고, 합의 내용은 안적어도 무관합니다.");
+        builder.setView(dialogView);
+        builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+//                RadioGroup rg;
+//                RadioButton rb;
+//                EditText et;
+//                if (smoke){
+//                    rg = (RadioGroup)findViewById(R.id.smoke_rd);
+//                    rb = (RadioButton)findViewById(R.id.radio_smoke_consent);
+//                    rb.setChecked(true);
+//                    rg.setClickable(false);
+//                    et = (EditText)findViewById(R.id.smoke_consent_detail);
+//                    et.setClickable(true);
+//                }
+//                if (pet){
+//                    rg = (RadioGroup)findViewById(R.id.smoke_rd);
+//                    rb = (RadioButton)findViewById(R.id.radio_smoke_consent);
+//                    rb.setChecked(true);
+//                    rg.setClickable(false);
+//                    et = (EditText)findViewById(R.id.smoke_consent_detail);
+//                    et.setClickable(true);
+//                }
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void setSpecailDialog(){
+        String special = contractData.getExtraspecial();
+        final EditText specialText = new EditText(this);
+        specialText.setLines(10);
+        specialText.setMinLines(5);
+        specialText.setMaxLines(20);
+        specialText.setPadding(10,5,10,5);
+        specialText.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+        specialText.setText(special);
+
+        AlertDialog ad = new AlertDialog.Builder(this)
+                .setTitle("특이 사항 수정")
+                .setView(specialText)
+                .setMessage("입력해주세요.")
+                .setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        contractData.setExtraspecial(specialText.getText().toString());
+                        contractAdapter.notifyDataSetChanged();
+                        databaseReference_contract.child(room).setValue(contractData);
+                    }
+                })
+                .show();
     }
     private void  setFeeDialog(){
         final EditText feeInput = new EditText(this);

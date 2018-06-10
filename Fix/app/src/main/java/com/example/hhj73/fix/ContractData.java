@@ -70,6 +70,7 @@ public class ContractData {
             this.helpConsent = false;
         this.extraConsent = false;
         this.finalagree = false;
+
         if (extra_j != null && extra_s==null)
             this.extraspecial ="학생 : "+extra_j+"\n";
         else if (extra_j == null && extra_s!=null)
@@ -192,7 +193,7 @@ public class ContractData {
     }
 
     public void setExtraspecial(String extraspecial) {
-        this.extraspecial = this.extraspecial+extraspecial;
+        this.extraspecial = extraspecial;
     }
 
     public boolean isExtraConsent() {
