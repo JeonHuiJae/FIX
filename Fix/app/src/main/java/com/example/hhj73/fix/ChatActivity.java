@@ -109,8 +109,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
         // 상대방 senior
         urID = intent.getStringExtra("urID");
 
-        chatAdapter = new ChatAdapter(getApplicationContext(), chats, myID);
-        chatList.setAdapter(chatAdapter);
+
 
         // 채팅방 생성
         users = new String[2];
@@ -124,7 +123,25 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
 //
 //        msg = users[1]+"님이 입장하셨습니다.";
 //        chats.add(msg);
+        databaseReference_user = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference_user.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                me = dataSnapshot.child(myID).getValue(User.class);
+                you =  dataSnapshot.child(urID).getValue(User.class);
+                urName.setText(you.getName()); // 이름
+                TextView roomName = (TextView) findViewById(R.id.roomName);
+                roomName.setText(you.getName()+" 어르신");
+                urNumber = Uri.parse(you.getPhone());// 전화번호
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        chatAdapter = new ChatAdapter(getApplicationContext(), chats, myID,"ME","YOU");
+        chatList.setAdapter(chatAdapter);
         chatAdapter.notifyDataSetChanged();
 
         databaseReference.child(room).child("chat").addChildEventListener(new ChildEventListener() {
@@ -132,13 +149,6 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 ChatData chatData = dataSnapshot.getValue(ChatData.class);
-                if(chatData.getUserName() == urID) {
-                    // 상대가 보낸 메시지면 배경색 바꾸기
-                    // chatAdapter 에서 접근해야할 문제라 어떻게 해야할지 모르겠어요
-                    // OnBindViewHolder 에서 조건문 설정해서 이렇게 해야하는데 ㅠㅠ
-                    // holder.itemView.setBackgroundColor(Color.WHITE);
-
-                }
                 chats.add(chatData);
                 chatAdapter.notifyDataSetChanged();
                 // chatList.smoothScrollToPosition(chatAdapter.getItemCount() - 1); // 아래로 스크롤
@@ -199,23 +209,6 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
             }
         });
 
-        databaseReference_user = FirebaseDatabase.getInstance().getReference("users");
-        databaseReference_user.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                me = dataSnapshot.child(myID).getValue(User.class);
-                you =  dataSnapshot.child(urID).getValue(User.class);
-                urName.setText(you.getName()); // 이름
-                TextView roomName = (TextView) findViewById(R.id.roomName);
-                roomName.setText(you.getName()+" 어르신");
-                urNumber = Uri.parse(you.getPhone());// 전화번호
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         databaseReference_contract = FirebaseDatabase.getInstance().getReference("contracts");
 
@@ -241,7 +234,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
     public void submit(View view) {
         // 채팅 보내기
         String chat = editChat.getText().toString();
-        String str = myID + ": " + chat;
+        String str =   chat;
 
 //        chats.add(str);
 //        arrayAdapter.notifyDataSetChanged();

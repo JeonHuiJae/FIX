@@ -6,36 +6,64 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-
         <LinearLayout
+            android:id="@+id/nameBox"
+            android:gravity="right"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/c_message"
-                android:text="안녕하세요 ㅋㄷ"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/c_time"
-                android:text="yyyy-MM-dd"
-                android:layout_marginRight="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:textSize="15sp"
-                android:autoLink="all" />
+                android:id="@+id/nameText"
+                android:gravity="center"
+                android:textColor="@color/colorPowder"
+                android:textSize="15dp"
+                android:text="희재"
+                android:background="@color/colorDarkMint"
+                android:layout_margin="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
         </LinearLayout>
+
+<LinearLayout
+    android:id="@+id/chatBox"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/chatLayout"
+        android:background="@drawable/chat_left"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/c_message"
+            android:layout_marginTop="20dp"
+            android:text="안녕하세요 ㅋㄷ"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/c_time"
+            android:text="yyyy-MM-dd"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="15sp"
+            android:autoLink="all" />
     </LinearLayout>
+</LinearLayout>
+
+    </FrameLayout>
 </LinearLayout>
 
