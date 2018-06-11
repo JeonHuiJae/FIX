@@ -141,6 +141,7 @@ public class MatchedMain extends AppCompatActivity {
         intent = new Intent(this, ChatAfterMatchedActivity.class);
         intent.putExtra("myID", myID);
         intent.putExtra("urID", urID);
+        intent.putExtra("type",type);
         startActivity(intent);
     }
 

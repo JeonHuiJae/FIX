@@ -53,7 +53,7 @@ public class SeniorMain extends AppCompatActivity {
         if(Build.VERSION.SDK_INT>=21)
             photo.setClipToOutline(true);
         //사진 검사
-        StorageReference pathRef = storageReference.child("Profile/Senior/"+id);
+        StorageReference pathRef = storageReference.child("Profile/Senior/"+id+".JPG");
         pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
             @Override
             public void onSuccess(Uri uri) {//있음

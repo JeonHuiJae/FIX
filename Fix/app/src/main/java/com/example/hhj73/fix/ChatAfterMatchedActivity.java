@@ -36,6 +36,7 @@ public class ChatAfterMatchedActivity extends AppCompatActivity {
     String urID;
     String users[];
     String room;
+    Boolean type;
     User you;
     User me;
 
@@ -58,7 +59,7 @@ public class ChatAfterMatchedActivity extends AppCompatActivity {
         myID = intent.getStringExtra("myID");
         // 상대방 senior
         urID = intent.getStringExtra("urID");
-
+        type = intent.getBooleanExtra("type", true);
         chatAdapter = new ChatAdapter(getApplicationContext(), chats, myID);
         chatList.setAdapter(chatAdapter);
 
@@ -110,6 +111,9 @@ public class ChatAfterMatchedActivity extends AppCompatActivity {
 
     public void back(View view) {
         Intent intent = new Intent(this, MatchedMain.class);
+        intent.putExtra("type", type);
+        intent.putExtra("myID", myID);
+        intent.putExtra("urID",urID);
         startActivity(intent);
     }
 
