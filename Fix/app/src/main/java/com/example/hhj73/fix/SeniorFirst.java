@@ -111,7 +111,7 @@ public class SeniorFirst extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         String fileName = id+"";
         StorageReference storageRef = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com")
-                .child("Room/"+fileName); //올리기
+                .child("Room/"+fileName+".JPG"); //올리기
         storageRef.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

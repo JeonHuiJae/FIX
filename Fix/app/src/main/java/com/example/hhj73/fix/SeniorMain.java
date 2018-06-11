@@ -1,25 +1,20 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -134,6 +129,12 @@ public class SeniorMain extends AppCompatActivity {
     public void chatList(View view) {//채팅리스트
         Intent intent = new Intent(this, SeniorChatList.class);
         intent.putExtra("id", id);
+        startActivity(intent);
+    }
+
+    public void editRoomInfo(View view) {
+        Intent intent = new Intent(this, EditRoomInfoActivity.class);
+        intent.putExtra("curUser", id);
         startActivity(intent);
     }
 }

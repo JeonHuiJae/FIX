@@ -62,7 +62,8 @@
         <activity android:name=".SeniorChatList" />
         <activity android:name=".ChatActivitySenior" />
         <activity android:name=".StudentDetail" />
-        <activity android:name=".ChatAfterMatchedActivity"></activity>
+        <activity android:name=".ChatAfterMatchedActivity" />
+        <activity android:name=".EditRoomInfoActivity"></activity>
     </application>
 
 </manifest>
