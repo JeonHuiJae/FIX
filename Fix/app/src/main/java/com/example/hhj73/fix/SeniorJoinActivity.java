@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -90,6 +91,7 @@ public class SeniorJoinActivity extends Activity {
     CheckBox curfewCheck;
     CheckBox smokeCheck;
 
+    MediaPlayer mp;
     Button next2Btn;
 
     final int REQUEST_IMAGE_CAPTURE= 123;
@@ -110,6 +112,7 @@ public class SeniorJoinActivity extends Activity {
     }
 
     public void init() {
+        mp = MediaPlayer.create(this, R.raw.dding);
         joinID = (EditText) findViewById(R.id.JoinID);
         pw1 = (EditText) findViewById(R.id.pw1);
         pw2 = (EditText) findViewById(R.id.pw2);
@@ -174,7 +177,7 @@ public class SeniorJoinActivity extends Activity {
 
     public void seniorJoinSuccess(View view) {
         // 노인회원 가입 완료
-
+        mp.start();
         User user = new User(true, id, pw, name, bday, gender, phoneNumber, strAddress, cost, smoking, curfew, pet, help, uniqueness,location, "");
         databaseReference.child(id).setValue(user);
 
@@ -213,7 +216,7 @@ public class SeniorJoinActivity extends Activity {
 
 
     public void next(View view) { //다음버튼
-
+            mp.start();
             switch (view.getId()) {
                 case R.id.next0:
                     CheckBox agree = (CheckBox) findViewById(R.id.agree);

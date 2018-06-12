@@ -63,7 +63,12 @@
         <activity android:name=".ChatActivitySenior" />
         <activity android:name=".StudentDetail" />
         <activity android:name=".ChatAfterMatchedActivity" />
-        <activity android:name=".EditRoomInfoActivity"></activity>
+        <activity android:name=".EditRoomInfoActivity" />
+        <activity
+            android:name=".emergency"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+        <activity android:name=".Poll" />
+        <activity android:name=".poll_senior"></activity>
     </application>
 
 </manifest>

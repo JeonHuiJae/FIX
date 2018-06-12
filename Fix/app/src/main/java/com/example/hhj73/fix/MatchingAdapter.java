@@ -1,5 +1,6 @@
 package com.example.hhj73.fix;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;

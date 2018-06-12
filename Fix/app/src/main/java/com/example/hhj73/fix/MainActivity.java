@@ -1,6 +1,9 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     String inputID;
     String inputPW;
     boolean flag = false;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void init() {
+        mp = MediaPlayer.create(this, R.raw.start);
+        mp.start();
+        mp = MediaPlayer.create(this, R.raw.login);
+
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
         databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
 
@@ -95,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
                                             if(SeniorId.equals(inputID) && dataSnapshot.child(roomName).child("id_student").exists()) { //내가 속한 방
                                                 flag = true;
+                                                mp.start();// 로그인 소리
                                                 Intent intentMatched = new Intent(getApplicationContext(), MatchedMain.class);
                                                 intentMatched.putExtra("myID",inputID);
                                                 intentMatched.putExtra("urID",roomName.substring(0,idx));// 상대 아이디
@@ -120,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
                                         if(!flag){
                                         Intent intent = new Intent(getApplicationContext(), SeniorMain.class);
                                         intent.putExtra("curUser", inputID);
+                                            mp.start();// 로그인 소리
                                         startActivity(intent);}
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {//없음
@@ -131,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                                         startActivity(intent);}
                                     }
                                 });
-
+                                flag = false;
                             }else{ //학생
 
                                 databaseReference_family.addValueEventListener(new ValueEventListener() {
@@ -146,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
                                             if(StudentId.equals(inputID)&& dataSnapshot.child(roomName).child("id_student").exists()) { //내가 속한 방
                                                 flag = true;
+                                                mp.start();// 로그인 소리
                                                 Intent intentMatched = new Intent(getApplicationContext(), MatchedMain.class);
                                                 intentMatched.putExtra("myID",inputID);
                                                 intentMatched.putExtra("urID",roomName.substring(idx+1));// 상대 아이디
@@ -160,10 +171,12 @@ public class MainActivity extends AppCompatActivity {
                                 });
 
                                 if(!flag){
+                                    mp.start();// 로그인 소리
                                 Intent intent = new Intent(getApplicationContext(), MatchingActivity.class);
                                 intent.putExtra("curUser", inputID);
                                 startActivity(intent);
                                 }
+                                flag = false;
                             }
                             return;
                         }
@@ -186,6 +199,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void join(View view) {
+        mp = MediaPlayer.create(this, R.raw.dding);
+        mp.start();
         Intent intent = new Intent(MainActivity.this, Join.class);
         startActivity(intent); //액티비티 이동
         overridePendingTransition(0, 0);

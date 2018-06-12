@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,6 +59,7 @@ public class ChatActivitySenior extends AppCompatActivity {
     final int DETAIL = 234;
 
     ImageView urPro;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -275,6 +277,10 @@ public class ChatActivitySenior extends AppCompatActivity {
 
     public void contractSubmit(View view) { // 계약서 제출
         // you 학생 me 어르신
+        mp = MediaPlayer.create(this, R.raw.dding);
+        mp.start();// 소리
+        mp = MediaPlayer.create(this, R.raw.login);
+
         databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
         databaseReference_family.child(room).child("seniorAgree").setValue(true);
         Toast.makeText(this, "Agree Ok", Toast.LENGTH_SHORT).show();
@@ -282,6 +288,7 @@ public class ChatActivitySenior extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child(room).child("studentAgree").exists()){
+                    mp.start();// 소리
                     Family family = new Family(you.getPhone(), me.getPhone(), you.getName(), me.getName(), you.getId(), me.getId());
                     databaseReference_family.child(room).setValue(family);
                     Toast.makeText(ChatActivitySenior.this, "Now We are Family!", Toast.LENGTH_SHORT).show();

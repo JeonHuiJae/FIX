@@ -2,6 +2,7 @@ package com.example.hhj73.fix;
 
 import android.content.Intent;
 import android.location.Geocoder;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -36,12 +37,14 @@ public class Address extends AppCompatActivity {
     String  lnglataddress;
     double  Longitude;
     double  Latitude;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
 
+        mp = MediaPlayer.create(this, R.raw.dding);
         Intent intent = getIntent();
        activity = intent.getBooleanExtra("activity",true);
         if(activity==true){
@@ -99,6 +102,7 @@ public class Address extends AppCompatActivity {
     }
 
     public void addclick(View view) {
+        mp.start();
         Intent add;
         if(activity==false)
         { add = new Intent(this,SeniorJoinActivity.class);

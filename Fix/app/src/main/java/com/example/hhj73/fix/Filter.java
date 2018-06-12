@@ -2,6 +2,7 @@ package com.example.hhj73.fix;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -23,6 +24,7 @@ RatingBar pet;
 RatingBar smoke;
 RatingBar curfew;
 double lot, lat;
+MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,9 @@ double lot, lat;
     }
 
     public void setFilter(View view) {//필터 설정 ㄱ ㄱ
+        mp = MediaPlayer.create(this, R.raw.dding);
+        mp.start();// 소리
+
         float petRate, helpRate, smokeRate, curfewRate;
         int MinCost, MaxCost;
         double resultMeter;
