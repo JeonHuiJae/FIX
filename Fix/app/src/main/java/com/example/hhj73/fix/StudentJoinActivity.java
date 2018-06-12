@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -100,6 +101,7 @@ public class StudentJoinActivity extends Activity {
     EditText editUniqueness;
     private Uri filePath;
     String mCurrentPhotoPath;
+    MediaPlayer mp;
 
 
     @Override
@@ -114,6 +116,7 @@ public class StudentJoinActivity extends Activity {
     }
 
     private void init() {
+        mp = MediaPlayer.create(this, R.raw.dding);
         editId = (EditText) findViewById(R.id.editId);
         editPw1 = (EditText) findViewById(R.id.editPw1);
         editPw2 = (EditText) findViewById(R.id.editPw2);
@@ -170,6 +173,9 @@ public class StudentJoinActivity extends Activity {
     }
 
     public void studentJoinSuccess(View view) {
+
+        mp.start();// 소리
+
         // 학생회원 가입 완료
         if(emailPassed) {
 
@@ -216,6 +222,7 @@ public class StudentJoinActivity extends Activity {
     }
 
     public void next(View view) {
+        mp.start();// 소리
         switch (view.getId()){
             case R.id.next0:
                 CheckBox agree = (CheckBox) findViewById(R.id.agree);

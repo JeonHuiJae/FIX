@@ -3,6 +3,7 @@ package com.example.hhj73.fix;
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -80,6 +81,7 @@ public class StudentEditProfile extends AppCompatActivity {
     }
 
     public void StudentEditPhoto(View view) {
+
         Intent intent = new Intent(this, SelectPhotoMode.class);
         intent.putExtra("id",id);
         intent.putExtra("type",false);

@@ -11,19 +11,21 @@
     <ImageView
         android:id="@+id/newPhoto"
         android:layout_width="270dp"
-        android:layout_height="220dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:background="@color/colorCream"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="40dp"/>
 
     <Button
+        android:textSize="20dp"
         android:text="방 사진 수정"
         android:onClick="editPhoto"
         android:layout_width="270dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:background="@drawable/mainbtn1"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:textColor="@color/colorPowder"/>
 
     <LinearLayout
@@ -32,22 +34,24 @@
         android:orientation="horizontal"
         android:layout_gravity="center">
 
+        <TextView
+            android:textSize="20dp"
+            android:text="월세 : "
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
         <EditText
             android:id="@+id/newPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <Button
-            android:text="수정"
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:background="@drawable/mainbtn2"
-            android:textColor="@color/colorPowder"/>
+
 
     </LinearLayout>
 
     <Button
+        android:textSize="20dp"
         android:text="저장"
         android:onClick="save"
         android:layout_width="270dp"

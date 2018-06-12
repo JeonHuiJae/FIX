@@ -58,8 +58,13 @@ public class ChatAfterMatchedActivity extends AppCompatActivity {
         myID = intent.getStringExtra("myID");
         // 상대방 senior
         urID = intent.getStringExtra("urID");
+<<<<<<< HEAD
 
         chatAdapter = new ChatAdapter(getApplicationContext(), chats, myID);
+=======
+        type = intent.getBooleanExtra("type", true);
+        chatAdapter = new ChatAdapter(getApplicationContext(), chats, myID, "ME", "YOU");
+>>>>>>> 5fb2c6d5ee3124704a14069e093b0f9214488963
         chatList.setAdapter(chatAdapter);
 
         // 채팅방 생성
@@ -116,7 +121,7 @@ public class ChatAfterMatchedActivity extends AppCompatActivity {
     public void submit(View view) {
         // 채팅 보내기
         String chat = editChat.getText().toString();
-        String str = myID + ": " + chat;
+        String str = chat;
 
 //        chats.add(str);
 //        arrayAdapter.notifyDataSetChanged();

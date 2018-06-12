@@ -61,6 +61,7 @@
             android:layout_width="160dp"
             android:layout_height="50dp" />
         <Button
+            android:onClick="emergency"
             android:textColor="@color/colorPowder"
             android:textSize="23dp"
             android:text="EMERGENCY"

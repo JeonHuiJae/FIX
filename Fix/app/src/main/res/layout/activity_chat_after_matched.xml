@@ -48,6 +48,8 @@
         </LinearLayout>
 
         <ListView
+            android:dividerHeight="0px"
+            android:divider="@color/trans"
             android:background="@color/colorPowder"
             android:id="@+id/chatList"
             android:transcriptMode="alwaysScroll"

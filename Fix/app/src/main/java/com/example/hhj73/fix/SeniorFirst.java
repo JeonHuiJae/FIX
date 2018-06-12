@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -30,12 +31,14 @@ public class SeniorFirst extends AppCompatActivity {
     Uri filePath;
     View view;
     String id;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_senior_first);
         Intent intent = getIntent();
+        mp = MediaPlayer.create(this, R.raw.login);
         id = intent.getStringExtra("curUser");
     }
 
@@ -108,6 +111,7 @@ public class SeniorFirst extends AppCompatActivity {
     }
 
     public void startSenior(View view) {//시작
+        mp.start();// 로그인 소리
         FirebaseStorage storage = FirebaseStorage.getInstance();
         String fileName = id+"";
         StorageReference storageRef = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com")

@@ -3,6 +3,7 @@ package com.example.hhj73.fix;
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class SeniorMain extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
     int roomNum=0;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class SeniorMain extends AppCompatActivity {
 
     }
     public void init(){
+        mp = MediaPlayer.create(this, R.raw.dding);
+
         message = (TextView)findViewById(R.id.myID);
         message.setText(id+" 님");
         photo = (ImageView)findViewById(R.id.profilePhoto);
@@ -101,6 +105,8 @@ public class SeniorMain extends AppCompatActivity {
     }
 
     public void editProfile(View view) {
+        mp.start();// 소리
+
         Intent editIntent = new Intent(this, EditProfileActivity.class);
         editIntent.putExtra("id",id);
         startActivityForResult(editIntent,Edit_PROFILE);
@@ -127,12 +133,16 @@ public class SeniorMain extends AppCompatActivity {
     }
 
     public void chatList(View view) {//채팅리스트
+        mp.start();// 소리
+
         Intent intent = new Intent(this, SeniorChatList.class);
         intent.putExtra("id", id);
         startActivity(intent);
     }
 
     public void editRoomInfo(View view) {
+        mp.start();// 소리
+
         Intent intent = new Intent(this, EditRoomInfoActivity.class);
         intent.putExtra("curUser", id);
         startActivity(intent);

@@ -1,6 +1,7 @@
 package com.example.hhj73.fix;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -41,7 +42,7 @@ public class SeniorDetail extends AppCompatActivity {
     ImageView pet;
     User senior;
     ContractData contractData;
-
+    MediaPlayer mp;
 
     long now = System.currentTimeMillis();
     Date date;
@@ -66,6 +67,7 @@ public class SeniorDetail extends AppCompatActivity {
 
     private void init() {
 
+        mp = MediaPlayer.create(this, R.raw.dding);
         messgae = (TextView)findViewById(R.id.profileMessage);
         title = (TextView)findViewById(R.id.Dtitle);
         roomImage = (ImageView)findViewById(R.id.roomImage);
@@ -155,6 +157,7 @@ public class SeniorDetail extends AppCompatActivity {
 
     }
     public void talk(View view) {//채팅으로
+        mp.start();
         make_first_contract(myId,urId);
         Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
         intent.putExtra("myID", myId);

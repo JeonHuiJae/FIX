@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,6 +59,7 @@ public class ChatActivitySenior extends AppCompatActivity {
     final int DETAIL = 234;
 
     ImageView urPro;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +87,6 @@ public class ChatActivitySenior extends AppCompatActivity {
         // 상대방
         urID = intent.getStringExtra("urID");
 
-        chatAdapter = new ChatAdapter(getApplicationContext(), chats, myID);
-        chatList.setAdapter(chatAdapter);
 
         // 채팅방 생성
         users = new String[2];
@@ -100,7 +100,28 @@ public class ChatActivitySenior extends AppCompatActivity {
 //
 //        msg = users[1]+"님이 입장하셨습니다.";
 //        chats.add(msg);
+        databaseReference_user = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference_user.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                me =  dataSnapshot.child(myID).getValue(User.class);
+                you =  dataSnapshot.child(urID).getValue(User.class);
+                urName.setText(you.getName()); // 이름
+                TextView roomName = (TextView) findViewById(R.id.roomName);
+                roomName.setText(you.getName()+" 학생");
+                urNumber = Uri.parse(you.getPhone());// 전화번호
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        chatAdapter = new ChatAdapter(getApplicationContext(), chats, myID, "ME", "YOU");
+        chatList.setAdapter(chatAdapter);
         chatAdapter.notifyDataSetChanged();
 
         databaseReference.child(room).child("chat").addChildEventListener(new ChildEventListener() {
@@ -108,13 +129,7 @@ public class ChatActivitySenior extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 ChatData chatData = dataSnapshot.getValue(ChatData.class);
-                if(chatData.getUserName() == urID) {
-                    // 상대가 보낸 메시지면 배경색 바꾸기
-                    // chatAdapter 에서 접근해야할 문제라 어떻게 해야할지 모르겠어요
-                    // OnBindViewHolder 에서 조건문 설정해서 이렇게 해야하는데 ㅠㅠ
-                    // holder.itemView.setBackgroundColor(Color.WHITE);
 
-                }
                 chats.add(chatData);
                 chatAdapter.notifyDataSetChanged();
                 // chatList.smoothScrollToPosition(chatAdapter.getItemCount() - 1); // 아래로 스크롤
@@ -173,30 +188,12 @@ public class ChatActivitySenior extends AppCompatActivity {
             }
         });
 
-        databaseReference_user = FirebaseDatabase.getInstance().getReference("users");
-        databaseReference_user.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                me =  dataSnapshot.child(myID).getValue(User.class);
-                you =  dataSnapshot.child(urID).getValue(User.class);
-                urName.setText(you.getName()); // 이름
-                TextView roomName = (TextView) findViewById(R.id.roomName);
-                roomName.setText(you.getName()+" 학생");
-                urNumber = Uri.parse(you.getPhone());// 전화번호
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
     }
 
     public void submit(View view) {
         // 채팅 보내기
         String chat = editChat.getText().toString();
-        String str = myID + ": " + chat;
+        String str =  chat;
 
 //        chats.add(str);
 //        arrayAdapter.notifyDataSetChanged();
@@ -280,6 +277,10 @@ public class ChatActivitySenior extends AppCompatActivity {
 
     public void contractSubmit(View view) { // 계약서 제출
         // you 학생 me 어르신
+        mp = MediaPlayer.create(this, R.raw.dding);
+        mp.start();// 소리
+        mp = MediaPlayer.create(this, R.raw.login);
+
         databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
         databaseReference_family.child(room).child("seniorAgree").setValue(true);
         Toast.makeText(this, "Agree Ok", Toast.LENGTH_SHORT).show();
@@ -287,6 +288,7 @@ public class ChatActivitySenior extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child(room).child("studentAgree").exists()){
+                    mp.start();// 소리
                     Family family = new Family(you.getPhone(), me.getPhone(), you.getName(), me.getName(), you.getId(), me.getId());
                     databaseReference_family.child(room).setValue(family);
                     Toast.makeText(ChatActivitySenior.this, "Now We are Family!", Toast.LENGTH_SHORT).show();

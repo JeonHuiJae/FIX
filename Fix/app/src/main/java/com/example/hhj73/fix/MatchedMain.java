@@ -1,8 +1,10 @@
 package com.example.hhj73.fix;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,6 +26,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MatchedMain extends AppCompatActivity {
     String myID;
     String urID;
@@ -33,8 +40,15 @@ public class MatchedMain extends AppCompatActivity {
     Family family;
     String senior;
     String student;
+    MediaPlayer mp;
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy년 mm월 dd일");
+    Date today;
+    Date expireDate;
+    String room;
 
     DatabaseReference databaseReference;
+    DatabaseReference databaseReference_contract;
+    ContractData contractData;
     StorageReference pathRef;
     Intent intentProfile; // 프로필 누를 때
     final  int CODE = 123;
@@ -47,6 +61,8 @@ public class MatchedMain extends AppCompatActivity {
     }
 
     private void init() {
+        mp = MediaPlayer.create(this, R.raw.dding);
+        today = new Date();
         final Intent intent = getIntent();
         myID = intent.getStringExtra("myID");
         urID = intent.getStringExtra("urID");
@@ -63,9 +79,7 @@ public class MatchedMain extends AppCompatActivity {
             senior = urID;
             student = myID;
         }
-        final String room = student+"+"+senior;
-
-        loadProfile();
+        room = student+"+"+senior;
 
         databaseReference = FirebaseDatabase.getInstance().getReference("families");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -73,12 +87,59 @@ public class MatchedMain extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 family = dataSnapshot.child(room).getValue(Family.class); // 객체 받아옴
                 title.setText(family.getName_senior()+" X " +family.getName_student()); // 타이틀
+                room = family.getId_student()+"+"+family.getId_senior();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+
+        loadProfile();
+
+        databaseReference_contract = FirebaseDatabase.getInstance().getReference("contracts");
+        databaseReference_contract.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                contractData = dataSnapshot.child(room).getValue(ContractData.class);
+                try{
+                    // 계약 만료일
+                    expireDate = dateFormat.parse(contractData.getExpirationdate());
+
+                    long dif = expireDate.getTime() - today.getTime();
+                    dif = dif / ( 24*60*60*1000);
+                    Toast.makeText(getApplicationContext(), expireDate+"-"+today+"="+dif+"일 지남", Toast.LENGTH_SHORT).show();
+
+                    if(dif<0){ // 계약 만료
+                        if(type){ // 어르신
+                            Intent intent1 = new Intent(getApplicationContext(), poll_senior.class);
+                            intent1.putExtra("myID", myID);
+                            intent1.putExtra("urID", family.getId_student());
+                            if(urID.equals("null"))
+                                intent1.putExtra("null", true);
+                            startActivity(intent1);
+                            finish();
+                        }else{ //학생
+                            Intent intent1 = new Intent(getApplicationContext(), Poll.class);
+                            intent1.putExtra("myID", myID);
+                            intent1.putExtra("urID", family.getId_senior());
+                            if(urID.equals("null"))
+                                intent1.putExtra("null", true);
+                            startActivity(intent1);
+                            finish();
+                        }
+                    }
+                }
+                catch (Exception e){}
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
 
         // 클릭이벤트
@@ -130,14 +191,9 @@ public class MatchedMain extends AppCompatActivity {
     }
 
     public void goChat(View view) { //==========================================구현해주셈
-        Intent intent; // 매칭후 채팅 엑티비티 만들고 연결.
-        //if(type)
-            //intent = new Intent(this ,);
-        //else
-            //intent = new Intent(this, ChatActivity.class);
-        //intent.putExtra("myID", myID);
-        //intent.putExtra("urID", urID);
 
+        mp.start();
+        Intent intent; // 매칭후 채팅 엑티비티 만들고 연결.
         intent = new Intent(this, ChatAfterMatchedActivity.class);
         intent.putExtra("myID", myID);
         intent.putExtra("urID", urID);
@@ -203,5 +259,15 @@ public class MatchedMain extends AppCompatActivity {
     if(requestCode == CODE){
         loadProfile();
     }
+    }
+
+    public void emergency(View view) { // 비상전화
+        mp.start();
+        Intent intent = new Intent(getApplicationContext(), emergency.class);
+        if(type)
+            intent.putExtra("urPhone", family.phone_student);
+        else
+            intent.putExtra("urPhone", family.phone_senior);
+        startActivityForResult(intent, CODE);
     }
 }

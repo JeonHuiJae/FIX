@@ -1,7 +1,9 @@
 package com.example.hhj73.fix;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -53,18 +55,21 @@ public class MatchingActivity extends AppCompatActivity {
     double lot, lat;
     int minCost, maxCost;
 
+    MediaPlayer mp;
     HashMap<String, Double> score;
     HashMap<String, String> scoreData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matching);
-
         init();
     }
 
     public void init() {
+        mp = MediaPlayer.create(this, R.raw.dding);
+
         Intent intent = getIntent();
         curUser = intent.getStringExtra("curUser");
         matchList = (ListView) findViewById(R.id.matchList);
@@ -141,6 +146,8 @@ public class MatchingActivity extends AppCompatActivity {
     }
 
     public void filter(View view) {//필터
+
+        mp.start();// 소리
         Intent intent = new Intent(this,Filter.class);
         startActivityForResult(intent,FILTER);
     }

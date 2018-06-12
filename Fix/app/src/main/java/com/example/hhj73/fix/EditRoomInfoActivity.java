@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -38,13 +39,13 @@ public class EditRoomInfoActivity extends AppCompatActivity {
     static final int REQUEST_STORAGE = 234;
 
     Uri filePath = null;
-
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_room_info);
-
+        mp = MediaPlayer.create(this, R.raw.dding);
         init();
     }
 
@@ -59,6 +60,7 @@ public class EditRoomInfoActivity extends AppCompatActivity {
     }
 
     public void editPhoto(View view) {
+        mp.start();
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -72,7 +74,7 @@ public class EditRoomInfoActivity extends AppCompatActivity {
 
     public void save(View view) {
         // 저장 버튼
-
+        mp.start();
         // 돈 입력함?
         String price = newPrice.getText().toString();
 

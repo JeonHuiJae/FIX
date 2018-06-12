@@ -70,6 +70,8 @@
         <!--</ListView>-->
 
         <ListView
+            android:dividerHeight="0px"
+            android:divider="@color/trans"
             android:background="@color/colorPowder"
             android:id="@+id/chatList"
             android:transcriptMode="alwaysScroll"
@@ -91,10 +93,11 @@
                 android:background="@color/colorPowder"
                 android:id="@+id/chatText"
                 android:paddingLeft="5dp"
-                android:textSize="50dp"
+                android:text="aa"
+                android:textSize="30dp"
                 android:layout_marginLeft="10dp"
-                android:layout_width="235dp"
-                android:layout_height="60dp" />
+                android:layout_width="245dp"
+                android:layout_height="50dp" />
 
             <Button
                 android:id="@+id/send"
@@ -104,8 +107,8 @@
                 android:background="@color/colorPink"
                 android:layout_marginRight="5dp"
                 android:onClick="submit"
-                android:layout_width="60dp"
-                android:layout_height="60dp"/>
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
         </LinearLayout>
     </LinearLayout>
 

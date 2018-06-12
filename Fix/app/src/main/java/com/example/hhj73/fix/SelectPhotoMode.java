@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class SelectPhotoMode extends Activity {
     Uri filePath = null;
     String id;
     Boolean type;//어르신 true
+    MediaPlayer mp;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +59,7 @@ public class SelectPhotoMode extends Activity {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         type = intent.getBooleanExtra("type",true);
+        mp = MediaPlayer.create(this, R.raw.dding);
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -201,6 +204,7 @@ public class SelectPhotoMode extends Activity {
     }
 
     public void saveProfilePic(View view) {
+        mp.start();
         //파이어베이스 Storage 저장 (Uri 받아서 저장함)
         FirebaseStorage storage = FirebaseStorage.getInstance();
         String fileName;
