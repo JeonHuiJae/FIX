@@ -151,13 +151,7 @@ public class ContractAdapter extends ArrayAdapter<ContractData> implements View.
             monthlyfee.setText(formalFee+"원");
             address.setText(contractData.getAddress());
             extraspecial.setText(contractData.getExtraspecial());
-            /*if(contractData.isFinalagree_j()){
-                finalRB_F_J.setChecked(false);
-                finalRB_T_J.setChecked(true);
-            }else{
-                finalRB_F_J.setChecked(true);
-                finalRB_T_J.setChecked(false);
-            }*/
+
             if(contractData.isFinalagree_s()){
                 finalRB_F_S.setChecked(false);
                 finalRB_T_S.setChecked(true);

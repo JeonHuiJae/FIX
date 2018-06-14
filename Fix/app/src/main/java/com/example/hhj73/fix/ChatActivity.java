@@ -214,7 +214,6 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
         databaseReference_contract.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Toast.makeText(getApplicationContext(),"finding..",Toast.LENGTH_SHORT).show();
                 contractData = dataSnapshot.child(room).getValue(ContractData.class);
             }
 
@@ -223,6 +222,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
                 Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
 
@@ -251,13 +251,15 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
 
 
     public void contractLayoutBtn(View view) { // 계약서 버튼
+
         contractArrayList = new ArrayList<>();
         contractlistView = (ListView)findViewById(R.id.detailContractList);
         finalAgreeCheck = (CheckBox)findViewById(R.id.finalAgreeCheck);
 
         FrameLayout  layout = (FrameLayout)findViewById(R.id.contractLayout);
         layout.setVisibility(View.VISIBLE);
-        layout.setClickable(true);
+
+
         if (contractData == null){
             Toast.makeText(getApplicationContext(),"don't exist",Toast.LENGTH_SHORT).show();
 
@@ -272,6 +274,11 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
         contractArrayList.add(contractData);
         contractAdapter = new ContractAdapter(this,R.layout.contract_row,contractArrayList,this);
         contractlistView.setAdapter(contractAdapter);
+        if(contractData.isFinalagree_s()){
+            layout.setEnabled(false);
+        }else{
+            layout.setEnabled(true);
+        }
 
         //계약시작날짜 - 사용자입력 수정가능
         //계약자들 - 오토 수정불가
