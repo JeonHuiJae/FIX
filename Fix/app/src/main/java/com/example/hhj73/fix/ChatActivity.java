@@ -341,29 +341,39 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
     }
 
     public void contractSubmit(View view) {
-        // you 어르신 me 학생
-        mp = MediaPlayer.create(this, R.raw.dding);
-        mp.start();// 소리
-        mp = MediaPlayer.create(this, R.raw.start);
 
-        databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
-        databaseReference_family.child(room).child("studentAgree").setValue(true);
-        Toast.makeText(this, "Agree Ok", Toast.LENGTH_SHORT).show();
-        databaseReference_family.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(room).child("seniorAgree").exists()){
-                    mp.start();// 소리
-                    Family family = new Family(me.getPhone(), you.getPhone(), me.getName(), you.getName(), me.getId(), you.getId());
-                    databaseReference_family.child(room).setValue(family);
-                    Toast.makeText(ChatActivity.this, "Now We are Family!", Toast.LENGTH_SHORT).show();
+
+        contractData.setFinalagree_j(true);
+        contractAdapter.notifyDataSetChanged();
+        databaseReference_contract.child(room).setValue(contractData);
+
+        if(contractData.isFinalagree_j()==true&&contractData.isFinalagree_s()==true){
+            // you 어르신 me 학생
+            mp = MediaPlayer.create(this, R.raw.dding);
+            mp.start();// 소리
+            mp = MediaPlayer.create(this, R.raw.start);
+
+
+            databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
+            databaseReference_family.child(room).child("studentAgree").setValue(true);
+            Toast.makeText(this, "Agree Ok", Toast.LENGTH_SHORT).show();
+            databaseReference_family.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.child(room).child("seniorAgree").exists()){
+                        mp.start();// 소리
+                        Family family = new Family(me.getPhone(), you.getPhone(), me.getName(), you.getName(), me.getId(), you.getId());
+                        databaseReference_family.child(room).setValue(family);
+                        Toast.makeText(ChatActivity.this, "Now We are Family!", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+
     }
 
     @Override

@@ -24,7 +24,7 @@ public class ContractData {
     private boolean smokingConsent,petConsent, cerfewConsent, helpConsent, extraConsent;
     private String smoke_detail, pet_detail, cerfew_detail, help_detail;
     private String extraspecial;
-    private boolean finalagree;
+    private boolean finalagree_j, finalagree_s;
 
     //생성자
     ContractData(){}
@@ -69,7 +69,8 @@ public class ContractData {
         else
             this.helpConsent = false;
         this.extraConsent = false;
-        this.finalagree = false;
+        this.finalagree_j = false;
+        this.finalagree_s = false;
 
         if (extra_j != null && extra_s==null)
             this.extraspecial ="학생 : "+extra_j+"\n";
@@ -232,12 +233,20 @@ public class ContractData {
         this.cerfewConsent = cerfewConsent;
     }
 
-    public boolean isFinalagree() {
-        return finalagree;
+    public boolean isFinalagree_j() {
+        return finalagree_j;
     }
 
-    public void setFinalagree(boolean finalagree) {
-        this.finalagree = finalagree;
+    public void setFinalagree_j(boolean finalagree_j) {
+        this.finalagree_j = finalagree_j;
+    }
+
+    public boolean isFinalagree_s() {
+        return finalagree_s;
+    }
+
+    public void setFinalagree_s(boolean finalagree_s) {
+        this.finalagree_s = finalagree_s;
     }
 
     public String getExpirationdate() {

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -76,6 +77,14 @@ public class ContractAdapter extends ArrayAdapter<ContractData> implements View.
         ImageButton conditionBtn = (ImageButton)v.findViewById(R.id.conditionBtn);
         ImageButton extraspecialBtn = (ImageButton)v.findViewById(R.id.extraspecialBtn);
 
+        RadioButton finalRB_F_J = (RadioButton) v.findViewById(R.id.j_agreeF);
+        RadioButton finalRB_T_J = (RadioButton) v.findViewById(R.id.j_agreeT);
+        RadioButton finalRB_F_S = (RadioButton) v.findViewById(R.id.s_agreeF);
+        RadioButton finalRB_T_S = (RadioButton) v.findViewById(R.id.s_agreeT);
+
+
+
+
         final int color_unConsent=v.getResources().getColor(R.color.colorLightRed);
         final int color_Consent=v.getResources().getColor(R.color.colorLightGreen);
         ContractData contractData = m_contractData.get(position);
@@ -138,6 +147,20 @@ public class ContractAdapter extends ArrayAdapter<ContractData> implements View.
             monthlyfee.setText(formalFee+"원");
             address.setText(contractData.getAddress());
             extraspecial.setText(contractData.getExtraspecial());
+            if(contractData.isFinalagree_j()){      //마지막 학생 동의
+                finalRB_F_J.setChecked(false);
+                finalRB_T_J.setChecked(true);
+            }else{
+                finalRB_F_J.setChecked(true);
+                finalRB_T_J.setChecked(false);
+            }
+            if(contractData.isFinalagree_s()){
+                finalRB_F_S.setChecked(false);
+                finalRB_T_S.setChecked(true);
+            }else{
+                finalRB_F_S.setChecked(true);
+                finalRB_T_S.setChecked(false);
+            }
 
         }
 

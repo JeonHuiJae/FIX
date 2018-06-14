@@ -195,7 +195,7 @@
                     android:onClick="contractSubmit"
                     android:background="@drawable/mainbtn2"
                     android:textSize="20dp"
-                    android:text="제출 요청하기"
+                    android:text="동의하기"
                     android:textColor="@color/colorPowder"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
