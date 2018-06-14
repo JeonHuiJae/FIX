@@ -55,9 +55,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
     TextView urName;
 
     ArrayList<ChatData> chats;
-    // ArrayAdapter arrayAdapter;
     ListView chatList;
-    // RecyclerView.LayoutManager layoutManager;
     ChatAdapter chatAdapter;
     String myName;
     String myID;
@@ -84,7 +82,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
     final static int FEE = R.id.monthlyFeeBtn;
     final static int PERIOD = R.id.periodMonthBtn;
     final static int EDATE = R.id.effectiveDateBtn;
-    final static int SPECAIL = R.id.extraspecialBtn;
+    final static int SPECIAL = R.id.extraspecialBtn;
 
     CheckBox finalAgreeCheck;
 
@@ -227,9 +225,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
         });
 
 
-        contractArrayList = new ArrayList<>();
-        contractlistView = (ListView)findViewById(R.id.detailContractList);
-        finalAgreeCheck = (CheckBox)findViewById(R.id.finalAgreeCheck);
+
 
     }
 
@@ -255,6 +251,10 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
 
 
     public void contractLayoutBtn(View view) { // 계약서 버튼
+        contractArrayList = new ArrayList<>();
+        contractlistView = (ListView)findViewById(R.id.detailContractList);
+        finalAgreeCheck = (CheckBox)findViewById(R.id.finalAgreeCheck);
+
         FrameLayout  layout = (FrameLayout)findViewById(R.id.contractLayout);
         layout.setVisibility(View.VISIBLE);
         layout.setClickable(true);
@@ -408,7 +408,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
                 datePickerDialog.show();
                 Toast.makeText(this,"EDATE",Toast.LENGTH_SHORT).show();
                 break;
-            case SPECAIL: //특이사항 추가 및 제거 ok
+            case SPECIAL: //특이사항 추가 및 제거 ok
                 Toast.makeText(this,"SPECIAL",Toast.LENGTH_SHORT).show();
                 setSpecailDialog();
                 break;

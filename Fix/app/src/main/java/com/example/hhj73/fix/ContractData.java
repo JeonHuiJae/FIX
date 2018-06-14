@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class ContractData {
 
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy년 mm월 dd일");
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy년 M월 dd일");
     private String contractwritedate;
     private String studentName;
     private String seniorName;

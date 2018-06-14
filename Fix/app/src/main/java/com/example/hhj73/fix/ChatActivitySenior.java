@@ -13,6 +13,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -28,7 +30,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -64,7 +65,7 @@ public class ChatActivitySenior extends AppCompatActivity {
 
     ListView detailContractList;
     ContractData contractData;
-    ContractAdapter contractAdapter;
+    ContractAdapterSenior contractAdapterSenior;
     DatabaseReference databaseReference_contract;
     ArrayList<ContractData> arrayList;
     @Override
@@ -182,10 +183,10 @@ public class ChatActivitySenior extends AppCompatActivity {
 
             }
         });
-        detailContractList = (ListView)findViewById(R.id.detailContractList);
+
         databaseReference_contract = FirebaseDatabase.getInstance().getReference("contracts");
-        Query query = databaseReference_contract.orderByKey().equalTo(room);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference db = databaseReference_contract.child(room);
+        db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 contractData = dataSnapshot.getValue(ContractData.class);
@@ -196,9 +197,8 @@ public class ChatActivitySenior extends AppCompatActivity {
 
             }
         });
-        arrayList = new ArrayList<>();
-        arrayList.add(contractData);
-        //contractAdapter = new ContractAdapter(this);
+
+
     }
 
     public void submit(View view) {
@@ -225,6 +225,12 @@ public class ChatActivitySenior extends AppCompatActivity {
     public void contractLayoutBtn(View view) { //계약서 버튼
         FrameLayout layout = (FrameLayout)findViewById(R.id.contractLayout);
         layout.setVisibility(View.VISIBLE);
+        arrayList = new ArrayList<>();
+        arrayList.add(contractData);
+        detailContractList = (ListView)findViewById(R.id.detailContractList);
+        contractAdapterSenior = new ContractAdapterSenior(this,R.layout.contract_row_senior,arrayList);
+        detailContractList.setAdapter(contractAdapterSenior);
+
     }
 
     public void backChat(View view) { //채팅으로 돌어가기
@@ -288,11 +294,27 @@ public class ChatActivitySenior extends AppCompatActivity {
 
     public void contractSubmit(View view) { // 계약서 제출
         // you 학생 me 어르신
-        mp = MediaPlayer.create(this, R.raw.dding);
-        mp.start();// 소리
-        mp = MediaPlayer.create(this, R.raw.login);
 
-        databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
+
+        CheckBox finalAgreeCheck = (CheckBox)findViewById(R.id.finalAgreeCheck_s);
+        finalAgreeCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                contractData.setFinalagree_s(isChecked);
+                databaseReference_contract.child(room).setValue(contractData);
+            }
+        });
+
+        if(contractData.isFinalagree_j()) {
+            mp = MediaPlayer.create(this, R.raw.dding);
+            mp.start();// 소리
+            mp = MediaPlayer.create(this, R.raw.login);
+            Toast.makeText(this, "최종 동의하셨습니다. 학생에게 제출을 요청하세요.", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "동의 체크박스를 확인해주세요.", Toast.LENGTH_SHORT).show();
+        }
+
+        /*databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
         databaseReference_family.child(room).child("seniorAgree").setValue(true);
         Toast.makeText(this, "Agree Ok", Toast.LENGTH_SHORT).show();
         databaseReference_family.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -309,6 +331,6 @@ public class ChatActivitySenior extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
-        });
+        });*/
     }
 }
