@@ -162,7 +162,7 @@
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:layout_height="400dp">
+                android:layout_height="420dp">
                 <TextView
                     android:text="CONTRACT"
                     android:gravity="center"
@@ -190,6 +190,12 @@
                     android:layout_height="250dp"
                     android:descendantFocusability="blocksDescendants"/>
 
+                <CheckBox
+                    android:id="@+id/finalAgreeCheck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="위 사항을 숙지했으며, 최종 동의합니다."/>
                 <!--제출버튼-->
                 <Button
                     android:onClick="contractSubmit"

@@ -28,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -61,6 +62,11 @@ public class ChatActivitySenior extends AppCompatActivity {
     ImageView urPro;
     MediaPlayer mp;
 
+    ListView detailContractList;
+    ContractData contractData;
+    ContractAdapter contractAdapter;
+    DatabaseReference databaseReference_contract;
+    ArrayList<ContractData> arrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,12 +80,7 @@ public class ChatActivitySenior extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("chats");
         editChat = (EditText) findViewById(R.id.chatText);
         chats = new ArrayList<>();
-        // arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, chats);
         chatList = (ListView) findViewById(R.id.chatList);
-
-        // layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        // chatList.setLayoutManager(layoutManager);
-
 
         Intent intent = getIntent();
         myID = intent.getStringExtra("myID");
@@ -95,11 +96,6 @@ public class ChatActivitySenior extends AppCompatActivity {
 
         room = users[0]+"+"+users[1];
 
-//        String msg = users[0]+"님이 입장하셨습니다.";
-//        chats.add(msg);
-//
-//        msg = users[1]+"님이 입장하셨습니다.";
-//        chats.add(msg);
         databaseReference_user = FirebaseDatabase.getInstance().getReference("users");
         databaseReference_user.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -132,7 +128,6 @@ public class ChatActivitySenior extends AppCompatActivity {
 
                 chats.add(chatData);
                 chatAdapter.notifyDataSetChanged();
-                // chatList.smoothScrollToPosition(chatAdapter.getItemCount() - 1); // 아래로 스크롤
 
                 //상대 프로필
                 FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -187,7 +182,23 @@ public class ChatActivitySenior extends AppCompatActivity {
 
             }
         });
+        detailContractList = (ListView)findViewById(R.id.detailContractList);
+        databaseReference_contract = FirebaseDatabase.getInstance().getReference("contracts");
+        Query query = databaseReference_contract.orderByKey().equalTo(room);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                contractData = dataSnapshot.getValue(ContractData.class);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        arrayList = new ArrayList<>();
+        arrayList.add(contractData);
+        //contractAdapter = new ContractAdapter(this);
     }
 
     public void submit(View view) {

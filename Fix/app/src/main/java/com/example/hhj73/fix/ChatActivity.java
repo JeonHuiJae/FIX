@@ -19,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -84,6 +86,8 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
     final static int EDATE = R.id.effectiveDateBtn;
     final static int SPECAIL = R.id.extraspecialBtn;
 
+    CheckBox finalAgreeCheck;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,11 +124,6 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
 
         room = users[0]+"+"+users[1];
 
-//        String msg = users[0]+"님이 입장하셨습니다.";
-//        chats.add(msg);
-//
-//        msg = users[1]+"님이 입장하셨습니다.";
-//        chats.add(msg);
         databaseReference_user = FirebaseDatabase.getInstance().getReference("users");
         databaseReference_user.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -230,6 +229,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
 
         contractArrayList = new ArrayList<>();
         contractlistView = (ListView)findViewById(R.id.detailContractList);
+        finalAgreeCheck = (CheckBox)findViewById(R.id.finalAgreeCheck);
 
     }
 
@@ -257,6 +257,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
     public void contractLayoutBtn(View view) { // 계약서 버튼
         FrameLayout  layout = (FrameLayout)findViewById(R.id.contractLayout);
         layout.setVisibility(View.VISIBLE);
+        layout.setClickable(true);
         if (contractData == null){
             Toast.makeText(getApplicationContext(),"don't exist",Toast.LENGTH_SHORT).show();
 
@@ -292,6 +293,9 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
         intent.putExtra("id",myID);
         startActivity(intent);
         overridePendingTransition(0, 0);
+        contractData.setFinalagree_j(false);
+        databaseReference_contract.child(room).setValue(contractData);
+        finalAgreeCheck.setChecked(false);
     }
 
     public void call(View view) { // 전화걸기
@@ -342,12 +346,14 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
 
     public void contractSubmit(View view) {
 
-
-        contractData.setFinalagree_j(true);
-        contractAdapter.notifyDataSetChanged();
-        databaseReference_contract.child(room).setValue(contractData);
-
-        if(contractData.isFinalagree_j()==true&&contractData.isFinalagree_s()==true){
+        finalAgreeCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                contractData.setFinalagree_j(isChecked);
+                databaseReference_contract.child(room).setValue(contractData);
+            }
+        });
+        if(contractData.isFinalagree_j()&&contractData.isFinalagree_s()){
             // you 어르신 me 학생
             mp = MediaPlayer.create(this, R.raw.dding);
             mp.start();// 소리
@@ -372,7 +378,12 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
+        } else if(contractData.isFinalagree_j()&&!contractData.isFinalagree_s()){
+            Toast.makeText(this,"어르신이 동의하지 않았습니다!",Toast.LENGTH_SHORT).show();
+        }else if(!contractData.isFinalagree_j()){
+            Toast.makeText(this,"먼저 본인이 동의해주세요!",Toast.LENGTH_SHORT).show();
         }
+
 
     }
 

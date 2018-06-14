@@ -30,10 +30,12 @@ public class ContractAdapter extends ArrayAdapter<ContractData> implements View.
 
     final ArrayList<ContractData> m_contractData;
     final Context context;
-    public ContractAdapter(@NonNull Context context, int resource, @NonNull ArrayList<ContractData> objects, ListBtnClickListener clickListener) {
+
+    public ContractAdapter(@NonNull Context context, int resource, @NonNull ArrayList<ContractData> objects,
+                           ListBtnClickListener clickListener) {
         super(context, resource, objects);
         this.m_contractData = objects;
-        this.context =context;
+        this.context = context;
         this.listBtnClickListener = clickListener;
     }
 
@@ -77,17 +79,19 @@ public class ContractAdapter extends ArrayAdapter<ContractData> implements View.
         ImageButton conditionBtn = (ImageButton)v.findViewById(R.id.conditionBtn);
         ImageButton extraspecialBtn = (ImageButton)v.findViewById(R.id.extraspecialBtn);
 
-        RadioButton finalRB_F_J = (RadioButton) v.findViewById(R.id.j_agreeF);
-        RadioButton finalRB_T_J = (RadioButton) v.findViewById(R.id.j_agreeT);
-        RadioButton finalRB_F_S = (RadioButton) v.findViewById(R.id.s_agreeF);
-        RadioButton finalRB_T_S = (RadioButton) v.findViewById(R.id.s_agreeT);
+
+       // RadioGroup finalAgree = (RadioGroup) v.findViewById(R.id.finalAgree);
+        //final RadioButton finalRB_F_J = (RadioButton) v.findViewById(R.id.j_agreeF);
+        //final RadioButton finalRB_T_J = (RadioButton) v.findViewById(R.id.j_agreeT);
+        final RadioButton finalRB_F_S = (RadioButton) v.findViewById(R.id.s_agreeF);
+        final RadioButton finalRB_T_S = (RadioButton) v.findViewById(R.id.s_agreeT);
 
 
 
 
         final int color_unConsent=v.getResources().getColor(R.color.colorLightRed);
         final int color_Consent=v.getResources().getColor(R.color.colorLightGreen);
-        ContractData contractData = m_contractData.get(position);
+        final ContractData contractData = m_contractData.get(position);
         if(contractData != null){
 
             seniorName.setText(contractData.getSeniorName()+" 어르신");
@@ -147,13 +151,13 @@ public class ContractAdapter extends ArrayAdapter<ContractData> implements View.
             monthlyfee.setText(formalFee+"원");
             address.setText(contractData.getAddress());
             extraspecial.setText(contractData.getExtraspecial());
-            if(contractData.isFinalagree_j()){      //마지막 학생 동의
+            /*if(contractData.isFinalagree_j()){
                 finalRB_F_J.setChecked(false);
                 finalRB_T_J.setChecked(true);
             }else{
                 finalRB_F_J.setChecked(true);
                 finalRB_T_J.setChecked(false);
-            }
+            }*/
             if(contractData.isFinalagree_s()){
                 finalRB_F_S.setChecked(false);
                 finalRB_T_S.setChecked(true);
