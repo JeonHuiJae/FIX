@@ -10,7 +10,7 @@
     <FrameLayout
         android:background="@color/colorMint"
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="@dimen/y55">
 
         <!--뒤로가기 버튼-->
         <Button
@@ -22,8 +22,8 @@
             android:textColor="@color/colorBrightMint"
             android:layout_gravity="center|left"
             android:gravity="center"
-            android:layout_width="45dp"
-            android:layout_height="45dp" />
+            android:layout_width="@dimen/x45"
+            android:layout_height="@dimen/y45" />
 
         <TextView
             android:layout_gravity="center"
@@ -38,7 +38,7 @@
         android:background="@color/colorDarkMint"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:layout_height="10dp"></LinearLayout>
+        android:layout_height="@dimen/y10"></LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -68,14 +68,14 @@
                 <ImageView
                     android:id="@+id/userImage"
                     android:background="@color/colorCream"
-                    android:layout_width="150dp"
+                    android:layout_width="@dimen/x150"
                     android:layout_gravity="center"
-                    android:layout_height="150dp" />
+                    android:layout_height="@dimen/y150" />
 
                 <FrameLayout
                     android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="@dimen/y50">
                     <LinearLayout
                         android:visibility="visible"
                         android:orientation="horizontal"
@@ -86,25 +86,25 @@
                             android:id="@+id/smokeO"
                             android:layout_marginRight="15dp"
                             android:src="@drawable/smoke"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp" />
+                            android:layout_width="@dimen/x50"
+                            android:layout_height="@dimen/y50" />
                         <ImageView
                             android:id="@+id/curfewO"
                             android:layout_marginRight="15dp"
                             android:src="@drawable/curfew"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp" />
+                            android:layout_width="@dimen/x50"
+                            android:layout_height="@dimen/y50" />
                         <ImageView
                             android:id="@+id/petO"
                             android:layout_marginRight="15dp"
                             android:src="@drawable/pet"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp" />
+                            android:layout_width="@dimen/x50"
+                            android:layout_height="@dimen/y50" />
                         <ImageView
                             android:id="@+id/helpO"
                             android:src="@drawable/help"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp" />
+                            android:layout_width="@dimen/x50"
+                            android:layout_height="@dimen/y50" />
                     </LinearLayout>
                     <LinearLayout
                         android:visibility="visible"
@@ -116,25 +116,25 @@
                             android:id="@+id/smokeX"
                             android:layout_marginRight="15dp"
                             android:src="@drawable/smoke_x"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp" />
+                            android:layout_width="@dimen/x50"
+                            android:layout_height="@dimen/y50" />
                         <ImageView
                             android:id="@+id/curfewX"
                             android:layout_marginRight="15dp"
                             android:src="@drawable/curfew_x"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp" />
+                            android:layout_width="@dimen/x50"
+                            android:layout_height="@dimen/y50" />
                         <ImageView
                             android:id="@+id/petX"
                             android:layout_marginRight="15dp"
                             android:src="@drawable/pet_x"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp" />
+                            android:layout_width="@dimen/x50"
+                            android:layout_height="@dimen/y50" />
                         <ImageView
                             android:id="@+id/helpX"
                             android:src="@drawable/help_x"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp" />
+                            android:layout_width="@dimen/x50"
+                            android:layout_height="@dimen/y50" />
                     </LinearLayout>
                 </FrameLayout>
                 <TextView

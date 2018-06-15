@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.DiscretePathEffect;
 import android.graphics.Matrix;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -19,7 +20,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -111,6 +114,16 @@ public class StudentJoinActivity extends Activity {
         zero = (LinearLayout)findViewById(R.id.zero);
         first = (LinearLayout)findViewById(R.id.first);
         second = (LinearLayout)findViewById(R.id.second);
+        
+
+        //--
+
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        Display display = getWindowManager().getDefaultDisplay();
+//        display.getMetrics(metrics);
+//        Toast.makeText(this,"display"+metrics.widthPixels+"*"+metrics.heightPixels,Toast.LENGTH_SHORT).show();
+
+        //--
         emailInit();
         init();
     }
