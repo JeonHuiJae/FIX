@@ -14,7 +14,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -297,13 +296,19 @@ public class ChatActivitySenior extends AppCompatActivity {
 
 
         CheckBox finalAgreeCheck = (CheckBox)findViewById(R.id.finalAgreeCheck_s);
-        finalAgreeCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        if(finalAgreeCheck.isChecked()){
+            contractData.setFinalagree_s(true);
+        }else{
+            contractData.setFinalagree_s(false);
+        }
+        databaseReference_contract.child(room).setValue(contractData);
+        /*finalAgreeCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 contractData.setFinalagree_s(isChecked);
                 databaseReference_contract.child(room).setValue(contractData);
             }
-        });
+        });*/
 
         if(contractData.isFinalagree_j()) {
             mp = MediaPlayer.create(this, R.raw.dding);
@@ -313,10 +318,11 @@ public class ChatActivitySenior extends AppCompatActivity {
         }else{
             Toast.makeText(this, "동의 체크박스를 확인해주세요.", Toast.LENGTH_SHORT).show();
         }
-
-        /*databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
+        databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
         databaseReference_family.child(room).child("seniorAgree").setValue(true);
         Toast.makeText(this, "Agree Ok", Toast.LENGTH_SHORT).show();
+
+        /*
         databaseReference_family.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

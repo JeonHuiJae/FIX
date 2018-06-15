@@ -300,9 +300,6 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
         intent.putExtra("id",myID);
         startActivity(intent);
         overridePendingTransition(0, 0);
-        contractData.setFinalagree_j(false);
-        databaseReference_contract.child(room).setValue(contractData);
-        finalAgreeCheck.setChecked(false);
     }
 
     public void call(View view) { // 전화걸기

@@ -68,7 +68,8 @@
             android:name=".emergency"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
         <activity android:name=".Poll" />
-        <activity android:name=".poll_senior"></activity>
+        <activity android:name=".poll_senior" />
+        <activity android:name=".ContractMatchedActivity"></activity>
     </application>
 
 </manifest>

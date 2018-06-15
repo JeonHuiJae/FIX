@@ -1,15 +1,14 @@
 package com.example.hhj73.fix;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -248,7 +247,8 @@ public class MatchedMain extends AppCompatActivity {
     }
 
     public void goContract(View view) { // 계약서 목록 출력 =========================구현해 주라긔
-
+        Intent intent = new Intent(this,ContractMatchedActivity.class);
+        startActivity(intent);
     }
 
 
@@ -270,4 +270,5 @@ public class MatchedMain extends AppCompatActivity {
             intent.putExtra("urPhone", family.phone_senior);
         startActivityForResult(intent, CODE);
     }
+
 }
