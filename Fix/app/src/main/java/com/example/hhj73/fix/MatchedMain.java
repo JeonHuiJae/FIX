@@ -142,7 +142,6 @@ public class MatchedMain extends AppCompatActivity {
 
 
         // 클릭이벤트
-
         if(myID.equals(senior)){ // 내가 어르신이면
             // 내사진 누르면 프로필 수정으로
             // 상대사진 누르면 정보보기로
@@ -248,6 +247,7 @@ public class MatchedMain extends AppCompatActivity {
 
     public void goContract(View view) { // 계약서 목록 출력 =========================구현해 주라긔
         Intent intent = new Intent(this,ContractMatchedActivity.class);
+        intent.putExtra("room", room);
         startActivity(intent);
     }
 
