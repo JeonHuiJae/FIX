@@ -311,9 +311,6 @@ public class ChatActivitySenior extends AppCompatActivity {
         });*/
 
         if(contractData.isFinalagree_j()) {
-            mp = MediaPlayer.create(this, R.raw.dding);
-            mp.start();// 소리
-            mp = MediaPlayer.create(this, R.raw.login);
             Toast.makeText(this, "최종 동의하셨습니다. 학생에게 제출을 요청하세요.", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(this, "동의 체크박스를 확인해주세요.", Toast.LENGTH_SHORT).show();
@@ -321,7 +318,8 @@ public class ChatActivitySenior extends AppCompatActivity {
         databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
         databaseReference_family.child(room).child("seniorAgree").setValue(true);
         Toast.makeText(this, "Agree Ok", Toast.LENGTH_SHORT).show();
-
+        mp = MediaPlayer.create(this, R.raw.x);
+        mp.start();// 소리
         /*
         databaseReference_family.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

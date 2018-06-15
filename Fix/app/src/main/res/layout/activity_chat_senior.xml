@@ -16,24 +16,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:background="@color/colorDarkMint"
-            android:layout_height="@dimen/y65">
+            android:layout_height="80dp">
             <FrameLayout
                 android:background="@color/colorMint"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y60">
+                android:layout_height="70dp">
 
-                <!--뒤로가기 버튼-->
-                <Button
-                    android:onClick="back"
-                    android:text="BACK"
-                    android:layout_gravity="center|left"
-                    android:background="@color/colorPink"
-                    android:textColor="@color/colorPowder"
-                    android:gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="15dp"
-                    android:layout_width="80dp"
-                    android:layout_height="50dp" />
+
                 <TextView
                     android:id="@+id/roomName"
                     android:layout_gravity="center"
@@ -50,13 +39,13 @@
                     android:onClick="contractLayoutBtn"
                     android:text="계약"
                     android:layout_gravity="center|right"
-                    android:background="@color/colorDarkMint"
+                    android:backgroundTint="@color/colorDarkMint"
                     android:textColor="@color/colorPowder"
                     android:gravity="center"
                     android:textSize="20dp"
                     android:layout_marginRight="10dp"
-                    android:layout_width="@dimen/x50"
-                    android:layout_height="@dimen/y40" />
+                    android:layout_width="70dp"
+                    android:layout_height="60dp" />
             </FrameLayout>
         </LinearLayout>
 
@@ -95,8 +84,9 @@
                 android:paddingLeft="5dp"
                 android:textSize="30dp"
                 android:layout_marginLeft="10dp"
-                android:layout_width="@dimen/x245"
-                android:layout_height="@dimen/y50" />
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="70dp" />
 
             <Button
                 android:id="@+id/send"
@@ -106,8 +96,8 @@
                 android:background="@color/colorPink"
                 android:layout_marginRight="5dp"
                 android:onClick="submit"
-                android:layout_width="@dimen/x50"
-                android:layout_height="@dimen/y50"/>
+                android:layout_width="70dp"
+                android:layout_height="70dp"/>
         </LinearLayout>
     </LinearLayout>
 

@@ -359,9 +359,8 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
         });
         if(contractData.isFinalagree_j()&&contractData.isFinalagree_s()){
             // you 어르신 me 학생
-            mp = MediaPlayer.create(this, R.raw.dding);
+            mp = MediaPlayer.create(this, R.raw.x);
             mp.start();// 소리
-            mp = MediaPlayer.create(this, R.raw.start);
 
 
             databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
@@ -371,17 +370,23 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if(dataSnapshot.child(room).child("seniorAgree").exists()){
-                        mp.start();// 소리
                         Family family = new Family(me.getPhone(), you.getPhone(), me.getName(), you.getName(), me.getId(), you.getId());
                         databaseReference_family.child(room).setValue(family);
                         Toast.makeText(ChatActivity.this, "Now We are Family!", Toast.LENGTH_SHORT).show();
                     }
+                    Intent intent = new Intent(getApplicationContext(), MatchedMain.class);
+                    intent.putExtra("myID", myID);
+                    intent.putExtra("urID",urID);
+                    intent.putExtra("type", false);
+                    startActivity(intent);
+                    finish();
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
+
         } else if(contractData.isFinalagree_j()&&!contractData.isFinalagree_s()){
             Toast.makeText(this,"어르신이 동의하지 않았습니다!",Toast.LENGTH_SHORT).show();
         }else if(!contractData.isFinalagree_j()){

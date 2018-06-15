@@ -10,32 +10,20 @@
     <FrameLayout
         android:background="@color/colorMint"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y55">
+        android:layout_height="70dp">
 
-        <!--뒤로가기 버튼-->
-        <Button
-            android:onClick="back"
-            android:layout_marginLeft="5dp"
-            android:background="#00ff0000"
-            android:text="◀"
-            android:textSize="25dp"
-            android:textColor="@color/colorBrightMint"
-            android:layout_gravity="center|left"
-            android:gravity="center"
-            android:layout_width="@dimen/x40"
-            android:layout_height="@dimen/y40" />
 
         <!--채팅내역 들어가는 버튼-->
         <Button
             android:layout_marginRight="5dp"
             android:background="#00ff0000"
             android:text="三"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:textColor="@color/colorPowder"
             android:layout_gravity="center|right"
             android:gravity="center"
-            android:layout_width="@dimen/x40"
-            android:layout_height="@dimen/y40" />
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
         <TextView
             android:layout_gravity="center"
             android:textSize="22dp"
@@ -55,7 +43,7 @@
         android:layout_height="match_parent">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="450dp">
+            android:layout_height="470dp">
 
         <LinearLayout
             android:layout_margin="5dp"
@@ -79,9 +67,9 @@
             <ImageView
                 android:id="@+id/roomImage"
                 android:background="@color/colorCream"
-                android:layout_width="@dimen/x220"
+                android:layout_width="300dp"
                 android:layout_gravity="center"
-                android:layout_height="@dimen/y150" />
+                android:layout_height="250dp" />
             <TextView
                 android:id="@+id/rent"
                 android:textColor="@color/colorPink"
@@ -201,18 +189,18 @@
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:gravity="center"
-            android:layout_height="@dimen/y70">
+            android:layout_height="100dp">
 
             <!--채팅 요청 보내기 버튼-->
             <Button
                 android:onClick="talk"
                 android:text="WANT TO TALK!"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:textColor="@color/colorPowder"
                 android:background="@drawable/mainbtn2"
                 android:layout_gravity="center"
-                android:layout_width="@dimen/x280"
-                android:layout_height="@dimen/y60" />
+                android:layout_width="370dp"
+                android:layout_height="80dp" />
         </LinearLayout>
     </FrameLayout>
 

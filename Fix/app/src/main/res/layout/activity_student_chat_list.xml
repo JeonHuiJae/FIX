@@ -12,18 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp">
 
-        <!--뒤로가기 버튼-->
-        <Button
-            android:onClick="back"
-            android:layout_marginLeft="5dp"
-            android:background="#00ff0000"
-            android:text="◀"
-            android:textSize="30dp"
-            android:textColor="@color/colorPowder"
-            android:layout_gravity="center|left"
-            android:gravity="center"
-            android:layout_width="@dimen/x40"
-            android:layout_height="@dimen/y40" />
+
 
         <TextView
             android:layout_gravity="center"
@@ -38,7 +27,7 @@
         android:background="@color/colorDarkMint"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:layout_height="@dimen/y10">
+        android:layout_height="10dp">
 
     </LinearLayout>
 

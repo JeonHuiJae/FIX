@@ -107,7 +107,6 @@ public class MatchedMain extends AppCompatActivity {
 
                     long dif = expireDate.getTime() - today.getTime();
                     dif = dif / ( 24*60*60*1000);
-                    Toast.makeText(getApplicationContext(), "계약 종료까지\n"+dif+"일 남았습니다", Toast.LENGTH_SHORT).show();
 
                     if(dif<0){ // 계약 만료
                         if(type){ // 어르신
@@ -127,6 +126,8 @@ public class MatchedMain extends AppCompatActivity {
                             startActivity(intent1);
                             finish();
                         }
+                    }else{
+                        Toast.makeText(getApplicationContext(), "계약 종료까지\n"+dif+"일 남았습니다", Toast.LENGTH_SHORT).show();
                     }
                 }
                 catch (Exception e){}

@@ -143,5 +143,6 @@ public class EditProfileActivity extends Activity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(0, 0);
+        finish();
     }
 }

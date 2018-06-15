@@ -14,7 +14,7 @@
 
             <TextView
                 android:layout_gravity="center"
-                android:textSize="22dp"
+                android:textSize="30dp"
                 android:textColor="@color/colorPowder"
                 android:gravity="center"
                 android:text="Living Contract"

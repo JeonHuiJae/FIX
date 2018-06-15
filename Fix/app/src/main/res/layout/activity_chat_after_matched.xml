@@ -16,11 +16,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:background="@color/colorDarkMint"
-            android:layout_height="@dimen/y65">
+            android:layout_height="80dp">
             <FrameLayout
                 android:background="@color/colorMint"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y60">
+                android:layout_height="70dp">
 
                 <TextView
                     android:id="@+id/roomName"
@@ -60,8 +60,9 @@
                 android:background="@color/colorPowder"
                 android:id="@+id/chatText"
                 android:layout_marginLeft="10dp"
-                android:layout_width="@dimen/x250"
-                android:layout_height="@dimen/y40" />
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="60dp" />
 
             <Button
                 android:id="@+id/send"
@@ -71,8 +72,8 @@
                 android:background="@color/colorPink"
                 android:layout_marginRight="5dp"
                 android:onClick="submit"
-                android:layout_width="@dimen/x50"
-                android:layout_height="@dimen/y40"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"/>
         </LinearLayout>
     </LinearLayout>
 

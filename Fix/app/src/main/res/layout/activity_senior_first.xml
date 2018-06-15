@@ -10,8 +10,8 @@
     <FrameLayout
         android:layout_gravity="center"
         android:layout_marginTop="80dp"
-        android:layout_width="@dimen/x240"
-        android:layout_height="@dimen/y170">
+        android:layout_width="320dp"
+        android:layout_height="270dp">
         <ImageView
             android:scaleType="fitXY"
             android:id="@+id/RoomImgRegister"
@@ -56,6 +56,6 @@
         android:background="@drawable/mainbtn2"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
-        android:layout_width="@dimen/x290"
-        android:layout_height="@dimen/y80" />
+        android:layout_width="350dp"
+        android:layout_height="90dp" />
 </LinearLayout>

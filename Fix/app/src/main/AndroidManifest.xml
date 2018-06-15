@@ -69,8 +69,10 @@
         <activity
             android:name=".emergency"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
-        <activity android:name=".Poll" />
-        <activity android:name=".poll_senior" />
+        <activity android:name=".Poll"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".poll_senior"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".ContractMatchedActivity"></activity>
     </application>
 

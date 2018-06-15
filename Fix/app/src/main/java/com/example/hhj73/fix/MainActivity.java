@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 //                            intent.putExtra("id", inputID);
 
                             if(type){ //어르신
-                                databaseReference_family.addValueEventListener(new ValueEventListener() {
+                                databaseReference_family.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         Iterator<DataSnapshot> child2 = dataSnapshot.getChildren().iterator();
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                                 });
                             }else{ //학생
 
-                                databaseReference_family.addValueEventListener(new ValueEventListener() {
+                                databaseReference_family.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         Iterator<DataSnapshot> child2 = dataSnapshot.getChildren().iterator();
