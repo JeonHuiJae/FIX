@@ -38,6 +38,7 @@ public class Address extends AppCompatActivity {
     double  Longitude;
     double  Latitude;
     MediaPlayer mp;
+    Boolean type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class Address extends AppCompatActivity {
 
         mp = MediaPlayer.create(this, R.raw.dding);
         Intent intent = getIntent();
+        type = intent.getBooleanExtra("type", false);
        activity = intent.getBooleanExtra("activity",true);
         if(activity==true){
             ID = intent.getStringExtra("id");
@@ -136,7 +138,10 @@ public class Address extends AppCompatActivity {
         //Toast.makeText(this, confirm, Toast.LENGTH_SHORT).show();      //리턴 값을 테스트
         add.putExtra("location",Latitude+"/"+Longitude);
 
-        startActivity(add);
+        if(type)
+            finish();
+        else
+            startActivity(add);
     }
 
     private class AndroidBridge {

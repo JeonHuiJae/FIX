@@ -10,7 +10,7 @@
     android:background="@color/colorMint">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="@dimen/y55">
 
         <!--뒤로가기 버튼-->
         <Button

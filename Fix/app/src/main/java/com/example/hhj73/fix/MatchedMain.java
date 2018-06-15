@@ -40,7 +40,7 @@ public class MatchedMain extends AppCompatActivity {
     String senior;
     String student;
     MediaPlayer mp;
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy년 mm월 dd일");
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy년 M월 dd일");
     Date today;
     Date expireDate;
     String room;
@@ -107,7 +107,7 @@ public class MatchedMain extends AppCompatActivity {
 
                     long dif = expireDate.getTime() - today.getTime();
                     dif = dif / ( 24*60*60*1000);
-                    Toast.makeText(getApplicationContext(), expireDate+"-"+today+"="+dif+"일 지남", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "계약 종료까지\n"+dif+"일 남았습니다", Toast.LENGTH_SHORT).show();
 
                     if(dif<0){ // 계약 만료
                         if(type){ // 어르신

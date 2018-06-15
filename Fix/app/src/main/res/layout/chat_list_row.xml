@@ -13,8 +13,8 @@
             android:id="@+id/listRowImage"
             android:layout_marginRight="10dp"
             android:background="@color/colorCream"
-            android:layout_width="@dimen/x50"
-            android:layout_height="@dimen/y50" />
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
         <LinearLayout
             android:layout_gravity="center"
             android:orientation="vertical"

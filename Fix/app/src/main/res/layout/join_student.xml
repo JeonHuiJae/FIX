@@ -122,6 +122,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 <LinearLayout
+    android:layout_marginBottom="30dp"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -151,7 +152,7 @@
             android:text="double Check"
             android:textSize="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/y40" />
+            android:layout_height="50dp" />
 
     </LinearLayout>
     <LinearLayout
@@ -286,7 +287,7 @@
             android:onClick="search"
             android:text="Search"
             android:layout_width="@dimen/x80"
-            android:layout_height="@dimen/y40" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
     <EditText
@@ -404,17 +405,18 @@
         <TextView
             android:id="@+id/agreeOk"
             android:text="@string/agreemnemt_eng"
-            android:textSize="10dp"
+            android:textSize="20dp"
             android:scrollbars="vertical"
             android:padding="10dp"
             android:layout_gravity="center"
             android:background="@color/colorMint"
             android:layout_width="@dimen/x290"
-            android:layout_height="@dimen/y300" />
+            android:layout_height="400dp" />
         <CheckBox
             android:id="@+id/agree"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:textSize="20dp"
             android:text="I Agree."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

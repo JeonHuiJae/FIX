@@ -40,17 +40,19 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="#eeeeee"
-            android:layout_width="@dimen/x110"
-            android:layout_height="@dimen/y110" />
+            android:layout_width="130dp"
+            android:layout_height="130dp" />
 
         <TextView
+            android:layout_marginTop="20dp"
+            android:text="하지마"
             android:id="@+id/myID"
             android:gravity="center"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:layout_width="match_parent"
-            android:textSize="20dp"
-            android:layout_height="@dimen/y50" />
+            android:textSize="25dp"
+            android:layout_height="wrap_content" />
         <Button
             android:layout_gravity="center"
             android:onClick="editRoomInfo"
@@ -58,21 +60,21 @@
             android:textColor="@color/colorPowder"
             android:textSize="22dp"
             android:background="@drawable/mainbtn1"
-            android:layout_width="@dimen/x290"
-            android:layout_height="@dimen/y70" />
+            android:layout_width="310dp"
+            android:layout_height="90dp" />
         <Button
             android:layout_gravity="center"
             android:text="Edit profile"
             android:textColor="@color/colorPowder"
             android:textSize="22dp"
             android:background="@drawable/mainbtn2"
-            android:layout_width="@dimen/x260"
-            android:layout_height="@dimen/y70"
+            android:layout_width="280dp"
+            android:layout_height="90dp"
             android:onClick="editProfile"/>
 
             <FrameLayout
-                android:layout_width="@dimen/x200"
-                android:layout_height="@dimen/y60"
+                android:layout_width="230dp"
+                android:layout_height="90dp"
                 android:layout_gravity="center">
 
                 <Button

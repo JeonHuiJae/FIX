@@ -31,7 +31,7 @@
 
             <TextView
                 android:textColor="@color/colorPowder"
-                android:textSize="30dp"
+                android:textSize="40dp"
                 android:layout_width="@dimen/x50"
                 android:layout_height="wrap_content"
                 android:gravity="left"
@@ -41,7 +41,7 @@
 
             <EditText
                 android:textColor="@color/colorPowder"
-                android:textSize="25dp"
+                android:textSize="35dp"
                 android:gravity="center"
                 android:id="@+id/inputID"
                 android:inputType="text"
@@ -56,8 +56,8 @@
 
             <TextView
                 android:textColor="@color/colorPowder"
-                android:textSize="30dp"
-                android:layout_width="@dimen/x50"
+                android:textSize="40dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:textStyle="bold"
@@ -69,7 +69,7 @@
                 android:textColor="@color/colorPowder"
                 android:id="@+id/inputPW"
                 android:width="@dimen/x150"
-                android:textSize="25dp"
+                android:textSize="35dp"
                 android:inputType="textPassword"
                 android:layout_width="@dimen/x200"
                 android:layout_height="wrap_content" />
@@ -86,8 +86,8 @@
         android:textColor="@color/colorPowder"
         android:text="Login"
         android:onClick="login"
-        android:layout_width="@dimen/x280"
-        android:layout_height="@dimen/y70" />
+        android:layout_width="330dp"
+        android:layout_height="90dp" />
 </LinearLayout>
 
 <LinearLayout
@@ -104,8 +104,8 @@
         android:textColor="@color/colorPowder"
         android:text="JOIN"
         android:layout_marginRight="5dp"
-        android:layout_width="@dimen/x280"
-        android:layout_height="@dimen/y70"
+        android:layout_width="330dp"
+        android:layout_height="90dp"
         android:onClick="join"/>
 
 </LinearLayout>

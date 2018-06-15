@@ -53,8 +53,8 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:background="#eeeeee"
-                    android:layout_width="@dimen/x130"
-                    android:layout_height="@dimen/y130"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_marginBottom="20dp"/>
 
             </LinearLayout>

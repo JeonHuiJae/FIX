@@ -37,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     String inputID;
     String inputPW;
-    boolean flag = false;
-    MediaPlayer mp;
+    MediaPlayer mp1, mp2, mp3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void init() {
-        mp = MediaPlayer.create(this, R.raw.start);
-        mp.start();
-        mp = MediaPlayer.create(this, R.raw.login);
+        mp1 = MediaPlayer.create(this, R.raw.start);
+        mp1.start();
+        mp2 = MediaPlayer.create(this, R.raw.login);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
         databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
@@ -102,15 +101,38 @@ public class MainActivity extends AppCompatActivity {
                                             String SeniorId = roomName.substring(idx+1);
 
                                             if(SeniorId.equals(inputID) && dataSnapshot.child(roomName).child("id_student").exists()) { //내가 속한 방
-                                                flag = true;
-                                                mp.start();// 로그인 소리
+                                                mp2.start();// 로그인 소리
                                                 Intent intentMatched = new Intent(getApplicationContext(), MatchedMain.class);
                                                 intentMatched.putExtra("myID",inputID);
                                                 intentMatched.putExtra("urID",roomName.substring(0,idx));// 상대 아이디
                                                 intentMatched.putExtra("type", true);// 어르신
                                                 startActivity(intentMatched);
+                                                return;
                                             }
                                         }
+                                        FirebaseStorage storage = FirebaseStorage.getInstance();
+                                        StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
+
+                                        //사진 검사
+                                        StorageReference pathRef = storageReference.child("Room/"+inputID+".JPG");
+                                        pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
+                                            @Override
+                                            public void onSuccess(Uri uri) {//있음
+
+                                                    Intent intent = new Intent(getApplicationContext(), SeniorMain.class);
+                                                    intent.putExtra("curUser", inputID);
+                                                    mp2.start();// 로그인 소리
+                                                    startActivity(intent);
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {//없음
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {//없음
+                                                    mp2.start();// 로그인 소리
+                                                    Intent intent = new Intent(getApplicationContext(),SeniorFirst.class);
+                                                    intent.putExtra("curUser",inputID);
+                                                    startActivity(intent);
+                                            }
+                                        });
                                     }
 
                                     @Override
@@ -118,30 +140,6 @@ public class MainActivity extends AppCompatActivity {
 
                                     }
                                 });
-                                FirebaseStorage storage = FirebaseStorage.getInstance();
-                                StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
-
-                                //사진 검사
-                                StorageReference pathRef = storageReference.child("Room/"+inputID+".JPG");
-                                pathRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {//있음
-                                    @Override
-                                    public void onSuccess(Uri uri) {//있음
-                                        if(!flag){
-                                        Intent intent = new Intent(getApplicationContext(), SeniorMain.class);
-                                        intent.putExtra("curUser", inputID);
-                                            mp.start();// 로그인 소리
-                                        startActivity(intent);}
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {//없음
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {//없음
-                                        if(!flag){
-                                        Intent intent = new Intent(getApplicationContext(),SeniorFirst.class);
-                                        intent.putExtra("curUser",inputID);
-                                        startActivity(intent);}
-                                    }
-                                });
-                                flag = false;
                             }else{ //학생
 
                                 databaseReference_family.addValueEventListener(new ValueEventListener() {
@@ -155,28 +153,24 @@ public class MainActivity extends AppCompatActivity {
                                             String StudentId = roomName.substring(0, idx);
 
                                             if(StudentId.equals(inputID)&& dataSnapshot.child(roomName).child("id_student").exists()) { //내가 속한 방
-                                                flag = true;
-                                                mp.start();// 로그인 소리
+                                                mp2.start();// 로그인 소리
                                                 Intent intentMatched = new Intent(getApplicationContext(), MatchedMain.class);
                                                 intentMatched.putExtra("myID",inputID);
                                                 intentMatched.putExtra("urID",roomName.substring(idx+1));// 상대 아이디
                                                 intentMatched.putExtra("type", false);// 학생
                                                 startActivity(intentMatched);
+                                                return;
                                             }
                                         }
+                                        mp2.start();// 로그인 소리
+                                        Intent intent = new Intent(getApplicationContext(), MatchingActivity.class);
+                                        intent.putExtra("curUser", inputID);
+                                        startActivity(intent);
                                     }
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
                                     }
                                 });
-
-                                if(!flag){
-                                    mp.start();// 로그인 소리
-                                Intent intent = new Intent(getApplicationContext(), MatchingActivity.class);
-                                intent.putExtra("curUser", inputID);
-                                startActivity(intent);
-                                }
-                                flag = false;
                             }
                             return;
                         }
@@ -199,8 +193,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void join(View view) {
-        mp = MediaPlayer.create(this, R.raw.dding);
-        mp.start();
+        mp3 = MediaPlayer.create(this, R.raw.dding);
+        mp3.start();
         Intent intent = new Intent(MainActivity.this, Join.class);
         startActivity(intent); //액티비티 이동
         overridePendingTransition(0, 0);

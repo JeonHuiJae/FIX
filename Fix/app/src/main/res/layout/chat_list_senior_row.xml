@@ -13,8 +13,8 @@
             android:id="@+id/listRowImage"
             android:layout_marginRight="20dp"
             android:background="@color/colorCream"
-            android:layout_width="@dimen/x70"
-            android:layout_height="@dimen/y70" />
+            android:layout_width="90dp"
+            android:layout_height="90dp" />
         <LinearLayout
             android:layout_gravity="center"
             android:orientation="vertical"
@@ -22,7 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content">
             <TextView
-                android:textSize="27dp"
+                android:textSize="30dp"
                 android:id="@+id/listRowTitle"
                 android:text="제목"
                 android:layout_width="match_parent"

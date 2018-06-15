@@ -22,8 +22,8 @@
             android:textColor="@color/colorBrightMint"
             android:layout_gravity="center|left"
             android:gravity="center"
-            android:layout_width="@dimen/x45"
-            android:layout_height="@dimen/y45" />
+            android:layout_width="70dp"
+            android:layout_height="70dp" />
 
         <TextView
             android:layout_gravity="center"
@@ -68,14 +68,14 @@
                 <ImageView
                     android:id="@+id/userImage"
                     android:background="@color/colorCream"
-                    android:layout_width="@dimen/x150"
+                    android:layout_width="150dp"
                     android:layout_gravity="center"
-                    android:layout_height="@dimen/y150" />
+                    android:layout_height="150dp" />
 
                 <FrameLayout
                     android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y50">
+                    android:layout_height="70dp">
                     <LinearLayout
                         android:visibility="visible"
                         android:orientation="horizontal"
@@ -86,25 +86,25 @@
                             android:id="@+id/smokeO"
                             android:layout_marginRight="15dp"
                             android:src="@drawable/smoke"
-                            android:layout_width="@dimen/x50"
-                            android:layout_height="@dimen/y50" />
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
                         <ImageView
                             android:id="@+id/curfewO"
                             android:layout_marginRight="15dp"
                             android:src="@drawable/curfew"
-                            android:layout_width="@dimen/x50"
-                            android:layout_height="@dimen/y50" />
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
                         <ImageView
                             android:id="@+id/petO"
                             android:layout_marginRight="15dp"
                             android:src="@drawable/pet"
-                            android:layout_width="@dimen/x50"
-                            android:layout_height="@dimen/y50" />
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
                         <ImageView
                             android:id="@+id/helpO"
                             android:src="@drawable/help"
-                            android:layout_width="@dimen/x50"
-                            android:layout_height="@dimen/y50" />
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
                     </LinearLayout>
                     <LinearLayout
                         android:visibility="visible"
@@ -116,25 +116,25 @@
                             android:id="@+id/smokeX"
                             android:layout_marginRight="15dp"
                             android:src="@drawable/smoke_x"
-                            android:layout_width="@dimen/x50"
-                            android:layout_height="@dimen/y50" />
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
                         <ImageView
                             android:id="@+id/curfewX"
                             android:layout_marginRight="15dp"
                             android:src="@drawable/curfew_x"
-                            android:layout_width="@dimen/x50"
-                            android:layout_height="@dimen/y50" />
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
                         <ImageView
                             android:id="@+id/petX"
                             android:layout_marginRight="15dp"
                             android:src="@drawable/pet_x"
-                            android:layout_width="@dimen/x50"
-                            android:layout_height="@dimen/y50" />
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
                         <ImageView
                             android:id="@+id/helpX"
                             android:src="@drawable/help_x"
-                            android:layout_width="@dimen/x50"
-                            android:layout_height="@dimen/y50" />
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
                     </LinearLayout>
                 </FrameLayout>
                 <TextView

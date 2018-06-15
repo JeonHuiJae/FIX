@@ -2,6 +2,7 @@ package com.example.hhj73.fix;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MatchingAdapter extends BaseAdapter {
@@ -69,7 +71,7 @@ public class MatchingAdapter extends BaseAdapter {
 
         rowTitle.setText(users.get(position).getName()+"님의 집");
         rowAddress.setText(users.get(position).getAddress());
-        rowPrice.setText(users.get(position).getCost());
+        rowPrice.setText("월세 "+moneyFormatToWon(users.get(position).getCost()));
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://xylophone-house.appspot.com");
@@ -95,5 +97,9 @@ public class MatchingAdapter extends BaseAdapter {
 
 
         return convertView;
+    }
+    public static String moneyFormatToWon(String inputMoney) {
+        String str = String.format("%,d 원", Integer.parseInt(inputMoney));
+        return  str;
     }
 }

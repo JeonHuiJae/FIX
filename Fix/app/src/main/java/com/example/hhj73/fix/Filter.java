@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class Filter extends Activity {
 
-    final  int ADDRESS = 123;
+    final  int ADDRESS = 123123;
 EditText address;
 EditText miter;
 EditText minCost;
@@ -40,6 +40,8 @@ MediaPlayer mp;
         help = (RatingBar)findViewById(R.id.RateHelp);
         smoke = (RatingBar)findViewById(R.id.RateSmoke);
         curfew = (RatingBar)findViewById(R.id.RateCurfew);
+        lat = 37.538153;
+        lot = 127.075394;
     }
 
     @Override
@@ -71,8 +73,7 @@ MediaPlayer mp;
         MaxCost = Integer.parseInt(maxCost.getText().toString());
         else MaxCost = -1;
 
-        lat = 37.538153;
-        lot = 127.075394;
+
         Intent intent = new Intent(this, MatchingActivity.class);
         intent.putExtra("help",helpRate);
         intent.putExtra("curfew",curfewRate);
@@ -90,6 +91,7 @@ MediaPlayer mp;
     public void searchAdd(View view) {//주소 검색
         // Toast.makeText(this, "주소 불러왔음",Toast.LENGTH_SHORT).show();      //delete
         Intent address = new Intent(this,Address.class);
+        address.putExtra("type", true);
         address.putExtra("activity",true);
         startActivityForResult(address, ADDRESS);
     }

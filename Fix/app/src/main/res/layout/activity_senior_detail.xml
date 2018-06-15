@@ -55,7 +55,7 @@
         android:layout_height="match_parent">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y370">
+            android:layout_height="450dp">
 
         <LinearLayout
             android:layout_margin="5dp"
@@ -103,7 +103,7 @@
             <FrameLayout
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y50">
+                android:layout_height="70dp">
                 <LinearLayout
                     android:visibility="visible"
                     android:orientation="horizontal"
@@ -114,25 +114,25 @@
                         android:id="@+id/smokeO"
                         android:layout_marginRight="15dp"
                         android:src="@drawable/smoke"
-                        android:layout_width="50dp"
-                        android:layout_height="@dimen/y50" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp" />
                     <ImageView
                         android:id="@+id/curfewO"
                         android:layout_marginRight="15dp"
                         android:src="@drawable/curfew"
-                        android:layout_width="@dimen/x50"
-                        android:layout_height="@dimen/y50" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp" />
                     <ImageView
                         android:id="@+id/petO"
                         android:layout_marginRight="15dp"
                         android:src="@drawable/pet"
-                        android:layout_width="@dimen/x50"
-                        android:layout_height="@dimen/y50" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp" />
                     <ImageView
                         android:id="@+id/helpO"
                         android:src="@drawable/help"
-                        android:layout_width="@dimen/x50"
-                        android:layout_height="@dimen/y50" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:visibility="visible"
@@ -144,25 +144,25 @@
                         android:id="@+id/smokeX"
                         android:layout_marginRight="15dp"
                         android:src="@drawable/smoke_x"
-                        android:layout_width="@dimen/x50"
-                        android:layout_height="@dimen/y50" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp" />
                     <ImageView
                         android:id="@+id/curfewX"
                         android:layout_marginRight="15dp"
                         android:src="@drawable/curfew_x"
-                        android:layout_width="@dimen/x50"
-                        android:layout_height="@dimen/y50" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp" />
                     <ImageView
                         android:id="@+id/petX"
                         android:layout_marginRight="15dp"
                         android:src="@drawable/pet_x"
-                        android:layout_width="@dimen/x50"
-                        android:layout_height="@dimen/y50" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp" />
                     <ImageView
                         android:id="@+id/helpX"
                         android:src="@drawable/help_x"
-                        android:layout_width="@dimen/x50"
-                        android:layout_height="@dimen/y50" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp" />
                 </LinearLayout>
             </FrameLayout>
             <TextView
@@ -207,7 +207,7 @@
             <Button
                 android:onClick="talk"
                 android:text="WANT TO TALK!"
-                android:textSize="20dp"
+                android:textSize="30dp"
                 android:textColor="@color/colorPowder"
                 android:background="@drawable/mainbtn2"
                 android:layout_gravity="center"

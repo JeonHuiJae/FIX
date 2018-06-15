@@ -298,7 +298,6 @@ public class MatchingActivity extends AppCompatActivity {
                             score.put((String) keySet.get(i), D_s + A_s + C_s); //총점 100점 점수 넣기
                         }
                     }
-
                     //정렬후 출력 해야하는데.
                     users.clear();
                     Iterator it = sortByValue(score).iterator();
@@ -308,32 +307,8 @@ public class MatchingActivity extends AppCompatActivity {
                         // users.add(temp + " = " + score.get(temp));
                         users.add(u);
                     }
-
                     matchingAdapter.notifyDataSetChanged();
                 }
-
-                public List sortByValue(final Map map) {
-
-                    List<String> list = new ArrayList();
-
-                    list.addAll(map.keySet());
-
-                    Collections.sort(list,new Comparator() {
-
-                        public int compare(Object o1,Object o2) {
-
-                            Object v1 = map.get(o1);
-
-                            Object v2 = map.get(o2);
-
-                            return ((Comparable) v2).compareTo(v1);
-                        }
-                    });
-                    //Collections.reverse(list); // 주석시 오름차순
-                    return list;
-                }
-
-
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -343,7 +318,26 @@ public class MatchingActivity extends AppCompatActivity {
         }
     }
 
+    public List sortByValue(final Map map) {
 
+        List<String> list = new ArrayList();
+
+        list.addAll(map.keySet());
+
+        Collections.sort(list,new Comparator() {
+
+            public int compare(Object o1,Object o2) {
+
+                Object v1 = map.get(o1);
+
+                Object v2 = map.get(o2);
+
+                return ((Comparable) v2).compareTo(v1);
+            }
+        });
+        //Collections.reverse(list); // 주석시 오름차순
+        return list;
+    }
 
     public float same(float imp){ //속성 같을때
         return (Math.abs(3-imp) + 1) * (4f);

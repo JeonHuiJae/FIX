@@ -17,7 +17,7 @@
         android:layout_marginTop="40dp"/>
 
     <Button
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:text="방 사진 수정"
         android:onClick="editPhoto"
         android:layout_width="@dimen/x270"
@@ -51,7 +51,7 @@
     </LinearLayout>
 
     <Button
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:text="저장"
         android:onClick="save"
         android:layout_width="@dimen/x270"

@@ -115,7 +115,7 @@ public class SeniorDetail extends AppCompatActivity {
                     add = " 할아버지댁("+SeniorOld+"세)";
 
                 title.setText(senior.getName()+add);
-                rent.setText("월 "+senior.getCost()+"원");
+                rent.setText("월 "+moneyFormatToWon(senior.getCost()));
                 address.setText(senior.getAddress());
                 uniqueness.setText(senior.getUnique());
 
@@ -152,10 +152,13 @@ public class SeniorDetail extends AppCompatActivity {
     }
     //myId = 학생, urId = 어르신
     public void make_first_contract(String myId, String urId){
-
-
-
     }
+
+    public static String moneyFormatToWon(String inputMoney) {
+        String str = String.format("%,d 원", Integer.parseInt(inputMoney));
+        return  str;
+    }
+
     public void talk(View view) {//채팅으로
         mp.start();
         make_first_contract(myId,urId);
