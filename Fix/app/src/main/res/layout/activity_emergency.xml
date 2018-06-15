@@ -26,9 +26,9 @@
         <Button
             android:onClick="call_partner"
             android:background="@drawable/call_partner"
-            android:layout_width="180dp"
+            android:layout_width="@dimen/x180"
             android:layout_marginBottom="5dp"
-            android:layout_height="180dp" />
+            android:layout_height="@dimen/y180" />
     <TextView
         android:text="119 전화걸기"
         android:layout_marginBottom="5dp"
@@ -40,8 +40,8 @@
         <Button
             android:onClick="call_119"
             android:background="@drawable/call_119"
-            android:layout_width="180dp"
-            android:layout_height="180dp" />
+            android:layout_width="@dimen/x180"
+            android:layout_height="@dimen/y180" />
 </LinearLayout>
 
 </LinearLayout>

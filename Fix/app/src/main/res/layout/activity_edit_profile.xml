@@ -17,7 +17,7 @@
             <FrameLayout
                 android:background="@color/colorMint"
                 android:layout_width="match_parent"
-                android:layout_height="55dp">
+                android:layout_height="@dimen/y55">
                 <TextView
                     android:layout_gravity="center"
                     android:textSize="22dp"
@@ -31,7 +31,7 @@
                 android:background="@color/colorDarkMint"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:layout_height="10dp">
+                android:layout_height="@dimen/y10">
             </LinearLayout>
 
             <LinearLayout
@@ -53,8 +53,8 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:background="#eeeeee"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="@dimen/x130"
+                    android:layout_height="@dimen/y130"
                     android:layout_marginBottom="20dp"/>
 
             </LinearLayout>
@@ -79,7 +79,7 @@
                     android:paddingLeft="15dp"
                     android:layout_width="match_parent"
                     android:textSize="20dp"
-                    android:layout_height="50dp" />
+                    android:layout_height="@dimen/y50" />
 
             </LinearLayout>
 
@@ -90,8 +90,8 @@
                 android:textColor="@color/colorPowder"
                 android:textSize="22dp"
                 android:background="@drawable/mainbtn2"
-                android:layout_width="260dp"
-                android:layout_height="70dp"
+                android:layout_width="@dimen/x260"
+                android:layout_height="@dimen/y70"
                 android:layout_gravity="center"/>
         </LinearLayout>
         <LinearLayout
@@ -99,13 +99,13 @@
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:gravity="center|right"
-            android:layout_height="50dp">
+            android:layout_height="@dimen/y50">
             <Button
                 android:onClick="logout"
                 android:background="@color/trans"
                 android:text="TOUCH HERE TO LOGOUT"
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="@dimen/y50" />
         </LinearLayout>
 
     </FrameLayout>

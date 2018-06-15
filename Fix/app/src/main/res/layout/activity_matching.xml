@@ -22,8 +22,8 @@
         android:textColor="@color/colorPowder"
         android:layout_gravity="center|left"
         android:gravity="center"
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
+        android:layout_width="@dimen/x50"
+        android:layout_height="@dimen/y40" />
 
     <!--채팅내역 들어가는 버튼-->
     <Button
@@ -35,8 +35,8 @@
         android:textColor="@color/colorPowder"
         android:layout_gravity="center|right"
         android:gravity="center"
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
+        android:layout_width="@dimen/x40"
+        android:layout_height="@dimen/y40" />
     <TextView
         android:layout_gravity="center"
         android:textSize="22dp"
@@ -50,7 +50,7 @@
     android:background="@color/colorDarkMint"
     android:layout_width="match_parent"
     android:gravity="center"
-    android:layout_height="60dp">
+    android:layout_height="@dimen/y60">
 
     <!--필터링 재설정하는 버튼-->
     <Button
@@ -59,8 +59,8 @@
         android:textSize="20dp"
         android:textColor="@color/colorPowder"
         android:background="@drawable/mainbtn2"
-        android:layout_width="250dp"
-        android:layout_height="50dp" />
+        android:layout_width="@dimen/x250"
+        android:layout_height="@dimen/y50" />
 
 </LinearLayout>
 

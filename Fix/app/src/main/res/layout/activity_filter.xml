@@ -226,7 +226,7 @@
             android:text="OK"
             android:background="@drawable/mainbtn1"
             android:layout_width="match_parent"
-            android:layout_height="60dp" />
+            android:layout_height="@dimen/y60" />
         <Button
             android:onClick="cancel"
             android:textSize="20dp"
@@ -234,7 +234,7 @@
             android:text="CANCEL"
             android:background="@drawable/mainbtn2"
             android:layout_width="match_parent"
-            android:layout_height="60dp" />
+            android:layout_height="@dimen/y60" />
     </LinearLayout>
 
 </ScrollView>

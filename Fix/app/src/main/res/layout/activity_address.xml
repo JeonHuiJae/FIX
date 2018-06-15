@@ -13,8 +13,8 @@
     <WebView
         android:id="@+id/webview"
         android:padding="10dp"
-        android:layout_width="300dp"
-        android:layout_height="350dp"
+        android:layout_width="@dimen/x300"
+        android:layout_height="@dimen/y350"
       />
 
     <TextView

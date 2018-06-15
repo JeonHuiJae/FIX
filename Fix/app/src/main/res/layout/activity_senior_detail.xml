@@ -10,7 +10,7 @@
     <FrameLayout
         android:background="@color/colorMint"
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="@dimen/y55">
 
         <!--뒤로가기 버튼-->
         <Button
@@ -22,8 +22,8 @@
             android:textColor="@color/colorBrightMint"
             android:layout_gravity="center|left"
             android:gravity="center"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_width="@dimen/x40"
+            android:layout_height="@dimen/y40" />
 
         <!--채팅내역 들어가는 버튼-->
         <Button
@@ -34,8 +34,8 @@
             android:textColor="@color/colorPowder"
             android:layout_gravity="center|right"
             android:gravity="center"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_width="@dimen/x40"
+            android:layout_height="@dimen/y40" />
         <TextView
             android:layout_gravity="center"
             android:textSize="22dp"
@@ -55,7 +55,7 @@
         android:layout_height="match_parent">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="370dp">
+            android:layout_height="@dimen/y370">
 
         <LinearLayout
             android:layout_margin="5dp"
@@ -79,9 +79,9 @@
             <ImageView
                 android:id="@+id/roomImage"
                 android:background="@color/colorCream"
-                android:layout_width="220dp"
+                android:layout_width="@dimen/x220"
                 android:layout_gravity="center"
-                android:layout_height="150dp" />
+                android:layout_height="@dimen/y150" />
             <TextView
                 android:id="@+id/rent"
                 android:textColor="@color/colorPink"
@@ -103,7 +103,7 @@
             <FrameLayout
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="@dimen/y50">
                 <LinearLayout
                     android:visibility="visible"
                     android:orientation="horizontal"
@@ -115,24 +115,24 @@
                         android:layout_marginRight="15dp"
                         android:src="@drawable/smoke"
                         android:layout_width="50dp"
-                        android:layout_height="50dp" />
+                        android:layout_height="@dimen/y50" />
                     <ImageView
                         android:id="@+id/curfewO"
                         android:layout_marginRight="15dp"
                         android:src="@drawable/curfew"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" />
+                        android:layout_width="@dimen/x50"
+                        android:layout_height="@dimen/y50" />
                     <ImageView
                         android:id="@+id/petO"
                         android:layout_marginRight="15dp"
                         android:src="@drawable/pet"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" />
+                        android:layout_width="@dimen/x50"
+                        android:layout_height="@dimen/y50" />
                     <ImageView
                         android:id="@+id/helpO"
                         android:src="@drawable/help"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" />
+                        android:layout_width="@dimen/x50"
+                        android:layout_height="@dimen/y50" />
                 </LinearLayout>
                 <LinearLayout
                     android:visibility="visible"
@@ -144,25 +144,25 @@
                         android:id="@+id/smokeX"
                         android:layout_marginRight="15dp"
                         android:src="@drawable/smoke_x"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" />
+                        android:layout_width="@dimen/x50"
+                        android:layout_height="@dimen/y50" />
                     <ImageView
                         android:id="@+id/curfewX"
                         android:layout_marginRight="15dp"
                         android:src="@drawable/curfew_x"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" />
+                        android:layout_width="@dimen/x50"
+                        android:layout_height="@dimen/y50" />
                     <ImageView
                         android:id="@+id/petX"
                         android:layout_marginRight="15dp"
                         android:src="@drawable/pet_x"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" />
+                        android:layout_width="@dimen/x50"
+                        android:layout_height="@dimen/y50" />
                     <ImageView
                         android:id="@+id/helpX"
                         android:src="@drawable/help_x"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" />
+                        android:layout_width="@dimen/x50"
+                        android:layout_height="@dimen/y50" />
                 </LinearLayout>
             </FrameLayout>
             <TextView
@@ -201,7 +201,7 @@
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:gravity="center"
-            android:layout_height="70dp">
+            android:layout_height="@dimen/y70">
 
             <!--채팅 요청 보내기 버튼-->
             <Button
@@ -211,8 +211,8 @@
                 android:textColor="@color/colorPowder"
                 android:background="@drawable/mainbtn2"
                 android:layout_gravity="center"
-                android:layout_width="280dp"
-                android:layout_height="60dp" />
+                android:layout_width="@dimen/x280"
+                android:layout_height="@dimen/y60" />
         </LinearLayout>
     </FrameLayout>
 
