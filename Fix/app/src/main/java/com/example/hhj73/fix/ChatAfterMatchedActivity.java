@@ -113,11 +113,6 @@ public class ChatAfterMatchedActivity extends AppCompatActivity {
     }
 
 
-    public void back(View view) {
-        Intent intent = new Intent(this, MatchedMain.class);
-        startActivity(intent);
-    }
-
     public void submit(View view) {
         // 채팅 보내기
         String chat = editChat.getText().toString();

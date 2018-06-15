@@ -22,17 +22,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
 
-                <!--뒤로가기 버튼-->
-                <Button
-                    android:onClick="back"
-                    android:text="◀"
-                    android:layout_gravity="center|left"
-                    android:background="#00ff0000"
-                    android:textColor="@color/colorBrightMint"
-                    android:gravity="center"
-                    android:textSize="30dp"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
                 <TextView
                     android:id="@+id/roomName"
                     android:layout_gravity="center"
