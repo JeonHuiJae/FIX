@@ -25,31 +25,27 @@ public class ContractMatchedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contract_matched);
         init();
+        setContractView();
     }
     public void init(){
         Intent intent = getIntent();
         final String room = intent.getStringExtra("room");
-        Toast.makeText(this,room,Toast.LENGTH_SHORT).show();
+
         databaseReference_contract = FirebaseDatabase.getInstance().getReference("contracts");
         DatabaseReference db = databaseReference_contract.child(room);
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                contractData = dataSnapshot.getValue(ContractData.class);
+                contractData= dataSnapshot.getValue(ContractData.class);
                 if (contractData==null){
                     Toast.makeText(getApplicationContext(),"null",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(),contractData.getSeniorName(),Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
-
-        setContractView();
-    }
-    public void setContractView(){
         TextView seniorName = (TextView)findViewById(R.id.seniorName_m);
         TextView studentName = (TextView)findViewById(R.id.studentName_m);
         TextView effectiveDate = (TextView)findViewById(R.id.effectiveDate_m);
@@ -75,7 +71,6 @@ public class ContractMatchedActivity extends AppCompatActivity {
 
         final int color_unConsent=getResources().getColor(R.color.colorLightRed);
         final int color_Consent=getResources().getColor(R.color.colorLightGreen);
-
 
         if(contractData!=null) {
             seniorName.setText(contractData.getSeniorName() + " 어르신");
@@ -137,8 +132,11 @@ public class ContractMatchedActivity extends AppCompatActivity {
             extraspecial.setText(contractData.getExtraspecial());
 
         }else{
-            //Toast.makeText(this,"NULL입니다!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"NULL입니다!",Toast.LENGTH_SHORT).show();
         }
+    }
+    public void setContractView(){
+
     }
 
 }
