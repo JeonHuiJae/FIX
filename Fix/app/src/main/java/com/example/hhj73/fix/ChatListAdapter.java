@@ -5,6 +5,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -59,8 +62,9 @@ public class ChatListAdapter extends BaseAdapter {
         }
 
         /* 'listview_custom'에 정의된 위젯에 대한 참조 획득 */
-        final ImageView userImage = (ImageView) convertView.findViewById(R.id.listRowImage);
+
         TextView userName = (TextView) convertView.findViewById(R.id.listRowTitle);
+        final ImageView userImage = (ImageView) convertView.findViewById(R.id.listRowImage);
 
         Glide.with(context)
                 .load(R.color.colorCream)

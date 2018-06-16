@@ -102,7 +102,7 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
         chats = new ArrayList<>();
         // arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, chats);
         chatList = (ListView) findViewById(R.id.chatList);
-
+        mp = MediaPlayer.create(this, R.raw.x);
         // layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         // chatList.setLayoutManager(layoutManager);
 
@@ -359,9 +359,8 @@ public class ChatActivity extends AppCompatActivity implements ContractAdapter.L
         });
         if(contractData.isFinalagree_j()&&contractData.isFinalagree_s()){
             // you 어르신 me 학생
-            mp = MediaPlayer.create(this, R.raw.x);
-            mp.start();// 소리
 
+            mp.start();// 소리
 
             databaseReference_family = FirebaseDatabase.getInstance().getReference("families");
             databaseReference_family.child(room).child("studentAgree").setValue(true);
